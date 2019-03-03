@@ -3,6 +3,7 @@ package com.example.nutritionVendors.entities;
 import lombok.Data;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Data
@@ -10,6 +11,7 @@ import javax.persistence.Table;
 //@Table(name = "area")
 public class Area {
 
+    @Id
     private Integer id;
     private Integer city_id;
     private String name;

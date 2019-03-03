@@ -3,7 +3,7 @@ package com.example.nutritionVendors.entities;
 import lombok.Data;
 
 import javax.persistence.Entity;
-//import javax.persistence.Table;
+import javax.persistence.Id;
 import java.sql.Timestamp;
 
 @Data
@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 //@Table(name = "user")
 public class User {
 
+    @Id
     private Integer id;
     private String user_name;
     private String email;

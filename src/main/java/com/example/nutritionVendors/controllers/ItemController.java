@@ -7,4 +7,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(ItemController.BASE_URL)
 public class ItemController {
     public final static String BASE_URL = "api/item";
+
+    @RequestMapping
+    public String hello() {
+        return "hello spring";
+    }
 }
