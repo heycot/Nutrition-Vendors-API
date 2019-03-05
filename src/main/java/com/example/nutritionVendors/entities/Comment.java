@@ -9,24 +9,22 @@ import java.sql.Timestamp;
 
 @Data
 @Entity
-//@Table(name = "comment")
+@Table(name = "comment")
 public class Comment {
 
     @Id
     private Integer id;
     private Integer user_id;
-    private Integer shop_id;
-    private Integer father_id;
+    private Integer shopItem_id;
     private String content;
     private Integer rating;
     private Timestamp create_date;
     private  Integer status;
 
-    public Comment(Integer id, Integer user_id, Integer shop_id, Integer father_id, String content, Integer rating, Timestamp create_date, Integer status) {
+    public Comment(Integer id, Integer user_id, Integer shopItem_id, String content, Integer rating, Timestamp create_date, Integer status) {
         this.id = id;
         this.user_id = user_id;
-        this.shop_id = shop_id;
-        this.father_id = father_id;
+        this.shopItem_id = shopItem_id;
         this.content = content;
         this.rating = rating;
         this.create_date = create_date;
@@ -52,20 +50,12 @@ public class Comment {
         this.user_id = user_id;
     }
 
-    public Integer getShop_id() {
-        return shop_id;
+    public Integer getShopItem_id() {
+        return shopItem_id;
     }
 
-    public void setShop_id(Integer shop_id) {
-        this.shop_id = shop_id;
-    }
-
-    public Integer getFather_id() {
-        return father_id;
-    }
-
-    public void setFather_id(Integer father_id) {
-        this.father_id = father_id;
+    public void setShopItem_id(Integer shopItem_id) {
+        this.shopItem_id = shopItem_id;
     }
 
     public String getContent() {

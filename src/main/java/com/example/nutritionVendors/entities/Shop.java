@@ -9,12 +9,13 @@ import java.sql.Timestamp;
 
 @Data
 @Entity
-//@Table(name = "shop")
+@Table(name = "shop")
 public class Shop {
 
     @Id
     private Integer id;
     private Integer location_id;
+    private Integer user_id;
     private String name;
     private Double rating;
     private Timestamp time_open;
@@ -24,9 +25,13 @@ public class Shop {
     private String phone;
     private String avatar;
 
-    public Shop(Integer id, Integer location_id, String name, Double rating, Timestamp time_open, Timestamp time_close, Timestamp create_date, Integer status, String phone, String avatar) {
+    public Shop() {
+    }
+
+    public Shop(Integer id, Integer location_id, Integer user_id, String name, Double rating, Timestamp time_open, Timestamp time_close, Timestamp create_date, Integer status, String phone, String avatar) {
         this.id = id;
         this.location_id = location_id;
+        this.user_id = user_id;
         this.name = name;
         this.rating = rating;
         this.time_open = time_open;
@@ -35,9 +40,6 @@ public class Shop {
         this.status = status;
         this.phone = phone;
         this.avatar = avatar;
-    }
-
-    public Shop() {
     }
 
     public Integer getId() {
@@ -54,6 +56,14 @@ public class Shop {
 
     public void setLocation_id(Integer location_id) {
         this.location_id = location_id;
+    }
+
+    public Integer getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 
     public String getName() {
