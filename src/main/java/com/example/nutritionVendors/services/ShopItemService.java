@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ShopItemService {
     List<ShopItem> getHighRatingItem(Integer start);
+
+    ShopItem getOne(Integer id);
 }

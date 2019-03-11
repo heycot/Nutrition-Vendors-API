@@ -3,7 +3,10 @@ package com.example.nutritionVendors.controllers;
 import com.example.nutritionVendors.entities.ShopItem;
 import com.example.nutritionVendors.services.ShopItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -21,6 +24,11 @@ public class ShopItemController {
         List<ShopItem> shopItems = shopItemService.getHighRatingItem(0);
 
         return shopItems;
+    }
+
+    @RequestMapping("/{id}")
+    public ShopItem getOne(@RequestParam("id") Integer id) {
+        return shopItemService.getOne(id);
     }
 
 }
