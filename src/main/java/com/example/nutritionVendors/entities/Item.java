@@ -2,24 +2,29 @@ package com.example.nutritionVendors.entities;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-@Data
+//@Data
 @Entity
 @Table(name = "item")
 public class Item {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private Integer category_id;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    private Category category;
+
+    @ManyToOne(cascade =  CascadeType.ALL)
+    @JoinColumn(name = "measure_id", referencedColumnName = "id")
+    private Measure measure;
 
     public Item(Integer id, String name, Integer category_id) {
         this.id = id;
         this.name = name;
-        this.category_id = category_id;
     }
 
     public Item() {
@@ -41,11 +46,19 @@ public class Item {
         this.name = name;
     }
 
-    public Integer getCategory_id() {
-        return category_id;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategory_id(Integer category_id) {
-        this.category_id = category_id;
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Measure getMeasure() {
+        return measure;
+    }
+
+    public void setMeasure(Measure measure) {
+        this.measure = measure;
     }
 }

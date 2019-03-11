@@ -1,28 +1,30 @@
 package com.example.nutritionVendors.entities;
 
-import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Collection;
 
 //@Data
 @Entity
-@Table(name = "city")
-public class City {
+@Table(name = "measure")
+public class Measure {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    @OneToMany(mappedBy = "city")
-    private Collection<Area> areas;
+    private String sign;
 
-    public City(Integer id, String name) {
-        this.id = id;
-        this.name = name;
+    @OneToMany(mappedBy = "measure")
+    private Collection<Item> items;
+
+    public Measure() {
     }
 
-    public City() {
+    public Measure(Integer id, String name, String sign) {
+        this.id = id;
+        this.name = name;
+        this.sign = sign;
     }
 
     public Integer getId() {
@@ -39,5 +41,13 @@ public class City {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSign() {
+        return sign;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
     }
 }

@@ -2,17 +2,16 @@ package com.example.nutritionVendors.entities;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
-@Data
+//@Data
 @Entity
 @Table(name = "shop")
 public class Shop {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer location_id;
     private Integer user_id;

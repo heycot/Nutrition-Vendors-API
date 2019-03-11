@@ -2,17 +2,17 @@ package com.example.nutritionVendors.entities;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-@Data
+//@Data
 @Entity
 @Table(name = "document")
 public class Document {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(name = "shopitem_id")
     private Integer shopItem_id;
     private String link;
 

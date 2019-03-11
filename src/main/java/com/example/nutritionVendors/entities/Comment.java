@@ -2,19 +2,19 @@ package com.example.nutritionVendors.entities;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
-@Data
+//@Data
 @Entity
 @Table(name = "comment")
 public class Comment {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer user_id;
+    @Column(name = "shopitem_id")
     private Integer shopItem_id;
     private String content;
     private Integer rating;

@@ -1,23 +1,24 @@
 package com.example.nutritionVendors.entities;
 
-import lombok.Data;
+import javax.persistence.*;
+import java.util.Collection;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Data
+//@Data
 @Entity
 @Table(name = "category")
 public class Category {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
 
-    public Category(Integer id, String name) {
-        this.id = id;
+    @OneToMany(mappedBy = "category")
+    private Collection<Item> items;
+
+    public Category(String name, Collection<Item> items) {
         this.name = name;
+        this.items = items;
     }
 
     public Category() {
@@ -37,5 +38,13 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Collection<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(Collection<Item> items) {
+        this.items = items;
     }
 }

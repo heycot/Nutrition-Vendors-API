@@ -3,18 +3,18 @@ package com.example.nutritionVendors.entities;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-@Data
+//@Data
 @Entity
 @Table(name = "favorites")
 public class Favorites {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer user_id;
+    @Column(name = "shopitem_id")
     private Integer shipItem_id;
 
     public Favorites(Integer id, Integer user_id, Integer shipItem_id) {

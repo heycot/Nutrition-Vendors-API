@@ -2,27 +2,28 @@ package com.example.nutritionVendors.entities;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-@Data
+//@Data
 @Entity
 @Table(name = "area")
 public class Area {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer city_id;
     private String name;
 
-    public Area(Integer id, Integer city_id, String name) {
-        this.id = id;
-        this.city_id = city_id;
-        this.name = name;
-    }
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "city_id", referencedColumnName = "id")
+    private City city;
 
     public Area() {
+    }
+
+    public Area(String name, City city) {
+        this.name = name;
+        this.city = city;
     }
 
     public Integer getId() {
@@ -33,19 +34,19 @@ public class Area {
         this.id = id;
     }
 
-    public Integer getCity_id() {
-        return city_id;
-    }
-
-    public void setCity_id(Integer city_id) {
-        this.city_id = city_id;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 }
