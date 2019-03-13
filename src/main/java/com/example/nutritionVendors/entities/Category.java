@@ -2,6 +2,7 @@ package com.example.nutritionVendors.entities;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 //@Data
 @Entity
@@ -13,10 +14,10 @@ public class Category {
     private Integer id;
     private String name;
 
-    @OneToMany(mappedBy = "category")
-    private Collection<Item> items;
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+    private List<Item> items;
 
-    public Category(String name, Collection<Item> items) {
+    public Category(String name, List<Item> items) {
         this.name = name;
         this.items = items;
     }
@@ -44,7 +45,7 @@ public class Category {
         return items;
     }
 
-    public void setItems(Collection<Item> items) {
+    public void setItems(List<Item> items) {
         this.items = items;
     }
 }

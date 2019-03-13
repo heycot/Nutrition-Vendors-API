@@ -3,6 +3,7 @@ package com.example.nutritionVendors.entities;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 //@Data
 @Entity
@@ -15,16 +16,16 @@ public class Measure {
     private String name;
     private String sign;
 
-    @OneToMany(mappedBy = "measure")
-    private Collection<Item> items;
+    @OneToMany(mappedBy = "measure", fetch = FetchType.LAZY)
+    private List<Item> items;
 
     public Measure() {
     }
 
-    public Measure(Integer id, String name, String sign) {
-        this.id = id;
+    public Measure(String name, String sign, List<Item> items) {
         this.name = name;
         this.sign = sign;
+        this.items = items;
     }
 
     public Integer getId() {
@@ -49,5 +50,13 @@ public class Measure {
 
     public void setSign(String sign) {
         this.sign = sign;
+    }
+
+    public Collection<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 }

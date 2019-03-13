@@ -1,6 +1,10 @@
 package com.example.nutritionVendors.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.List;
 
 //@Data
 @Entity
@@ -12,16 +16,21 @@ public class Area {
     private Integer id;
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "city_id", referencedColumnName = "id")
     private City city;
+
+    @OneToMany(mappedBy = "area")
+    private List<Location> locations;
 
     public Area() {
     }
 
-    public Area(String name, City city) {
+    public Area(String name, City city, List<Location> locations) {
         this.name = name;
         this.city = city;
+        this.locations = locations;
     }
 
     public Integer getId() {
@@ -46,5 +55,14 @@ public class Area {
 
     public void setCity(City city) {
         this.city = city;
+    }
+
+
+    public Collection<Location> getLocations() {
+        return locations;
+    }
+
+    public void setLocations(List<Location> locations) {
+        this.locations = locations;
     }
 }

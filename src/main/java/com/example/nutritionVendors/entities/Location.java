@@ -1,5 +1,6 @@
 package com.example.nutritionVendors.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -12,22 +13,29 @@ public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer area_id;
     private String name;
     private String address;
     private Double longitude;
     private Double latitude;
 
-    public Location(Integer id, Integer area_id, String name, String address, Double longitude, Double latitude) {
-        this.id = id;
-        this.area_id = area_id;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinColumn(name = "area_id", referencedColumnName = "id")
+    private Area area;
+
+    @OneToOne(mappedBy = "location", fetch = FetchType.LAZY)
+    private Shop shop;
+
+    public Location() {
+    }
+
+    public Location(String name, String address, Double longitude, Double latitude, Area area, Shop shop) {
         this.name = name;
         this.address = address;
         this.longitude = longitude;
         this.latitude = latitude;
-    }
-
-    public Location() {
+        this.area = area;
+        this.shop = shop;
     }
 
     public Integer getId() {
@@ -38,12 +46,12 @@ public class Location {
         this.id = id;
     }
 
-    public Integer getArea_id() {
-        return area_id;
+    public Area getArea() {
+        return area;
     }
 
-    public void setArea_id(Integer area_id) {
-        this.area_id = area_id;
+    public void setArea(Area area) {
+        this.area = area;
     }
 
     public String getName() {
@@ -76,5 +84,13 @@ public class Location {
 
     public void setLatitude(Double latitude) {
         this.latitude = latitude;
+    }
+
+    public Shop getShop() {
+        return shop;
+    }
+
+    public void setShop(Shop shop) {
+        this.shop = shop;
     }
 }

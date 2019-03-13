@@ -13,17 +13,21 @@ public class Favorites {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer user_id;
-    @Column(name = "shopitem_id")
-    private Integer shipItem_id;
 
-    public Favorites(Integer id, Integer user_id, Integer shipItem_id) {
-        this.id = id;
-        this.user_id = user_id;
-        this.shipItem_id = shipItem_id;
-    }
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "shopitem_id", referencedColumnName = "id")
+    private ShopItem shopItem;
 
     public Favorites() {
+    }
+
+    public Favorites(User user, ShopItem shopItem) {
+        this.user = user;
+        this.shopItem = shopItem;
     }
 
     public Integer getId() {
@@ -34,19 +38,19 @@ public class Favorites {
         this.id = id;
     }
 
-    public Integer getUser_id() {
-        return user_id;
+    public User getUser() {
+        return user;
     }
 
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Integer getShipItem_id() {
-        return shipItem_id;
+    public ShopItem getShopItem() {
+        return shopItem;
     }
 
-    public void setShipItem_id(Integer shipItem_id) {
-        this.shipItem_id = shipItem_id;
+    public void setShopItem(ShopItem shopItem) {
+        this.shopItem = shopItem;
     }
 }

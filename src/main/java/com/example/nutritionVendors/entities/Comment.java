@@ -13,22 +13,26 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer user_id;
-    @Column(name = "shopitem_id")
-    private Integer shopItem_id;
     private String content;
     private Integer rating;
     private Timestamp create_date;
     private  Integer status;
 
-    public Comment(Integer id, Integer user_id, Integer shopItem_id, String content, Integer rating, Timestamp create_date, Integer status) {
-        this.id = id;
-        this.user_id = user_id;
-        this.shopItem_id = shopItem_id;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "shopitem_id", referencedColumnName = "id")
+    private ShopItem shopItem;
+
+    public Comment(String content, Integer rating, Timestamp create_date, Integer status, User user, ShopItem shopItem) {
         this.content = content;
         this.rating = rating;
         this.create_date = create_date;
         this.status = status;
+        this.user = user;
+        this.shopItem = shopItem;
     }
 
     public Comment() {
@@ -40,22 +44,6 @@ public class Comment {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
-    }
-
-    public Integer getShopItem_id() {
-        return shopItem_id;
-    }
-
-    public void setShopItem_id(Integer shopItem_id) {
-        this.shopItem_id = shopItem_id;
     }
 
     public String getContent() {
@@ -88,5 +76,21 @@ public class Comment {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public ShopItem getShopItem() {
+        return shopItem;
+    }
+
+    public void setShopItem(ShopItem shopItem) {
+        this.shopItem = shopItem;
     }
 }

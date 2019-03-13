@@ -4,5 +4,5 @@ import com.example.nutritionVendors.entities.User;
 
 public interface UserService {
 
-    public User findOneByNameAndPassword(User user);
+    User findOneByNameAndPassword(User user);
 }

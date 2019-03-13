@@ -1,9 +1,11 @@
 package com.example.nutritionVendors.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 //@Data
 @Entity
@@ -13,8 +15,6 @@ public class Shop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer location_id;
-    private Integer user_id;
     private String name;
     private Double rating;
     private Timestamp time_open;
@@ -24,13 +24,24 @@ public class Shop {
     private String phone;
     private String avatar;
 
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinColumn(name = "location_id", referencedColumnName = "id")
+    private Location location;
+
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
+    @OneToMany(mappedBy = "shop", fetch = FetchType.LAZY)
+    private List<ShopItem> shopItems;
+
     public Shop() {
     }
 
-    public Shop(Integer id, Integer location_id, Integer user_id, String name, Double rating, Timestamp time_open, Timestamp time_close, Timestamp create_date, Integer status, String phone, String avatar) {
-        this.id = id;
-        this.location_id = location_id;
-        this.user_id = user_id;
+    public Shop(String name, Double rating, Timestamp time_open, Timestamp time_close, Timestamp create_date, Integer status, String phone, String avatar, Location location, User user, List<ShopItem> shopItems) {
         this.name = name;
         this.rating = rating;
         this.time_open = time_open;
@@ -39,6 +50,9 @@ public class Shop {
         this.status = status;
         this.phone = phone;
         this.avatar = avatar;
+        this.location = location;
+        this.user = user;
+        this.shopItems = shopItems;
     }
 
     public Integer getId() {
@@ -47,22 +61,6 @@ public class Shop {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getLocation_id() {
-        return location_id;
-    }
-
-    public void setLocation_id(Integer location_id) {
-        this.location_id = location_id;
-    }
-
-    public Integer getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
     }
 
     public String getName() {
@@ -127,5 +125,29 @@ public class Shop {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<ShopItem> getShopItems() {
+        return shopItems;
+    }
+
+    public void setShopItems(List<ShopItem> shopItems) {
+        this.shopItems = shopItems;
     }
 }

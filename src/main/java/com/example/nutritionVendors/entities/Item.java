@@ -3,6 +3,7 @@ package com.example.nutritionVendors.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 //@Data
 @Entity
@@ -14,20 +15,25 @@ public class Item {
     private Integer id;
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
-    @ManyToOne(cascade =  CascadeType.ALL)
+    @ManyToOne(cascade =  CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "measure_id", referencedColumnName = "id")
     private Measure measure;
 
-    public Item(Integer id, String name, Integer category_id) {
-        this.id = id;
-        this.name = name;
-    }
+    @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
+    private List<ShopItem> shopItems;
 
     public Item() {
+    }
+
+    public Item(String name, Category category, Measure measure, List<ShopItem> shopItems) {
+        this.name = name;
+        this.category = category;
+        this.measure = measure;
+        this.shopItems = shopItems;
     }
 
     public Integer getId() {
@@ -60,5 +66,13 @@ public class Item {
 
     public void setMeasure(Measure measure) {
         this.measure = measure;
+    }
+
+    public List<ShopItem> getShopItems() {
+        return shopItems;
+    }
+
+    public void setShopItems(List<ShopItem> shopItems) {
+        this.shopItems = shopItems;
     }
 }
