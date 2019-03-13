@@ -21,7 +21,7 @@ public class ShopItemController {
 
     @RequestMapping("/high-rating")
     public List<ShopItem> getHighRatingItem() {
-        List<ShopItem> shopItems = shopItemService.getHighRatingItem(0);
+        List<ShopItem> shopItems = shopItemService.getHighRatingItem(10);
 
         return shopItems;
     }

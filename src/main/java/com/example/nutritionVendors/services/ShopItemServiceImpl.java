@@ -14,7 +14,7 @@ public class ShopItemServiceImpl implements ShopItemService {
 
     @Override
     public List<ShopItem> getHighRatingItem(Integer start) {
-        return shopItemRepository.getHighRatingItem(start, 10);
+        return shopItemRepository.getHighRatingItem(start);
     }
 
     @Override

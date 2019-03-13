@@ -10,6 +10,8 @@ import java.util.List;
 @Repository
 public interface ShopItemRepository extends JpaRepository<ShopItem, Integer> {
 
-    @Query(value = "select * from shopitem order by rating DESC limit ?1, ?2", nativeQuery = true)
-    List<ShopItem> getHighRatingItem(Integer start, Integer limit);
+    @Query(value = "select * from shopitem order by rating DESC limit ?1", nativeQuery = true)
+    List<ShopItem> getHighRatingItem(Integer start);
+
+
 }
