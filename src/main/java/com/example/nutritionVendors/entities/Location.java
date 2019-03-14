@@ -17,26 +17,17 @@ public class Location {
     private String address;
     private Double longitude;
     private Double latitude;
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    @JoinColumn(name = "area_id", referencedColumnName = "id")
-    private Area area;
-
-    @OneToOne(mappedBy = "location", fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Shop shop;
+    private Integer area_id;
 
     public Location() {
     }
 
-    public Location(String name, String address, Double longitude, Double latitude, Area area, Shop shop) {
+    public Location(String name, String address, Double longitude, Double latitude, Integer area_id) {
         this.name = name;
         this.address = address;
         this.longitude = longitude;
         this.latitude = latitude;
-        this.area = area;
-        this.shop = shop;
+        this.area_id = area_id;
     }
 
     public Integer getId() {
@@ -45,14 +36,6 @@ public class Location {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Area getArea() {
-        return area;
-    }
-
-    public void setArea(Area area) {
-        this.area = area;
     }
 
     public String getName() {
@@ -87,11 +70,11 @@ public class Location {
         this.latitude = latitude;
     }
 
-    public Shop getShop() {
-        return shop;
+    public Integer getArea_id() {
+        return area_id;
     }
 
-    public void setShop(Shop shop) {
-        this.shop = shop;
+    public void setArea_id(Integer area_id) {
+        this.area_id = area_id;
     }
 }

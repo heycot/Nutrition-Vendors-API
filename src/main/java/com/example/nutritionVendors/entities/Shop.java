@@ -23,25 +23,12 @@ public class Shop {
     private Integer status;
     private String phone;
     private String avatar;
-
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "location_id", referencedColumnName = "id")
-    private Location location;
-
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
-
-    @OneToMany(mappedBy = "shop", fetch = FetchType.LAZY)
-    private List<ShopItem> shopItems;
-
+    private Integer location_id;
+    private Integer user_id;
     public Shop() {
     }
 
-    public Shop(String name, Double rating, String time_open, String  time_close, Timestamp create_date, Integer status, String phone, String avatar, Location location, User user, List<ShopItem> shopItems) {
+    public Shop(String name, Double rating, String time_open, String time_close, Timestamp create_date, Integer status, String phone, String avatar, Integer location_id, Integer user_id) {
         this.name = name;
         this.rating = rating;
         this.time_open = time_open;
@@ -50,9 +37,8 @@ public class Shop {
         this.status = status;
         this.phone = phone;
         this.avatar = avatar;
-        this.location = location;
-        this.user = user;
-        this.shopItems = shopItems;
+        this.location_id = location_id;
+        this.user_id = user_id;
     }
 
     public Integer getId() {
@@ -127,27 +113,19 @@ public class Shop {
         this.avatar = avatar;
     }
 
-    public Location getLocation() {
-        return location;
+    public Integer getLocation_id() {
+        return location_id;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setLocation_id(Integer location_id) {
+        this.location_id = location_id;
     }
 
-    public User getUser() {
-        return user;
+    public Integer getUser_id() {
+        return user_id;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public List<ShopItem> getShopItems() {
-        return shopItems;
-    }
-
-    public void setShopItems(List<ShopItem> shopItems) {
-        this.shopItems = shopItems;
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 }

@@ -14,18 +14,14 @@ public class Document {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String link;
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    @JoinColumn(name = "shopitem_id", referencedColumnName = "id")
-    private ShopItem shopItem;
-
-    public Document(String link, ShopItem shopItem) {
-        this.link = link;
-        this.shopItem = shopItem;
-    }
+    private Integer shopitem_id;
 
     public Document() {
+    }
+
+    public Document(String link, Integer shopitem_id) {
+        this.link = link;
+        this.shopitem_id = shopitem_id;
     }
 
     public Integer getId() {
@@ -44,11 +40,11 @@ public class Document {
         this.link = link;
     }
 
-    public ShopItem getShopItem() {
-        return shopItem;
+    public Integer getShopitem_id() {
+        return shopitem_id;
     }
 
-    public void setShopItem(ShopItem shopItem) {
-        this.shopItem = shopItem;
+    public void setShopitem_id(Integer shopitem_id) {
+        this.shopitem_id = shopitem_id;
     }
 }

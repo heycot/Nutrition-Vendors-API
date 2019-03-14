@@ -14,12 +14,8 @@ public class Category {
     private Integer id;
     private String name;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
-    private List<Item> items;
-
-    public Category(String name, List<Item> items) {
+    public Category(String name) {
         this.name = name;
-        this.items = items;
     }
 
     public Category() {
@@ -41,11 +37,4 @@ public class Category {
         this.name = name;
     }
 
-    public Collection<Item> getItems() {
-        return items;
-    }
-
-    public void setItems(List<Item> items) {
-        this.items = items;
-    }
 }

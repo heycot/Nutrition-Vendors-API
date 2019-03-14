@@ -19,27 +19,20 @@ public class Comment {
     private Integer rating;
     private Timestamp create_date;
     private  Integer status;
+    private Integer user_id;
+    private Integer shopitem_id;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+    public Comment() {
+    }
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    @JoinColumn(name = "shopitem_id", referencedColumnName = "id")
-    private ShopItem shopItem;
-
-    public Comment(String title, String content, Integer rating, Timestamp create_date, Integer status, User user, ShopItem shopItem) {
+    public Comment(String title, String content, Integer rating, Timestamp create_date, Integer status, Integer user_id, Integer shopitem_id) {
         this.title = title;
         this.content = content;
         this.rating = rating;
         this.create_date = create_date;
         this.status = status;
-        this.user = user;
-        this.shopItem = shopItem;
-    }
-
-    public Comment() {
+        this.user_id = user_id;
+        this.shopitem_id = shopitem_id;
     }
 
     public Integer getId() {
@@ -90,19 +83,19 @@ public class Comment {
         this.status = status;
     }
 
-    public User getUser() {
-        return user;
+    public Integer getUser_id() {
+        return user_id;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 
-    public ShopItem getShopItem() {
-        return shopItem;
+    public Integer getShopitem_id() {
+        return shopitem_id;
     }
 
-    public void setShopItem(ShopItem shopItem) {
-        this.shopItem = shopItem;
+    public void setShopitem_id(Integer shopitem_id) {
+        this.shopitem_id = shopitem_id;
     }
 }

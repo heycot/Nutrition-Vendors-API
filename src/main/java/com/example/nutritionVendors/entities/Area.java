@@ -15,23 +15,14 @@ public class Area {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    @JoinColumn(name = "city_id", referencedColumnName = "id")
-    private City city;
-
-    @OneToMany(mappedBy = "area")
-    @JsonIgnore
-    private List<Location> locations;
+    private Integer city_id;
 
     public Area() {
     }
 
-    public Area(String name, City city, List<Location> locations) {
+    public Area(String name, Integer city_id) {
         this.name = name;
-        this.city = city;
-        this.locations = locations;
+        this.city_id = city_id;
     }
 
     public Integer getId() {
@@ -50,20 +41,11 @@ public class Area {
         this.name = name;
     }
 
-    public City getCity() {
-        return city;
+    public Integer getCity_id() {
+        return city_id;
     }
 
-    public void setCity(City city) {
-        this.city = city;
-    }
-
-
-    public Collection<Location> getLocations() {
-        return locations;
-    }
-
-    public void setLocations(List<Location> locations) {
-        this.locations = locations;
+    public void setCity_id(Integer city_id) {
+        this.city_id = city_id;
     }
 }

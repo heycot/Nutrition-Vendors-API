@@ -15,27 +15,32 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id", referencedColumnName = "id")
-    private Category category;
-
-    @ManyToOne(cascade =  CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "measure_id", referencedColumnName = "id")
-    private Measure measure;
-
-    @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<ShopItem> shopItems;
+    private Integer category_id;
+    private Integer measure_id;
 
     public Item() {
     }
 
-    public Item(String name, Category category, Measure measure, List<ShopItem> shopItems) {
+    public Item(String name, Integer category_id, Integer measure_id) {
         this.name = name;
-        this.category = category;
-        this.measure = measure;
-        this.shopItems = shopItems;
+        this.category_id = category_id;
+        this.measure_id = measure_id;
+    }
+
+    public Integer getCategory_id() {
+        return category_id;
+    }
+
+    public void setCategory_id(Integer category_id) {
+        this.category_id = category_id;
+    }
+
+    public Integer getMeasure_id() {
+        return measure_id;
+    }
+
+    public void setMeasure_id(Integer measure_id) {
+        this.measure_id = measure_id;
     }
 
     public Integer getId() {
@@ -54,27 +59,4 @@ public class Item {
         this.name = name;
     }
 
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public Measure getMeasure() {
-        return measure;
-    }
-
-    public void setMeasure(Measure measure) {
-        this.measure = measure;
-    }
-
-    public List<ShopItem> getShopItems() {
-        return shopItems;
-    }
-
-    public void setShopItems(List<ShopItem> shopItems) {
-        this.shopItems = shopItems;
-    }
 }

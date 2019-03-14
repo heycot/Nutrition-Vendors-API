@@ -15,15 +15,12 @@ public class City {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    @OneToMany(mappedBy = "city", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    private List<Area> areas;
 
     public City() {
     }
 
     public City(String name, List<Area> areas) {
         this.name = name;
-        this.areas = areas;
     }
 
     public Integer getId() {
@@ -42,11 +39,4 @@ public class City {
         this.name = name;
     }
 
-    public Collection<Area> getAreas() {
-        return areas;
-    }
-
-    public void setAreas(List<Area> areas) {
-        this.areas = areas;
-    }
 }

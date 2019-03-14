@@ -18,17 +18,12 @@ public class Measure {
     private String name;
     private String sign;
 
-    @OneToMany(mappedBy = "measure", fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<Item> items;
-
     public Measure() {
     }
 
-    public Measure(String name, String sign, List<Item> items) {
+    public Measure(String name, String sign) {
         this.name = name;
         this.sign = sign;
-        this.items = items;
     }
 
     public Integer getId() {
@@ -53,13 +48,5 @@ public class Measure {
 
     public void setSign(String sign) {
         this.sign = sign;
-    }
-
-    public Collection<Item> getItems() {
-        return items;
-    }
-
-    public void setItems(List<Item> items) {
-        this.items = items;
     }
 }

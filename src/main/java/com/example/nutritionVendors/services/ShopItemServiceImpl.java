@@ -1,5 +1,6 @@
 package com.example.nutritionVendors.services;
 
+import com.example.nutritionVendors.DTORepositories.ShopItemDTORepository;
 import com.example.nutritionVendors.EntitiesDTO.ShopItemDTO;
 import com.example.nutritionVendors.entities.Document;
 import com.example.nutritionVendors.entities.ShopItem;
@@ -19,13 +20,16 @@ public class ShopItemServiceImpl implements ShopItemService {
     @Autowired
     private DocumentRepository documentRepository;
 
+    @Autowired
+    private ShopItemDTORepository shopItemDTORepository;
+
 
     @Override
     public List<ShopItemDTO> getHighRatingItem(Integer limit, Integer offset) {
 
         List<ShopItemDTO> shopItemDTOS = new ArrayList<>();
 
-        shopItemDTOS = shopItemRepository.getHighRatingItem(limit, offset);
+        shopItemDTOS = shopItemDTORepository.getHighRatingItem(limit, offset);
         for (ShopItemDTO item: shopItemDTOS) {
             List<Document> documents = documentRepository.findAllByShopItemId(item.getId());
 //            item.setDocuments(documents);
