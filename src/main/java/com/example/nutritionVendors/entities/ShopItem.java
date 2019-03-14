@@ -20,11 +20,13 @@ public class ShopItem {
     private Double rating;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "shop_id", referencedColumnName = "id")
     private Shop shop;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id", referencedColumnName = "id")
+    @JsonIgnore
     private Item item;
 
     @OneToMany(mappedBy = "shopItem", fetch = FetchType.LAZY)

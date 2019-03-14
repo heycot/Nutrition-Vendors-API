@@ -1,5 +1,6 @@
 package com.example.nutritionVendors.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -24,6 +25,7 @@ public class Item {
     private Measure measure;
 
     @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<ShopItem> shopItems;
 
     public Item() {

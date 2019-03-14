@@ -5,12 +5,10 @@ import com.example.nutritionVendors.entities.ShopItem;
 import com.example.nutritionVendors.services.ShopItemService;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,9 +21,20 @@ public class ShopItemController {
     private ShopItemService shopItemService;
 
     @RequestMapping("/high-rating")
+    public ResponseEntity getHighRating() throws InternalError {
+        try{
+            List<ShopItem> shopItemDTOS = shopItemService.getHighRatingShopItem(10, 0);
+
+            return ResponseEntity.ok(shopItemDTOS);
+        } catch (InternalError | NullPointerException e){
+            throw new InternalException("Internal Server Error");
+        }
+    }
+
+    @RequestMapping("/high-rating-item")
     public ResponseEntity getHighRatingItem() throws InternalError {
         try{
-            List<ShopItem> shopItemDTOS = shopItemService.getHighRatingShopItem(10);
+            List<ShopItemDTO> shopItemDTOS = shopItemService.getHighRatingItem(10, 0);
 
             return ResponseEntity.ok(shopItemDTOS);
         } catch (InternalError | NullPointerException e){
@@ -34,8 +43,12 @@ public class ShopItemController {
     }
 
     @RequestMapping("/{id}")
-    public ShopItem getOne(@RequestParam("id") Integer id) {
-        return shopItemService.getOne(id);
+    public ResponseEntity getOne(@PathVariable(value = "id") Integer id) throws InternalError {
+        try {
+            return ResponseEntity.ok(shopItemService.getOne(id));
+        } catch (Exception e) {
+            throw new InternalError("Internal Server Error");
+        }
     }
 
 }

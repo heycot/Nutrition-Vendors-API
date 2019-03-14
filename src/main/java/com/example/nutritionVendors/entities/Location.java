@@ -24,6 +24,7 @@ public class Location {
     private Area area;
 
     @OneToOne(mappedBy = "location", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Shop shop;
 
     public Location() {

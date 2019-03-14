@@ -26,7 +26,6 @@ public class Shop {
 
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
     @JoinColumn(name = "location_id", referencedColumnName = "id")
     private Location location;
 

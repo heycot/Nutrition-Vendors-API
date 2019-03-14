@@ -1,6 +1,8 @@
 package com.example.nutritionVendors.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
@@ -17,6 +19,7 @@ public class Measure {
     private String sign;
 
     @OneToMany(mappedBy = "measure", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Item> items;
 
     public Measure() {

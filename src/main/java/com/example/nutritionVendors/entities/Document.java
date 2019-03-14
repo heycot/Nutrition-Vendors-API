@@ -1,5 +1,6 @@
 package com.example.nutritionVendors.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ public class Document {
     private String link;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "shopitem_id", referencedColumnName = "id")
     private ShopItem shopItem;
 
