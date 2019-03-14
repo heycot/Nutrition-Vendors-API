@@ -1,11 +1,14 @@
 package com.example.nutritionVendors.services;
 
+import com.example.nutritionVendors.EntitiesDTO.ShopItemDTO;
 import com.example.nutritionVendors.entities.ShopItem;
 
 import java.util.List;
 
 public interface ShopItemService {
-    List<ShopItem> getHighRatingItem(Integer start);
+    List<ShopItemDTO> getHighRatingItem(Integer start);
+
+    List<ShopItem> getHighRatingShopItem(Integer start);
 
     ShopItem getOne(Integer id);
 }

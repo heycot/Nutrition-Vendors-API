@@ -1,8 +1,11 @@
 package com.example.nutritionVendors.controllers;
 
+import com.example.nutritionVendors.EntitiesDTO.ShopItemDTO;
 import com.example.nutritionVendors.entities.ShopItem;
 import com.example.nutritionVendors.services.ShopItemService;
+import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,10 +23,14 @@ public class ShopItemController {
     private ShopItemService shopItemService;
 
     @RequestMapping("/high-rating")
-    public List<ShopItem> getHighRatingItem() {
-        List<ShopItem> shopItems = shopItemService.getHighRatingItem(10);
+    public ResponseEntity getHighRatingItem() throws InternalError {
+        try{
+            List<ShopItem> shopItemDTOS = shopItemService.getHighRatingShopItem(10);
 
-        return shopItems;
+            return ResponseEntity.ok(shopItemDTOS);
+        } catch (InternalError | NullPointerException e){
+            throw new InternalException("Internal Server Error");
+        }
     }
 
     @RequestMapping("/{id}")
