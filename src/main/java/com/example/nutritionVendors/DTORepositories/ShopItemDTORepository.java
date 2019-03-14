@@ -18,6 +18,6 @@ public interface ShopItemDTORepository  extends JpaRepository<ShopItemDTO, Integ
             " left join comment on shopitem.id = comment.shopitem_id " +
             " left join favorites on shopitem.id = favorites.shopitem_id" +
             " left join item on shopitem.item_id = item.id" +
-            " group by shopitem.id, item.name where shopitem.status = 1 order by shopitem.rating desc limit ?1 offset ?2", nativeQuery = true)
+            " where shopitem.status = 1 group by shopitem.id, item.name order by shopitem.rating desc limit ?1 offset ?2", nativeQuery = true)
     List<ShopItemDTO> getHighRatingItem(Integer limit, Integer offset);
 }

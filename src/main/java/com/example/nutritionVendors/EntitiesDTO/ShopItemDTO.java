@@ -1,11 +1,15 @@
 package com.example.nutritionVendors.EntitiesDTO;
 
 import com.example.nutritionVendors.entities.Document;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.List;
 
+@Getter
+@Setter
 @Entity
 public class ShopItemDTO {
 
@@ -18,7 +22,7 @@ public class ShopItemDTO {
     private Integer favorites_number;
     private String name;
 
-    private List<Document> documents;
+//    private List<Document> documents;
 
     public ShopItemDTO() {
     }
@@ -89,11 +93,11 @@ public class ShopItemDTO {
         this.favorites_number = favorites_number;
     }
 
-    public List<Document> getDocuments() {
-        return documents;
-    }
-
-    public void setDocuments(List<Document> documents) {
-        this.documents = documents;
-    }
+//    public List<Document> getDocuments() {
+//        return documents;
+//    }
+//
+//    public void setDocuments(List<Document> documents) {
+//        this.documents = documents;
+//    }
 }
