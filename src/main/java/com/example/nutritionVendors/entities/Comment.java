@@ -13,6 +13,7 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String title;
     private String content;
     private Integer rating;
     private Timestamp create_date;
@@ -26,7 +27,8 @@ public class Comment {
     @JoinColumn(name = "shopitem_id", referencedColumnName = "id")
     private ShopItem shopItem;
 
-    public Comment(String content, Integer rating, Timestamp create_date, Integer status, User user, ShopItem shopItem) {
+    public Comment(String title, String content, Integer rating, Timestamp create_date, Integer status, User user, ShopItem shopItem) {
+        this.title = title;
         this.content = content;
         this.rating = rating;
         this.create_date = create_date;
@@ -52,6 +54,14 @@ public class Comment {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Integer getRating() {

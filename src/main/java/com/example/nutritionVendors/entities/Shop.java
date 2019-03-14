@@ -17,8 +17,8 @@ public class Shop {
     private Integer id;
     private String name;
     private Double rating;
-    private Timestamp time_open;
-    private Timestamp time_close;
+    private String time_open;
+    private String time_close;
     private Timestamp create_date;
     private Integer status;
     private String phone;
@@ -32,6 +32,7 @@ public class Shop {
 
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
@@ -41,7 +42,7 @@ public class Shop {
     public Shop() {
     }
 
-    public Shop(String name, Double rating, Timestamp time_open, Timestamp time_close, Timestamp create_date, Integer status, String phone, String avatar, Location location, User user, List<ShopItem> shopItems) {
+    public Shop(String name, Double rating, String time_open, String  time_close, Timestamp create_date, Integer status, String phone, String avatar, Location location, User user, List<ShopItem> shopItems) {
         this.name = name;
         this.rating = rating;
         this.time_open = time_open;
@@ -79,19 +80,19 @@ public class Shop {
         this.rating = rating;
     }
 
-    public Timestamp getTime_open() {
+    public String getTime_open() {
         return time_open;
     }
 
-    public void setTime_open(Timestamp time_open) {
+    public void setTime_open(String time_open) {
         this.time_open = time_open;
     }
 
-    public Timestamp getTime_close() {
+    public String getTime_close() {
         return time_close;
     }
 
-    public void setTime_close(Timestamp time_close) {
+    public void setTime_close(String time_close) {
         this.time_close = time_close;
     }
 

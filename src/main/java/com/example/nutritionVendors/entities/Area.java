@@ -22,6 +22,7 @@ public class Area {
     private City city;
 
     @OneToMany(mappedBy = "area")
+    @JsonIgnore
     private List<Location> locations;
 
     public Area() {
