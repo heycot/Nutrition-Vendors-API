@@ -3,6 +3,7 @@ package com.example.nutritionVendors.services;
 import com.example.nutritionVendors.EntitiesDTO.ShopItemDTO;
 import com.example.nutritionVendors.entities.Document;
 import com.example.nutritionVendors.entities.ShopItem;
+import com.example.nutritionVendors.respositories.DTOSopItemRepository;
 import com.example.nutritionVendors.respositories.DocumentRepository;
 import com.example.nutritionVendors.respositories.ShopItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +20,16 @@ public class ShopItemServiceImpl implements ShopItemService {
     @Autowired
     private DocumentRepository documentRepository;
 
+    @Autowired
+    private DTOSopItemRepository dtoSopItemRepository;
+
 
     @Override
     public List<ShopItemDTO> getHighRatingItem(Integer limit, Integer offset) {
 
         List<ShopItemDTO> shopItemDTOS = new ArrayList<>();
 
-        shopItemDTOS = shopItemRepository.getHighRatingItem(limit, offset);
+        shopItemDTOS = dtoSopItemRepository.getHighRatingItem(limit, offset);
         for (ShopItemDTO item: shopItemDTOS) {
             List<Document> documents = documentRepository.findAllByShopItemId(item.getId());
 //            item.setDocuments(documents);
