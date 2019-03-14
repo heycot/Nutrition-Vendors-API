@@ -4,8 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.math.BigInteger;
 
+@Entity
 public class ShopItemDTO {
 
+    @Id
     private Integer id;
     private Double price;
     private Integer status;
