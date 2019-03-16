@@ -11,4 +11,6 @@ public interface ShopItemService {
     List<ShopItem> getHighRatingShopItem(Integer limit, Integer offset);
 
     ShopItem getOne(Integer id);
+
+    List<ShopItemDTO> getAllByShopId(Integer id, Integer limit, Integer offset);
 }

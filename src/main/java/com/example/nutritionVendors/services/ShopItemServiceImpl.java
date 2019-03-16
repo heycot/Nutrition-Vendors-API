@@ -1,9 +1,8 @@
 package com.example.nutritionVendors.services;
 
 import com.example.nutritionVendors.EntitiesDTO.ShopItemDTO;
-import com.example.nutritionVendors.entities.Document;
 import com.example.nutritionVendors.entities.ShopItem;
-import com.example.nutritionVendors.respositories.DTOSopItemRepository;
+import com.example.nutritionVendors.respositories.DTOShopItemRepository;
 import com.example.nutritionVendors.respositories.DocumentRepository;
 import com.example.nutritionVendors.respositories.ShopItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ public class ShopItemServiceImpl implements ShopItemService {
     private DocumentRepository documentRepository;
 
     @Autowired
-    private DTOSopItemRepository dtoSopItemRepository;
+    private DTOShopItemRepository dtoShopItemRepository;
 
 
     @Override
@@ -29,7 +28,7 @@ public class ShopItemServiceImpl implements ShopItemService {
 
         List<ShopItemDTO> shopItemDTOS = new ArrayList<>();
 
-        shopItemDTOS = dtoSopItemRepository.getHighRatingItem(limit, offset);
+        shopItemDTOS = dtoShopItemRepository.getHighRatingItem(limit, offset);
 //        for (ShopItemDTO item: shopItemDTOS) {
 //            Document documents = documentRepository.getFirstByShopItem_Id(item.getId());
 //            item.setAvatar(documents.getLink());
@@ -46,5 +45,11 @@ public class ShopItemServiceImpl implements ShopItemService {
     @Override
     public ShopItem getOne(Integer id) {
         return shopItemRepository.findOneById(id);
+    }
+
+    @Override
+    public List<ShopItemDTO> getAllByShopId(Integer id, Integer limit, Integer offset) {
+
+        return dtoShopItemRepository.getAllByShopId(id, limit, offset);
     }
 }

@@ -6,10 +6,12 @@ import com.example.nutritionVendors.services.ShopItemService;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 @RestController
@@ -49,6 +51,16 @@ public class ShopItemController {
             return ResponseEntity.ok(shopItemService.getOne(id));
         } catch (Exception e) {
             throw new InternalError("Internal Server Error");
+        }
+    }
+
+    @GetMapping("/shop/{id}/{offset}")
+    public ResponseEntity getAllByShopId(@PathVariable(name = "id") Integer id, @PathVariable(name = "offset") Integer offset){
+        try {
+            return ResponseEntity.ok(shopItemService.getAllByShopId(id, 10, offset));
+        } catch (Exception e){
+            System.out.println("exception: " + e.getCause());
+            return new ResponseEntity<>("internal exception", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
