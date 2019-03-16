@@ -38,6 +38,7 @@ public class ShopItemController {
 
             return ResponseEntity.ok(shopItemDTOS);
         } catch (InternalError | NullPointerException e){
+            System.out.println(e.getCause());
             throw new InternalException("Internal Server Error");
         }
     }

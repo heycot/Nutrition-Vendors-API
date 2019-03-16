@@ -9,7 +9,7 @@ import java.util.List;
 
 //@Data
 @Entity
-@Table(name = "shop")
+@Table(name = "shop", schema = "public")
 public class Shop {
 
     @Id
@@ -31,7 +31,6 @@ public class Shop {
 
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 

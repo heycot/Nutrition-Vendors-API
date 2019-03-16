@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "shopitem")
+@Table(name = "shopitem", schema = "public")
 public class ShopItem {
 
     @Id
@@ -33,6 +33,7 @@ public class ShopItem {
     private List<Document> documents;
 
     @OneToMany(mappedBy = "shopItem", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Favorites> favorites;
 
     @OneToMany(mappedBy = "shopItem", fetch = FetchType.LAZY)

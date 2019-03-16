@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 //@Data
 @Entity
-@Table(name = "favorites")
+@Table(name = "favorites", schema = "public")
 public class Favorites {
 
     @Id
@@ -14,7 +14,6 @@ public class Favorites {
     private Integer id;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 

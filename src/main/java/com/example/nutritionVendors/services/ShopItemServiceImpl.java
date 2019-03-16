@@ -30,10 +30,10 @@ public class ShopItemServiceImpl implements ShopItemService {
         List<ShopItemDTO> shopItemDTOS = new ArrayList<>();
 
         shopItemDTOS = dtoSopItemRepository.getHighRatingItem(limit, offset);
-        for (ShopItemDTO item: shopItemDTOS) {
-            List<Document> documents = documentRepository.findAllByShopItemId(item.getId());
-//            item.setDocuments(documents);
-        }
+//        for (ShopItemDTO item: shopItemDTOS) {
+//            Document documents = documentRepository.getFirstByShopItem_Id(item.getId());
+//            item.setAvatar(documents.getLink());
+//        }
 
         return shopItemDTOS;
     }

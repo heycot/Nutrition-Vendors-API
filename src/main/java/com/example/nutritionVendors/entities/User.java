@@ -1,16 +1,14 @@
 package com.example.nutritionVendors.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Collection;
 import java.util.List;
 
 //@Data
 @Entity
-@Table(name = "user")
+@Table(name = "user", schema = "public")
 public class User {
 
     @Id
@@ -26,35 +24,35 @@ public class User {
     private Timestamp create_date;
     private Integer status;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<Shop> shops;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<Comment> comments;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<Favorites> favorites;
+//    @OneToMany(mappedBy = "user")
+//    @JsonIgnore
+//    private List<Shop> shops;
+//
+//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    private List<Comment> comments;
+//
+//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    private List<Favorites> favorites;
 
     public User() {
     }
 
-    public User(String user_name, String email, String phone, String password, Timestamp birthday, String address, String avatar, Timestamp create_date, Integer status, List<Shop> shops, List<Comment> comments, List<Favorites> favorites) {
-        this.user_name = user_name;
-        this.email = email;
-        this.phone = phone;
-        this.password = password;
-        this.birthday = birthday;
-        this.address = address;
-        this.avatar = avatar;
-        this.create_date = create_date;
-        this.status = status;
-        this.shops = shops;
-        this.comments = comments;
-        this.favorites = favorites;
-    }
+//    public User(String user_name, String email, String phone, String password, Timestamp birthday, String address, String avatar, Timestamp create_date, Integer status, List<Shop> shops, List<Comment> comments, List<Favorites> favorites) {
+//        this.user_name = user_name;
+//        this.email = email;
+//        this.phone = phone;
+//        this.password = password;
+//        this.birthday = birthday;
+//        this.address = address;
+//        this.avatar = avatar;
+//        this.create_date = create_date;
+//        this.status = status;
+//        this.shops = shops;
+//        this.comments = comments;
+//        this.favorites = favorites;
+//    }
 
     public Integer getId() {
         return id;
@@ -135,28 +133,28 @@ public class User {
     public void setStatus(Integer status) {
         this.status = status;
     }
-
-    public List<Shop> getShops() {
-        return shops;
-    }
-
-    public void setShops(List<Shop> shops) {
-        this.shops = shops;
-    }
-
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
-
-    public List<Favorites> getFavorites() {
-        return favorites;
-    }
-
-    public void setFavorites(List<Favorites> favorites) {
-        this.favorites = favorites;
-    }
+//
+//    public List<Shop> getShops() {
+//        return shops;
+//    }
+//
+//    public void setShops(List<Shop> shops) {
+//        this.shops = shops;
+//    }
+//
+//    public List<Comment> getComments() {
+//        return comments;
+//    }
+//
+//    public void setComments(List<Comment> comments) {
+//        this.comments = comments;
+//    }
+//
+//    public List<Favorites> getFavorites() {
+//        return favorites;
+//    }
+//
+//    public void setFavorites(List<Favorites> favorites) {
+//        this.favorites = favorites;
+//    }
 }

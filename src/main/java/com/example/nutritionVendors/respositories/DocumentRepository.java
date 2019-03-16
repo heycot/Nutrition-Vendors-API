@@ -14,4 +14,7 @@ public interface DocumentRepository extends JpaRepository<Document, Integer> {
     @Query(value = "select * from document where document.shopitem_id = ?1", nativeQuery = true)
     List<Document> findAllByShopItemId(long id);
 
+//    Document findOneByShopItemId(Integer id);
+
+    Document getFirstByShopItem_Id(Integer id);
 }

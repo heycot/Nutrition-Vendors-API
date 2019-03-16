@@ -3,12 +3,11 @@ package com.example.nutritionVendors.controllers;
 import com.example.nutritionVendors.entities.User;
 import com.example.nutritionVendors.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping(UserController.BASE_URL)
@@ -18,13 +17,24 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping
-    public String login(@Valid @RequestBody User user) {
-        if (userService.findOneByNameAndPassword(user) != null ) {
-            return "";
-        }
+    @GetMapping("/login")
+    public ResponseEntity login(@Valid @RequestBody User user) {
+       User user1 = userService.findOneByNameAndPassword(user);
 
-        return null;
+       return ResponseEntity.ok(user1);
     }
 
+    @GetMapping("/{id}")
+    public  ResponseEntity getOne(@PathVariable(name = "id") Integer id){
+        User user = userService.findOneById(id);
+
+        return ResponseEntity.ok(user);
+    }
+
+    @GetMapping
+    public  ResponseEntity getAll(){
+        List<User> user = userService.findAll();
+
+        return ResponseEntity.ok(user);
+    }
 }

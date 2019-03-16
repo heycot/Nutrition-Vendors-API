@@ -6,7 +6,7 @@ import java.util.List;
 
 //@Data
 @Entity
-@Table(name = "category")
+@Table(name = "category", schema = "public")
 public class Category {
 
     @Id
