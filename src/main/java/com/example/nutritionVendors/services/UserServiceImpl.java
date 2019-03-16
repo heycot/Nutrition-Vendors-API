@@ -14,8 +14,8 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public User findOneByNameAndPassword(User user) {
-        return userRepository.findOneByNameAndPassword(user.getUser_name(), user.getPassword());
+    public User findOneByNameAndPassword(String username, String password) {
+        return userRepository.findOneByNameAndPassword(username, password);
     }
 
     @Override
@@ -26,5 +26,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public User signUp(User user) {
+        return userRepository.save(user);
     }
 }

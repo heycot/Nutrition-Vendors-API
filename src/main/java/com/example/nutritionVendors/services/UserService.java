@@ -6,9 +6,11 @@ import java.util.List;
 
 public interface UserService {
 
-    User findOneByNameAndPassword(User user);
+    User findOneByNameAndPassword(String username, String password);
 
     User findOneById(Integer id);
 
     List<User> findAll();
+
+    User signUp(User user);
 }

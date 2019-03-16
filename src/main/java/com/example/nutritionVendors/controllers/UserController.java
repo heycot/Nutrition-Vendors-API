@@ -2,8 +2,12 @@ package com.example.nutritionVendors.controllers;
 
 import com.example.nutritionVendors.entities.User;
 import com.example.nutritionVendors.services.UserService;
+import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -17,11 +21,30 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/login")
-    public ResponseEntity login(@Valid @RequestBody String username,@RequestBody String password) {
-       User user1 = userService.findOneByNameAndPassword();
+    @PostMapping("/login")
+    public ResponseEntity login(@Valid @RequestBody User user) {
 
-       return ResponseEntity.ok(user1);
+        try {
+            User user1 = userService.findOneByNameAndPassword(user.getUser_name(), user.getPassword());
+//
+            return ResponseEntity.ok(user1);
+        } catch (Exception e) {
+            System.out.println("exception: " + e.getMessage());
+            return new ResponseEntity<>("internal exception", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity signup(@Valid @RequestBody User user) {
+
+        try {
+            User user1 = userService.signUp(user);
+
+            return ResponseEntity.ok(user1);
+        } catch (Exception e) {
+            System.out.println("exception: " + e.getMessage());
+            return new ResponseEntity<>("internal exception with sign up", HttpStatus.EXPECTATION_FAILED);
+        }
     }
 
     @GetMapping("/{id}")
