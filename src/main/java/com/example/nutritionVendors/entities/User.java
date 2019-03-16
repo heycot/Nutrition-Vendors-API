@@ -24,17 +24,17 @@ public class User {
     private Timestamp create_date;
     private Integer status;
 
-//    @OneToMany(mappedBy = "user")
-//    @JsonIgnore
-//    private List<Shop> shops;
-//
-//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-//    @JsonIgnore
-//    private List<Comment> comments;
-//
-//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-//    @JsonIgnore
-//    private List<Favorites> favorites;
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Shop> shops;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Favorites> favorites;
 
     public User() {
     }
@@ -133,28 +133,28 @@ public class User {
     public void setStatus(Integer status) {
         this.status = status;
     }
-//
-//    public List<Shop> getShops() {
-//        return shops;
-//    }
-//
-//    public void setShops(List<Shop> shops) {
-//        this.shops = shops;
-//    }
-//
-//    public List<Comment> getComments() {
-//        return comments;
-//    }
-//
-//    public void setComments(List<Comment> comments) {
-//        this.comments = comments;
-//    }
-//
-//    public List<Favorites> getFavorites() {
-//        return favorites;
-//    }
-//
-//    public void setFavorites(List<Favorites> favorites) {
-//        this.favorites = favorites;
-//    }
+
+    public List<Shop> getShops() {
+        return shops;
+    }
+
+    public void setShops(List<Shop> shops) {
+        this.shops = shops;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public List<Favorites> getFavorites() {
+        return favorites;
+    }
+
+    public void setFavorites(List<Favorites> favorites) {
+        this.favorites = favorites;
+    }
 }

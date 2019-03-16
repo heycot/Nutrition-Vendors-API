@@ -1,6 +1,7 @@
 package com.example.nutritionVendors.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -20,8 +21,8 @@ public class ShopItem {
     private Double rating;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
     @JoinColumn(name = "shop_id", referencedColumnName = "id")
+    @JsonIgnore
     private Shop shop;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -42,16 +43,16 @@ public class ShopItem {
     public ShopItem() {
     }
 
-    public ShopItem(Integer price, Integer status, Double rating, Shop shop, Item item, List<Document> documents, List<Favorites> favorites, List<Comment> comments) {
-        this.price = price;
-        this.status = status;
-        this.rating = rating;
-        this.shop = shop;
-        this.item = item;
-        this.documents = documents;
-        this.favorites = favorites;
-        this.comments = comments;
-    }
+//    public ShopItem(Integer price, Integer status, Double rating, Shop shop, Item item, List<Document> documents, List<Favorites> favorites, List<Comment> comments) {
+//        this.price = price;
+//        this.status = status;
+//        this.rating = rating;
+//        this.shop = shop;
+//        this.item = item;
+//        this.documents = documents;
+//        this.favorites = favorites;
+//        this.comments = comments;
+//    }
 
     public Shop getShop() {
         return shop;

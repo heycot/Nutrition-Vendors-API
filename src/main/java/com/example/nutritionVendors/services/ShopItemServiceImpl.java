@@ -45,6 +45,6 @@ public class ShopItemServiceImpl implements ShopItemService {
 
     @Override
     public ShopItem getOne(Integer id) {
-        return shopItemRepository.findOne(id);
+        return shopItemRepository.findOneById(id);
     }
 }

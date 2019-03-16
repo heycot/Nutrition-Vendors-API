@@ -18,12 +18,12 @@ public class Location {
     private Double longitude;
     private Double latitude;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
     @JoinColumn(name = "area_id", referencedColumnName = "id")
     private Area area;
 
-    @OneToOne(mappedBy = "location", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "location", fetch = FetchType.EAGER)
     @JsonIgnore
     private Shop shop;
 
