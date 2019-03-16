@@ -18,8 +18,8 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/login")
-    public ResponseEntity login(@Valid @RequestBody User user) {
-       User user1 = userService.findOneByNameAndPassword(user);
+    public ResponseEntity login(@Valid @RequestBody String username,@RequestBody String password) {
+       User user1 = userService.findOneByNameAndPassword();
 
        return ResponseEntity.ok(user1);
     }

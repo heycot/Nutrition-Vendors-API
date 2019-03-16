@@ -32,9 +32,11 @@ public class Shop {
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JsonIgnore
     private User user;
 
     @OneToMany(mappedBy = "shop", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<ShopItem> shopItems;
 
     public Shop() {

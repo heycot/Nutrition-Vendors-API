@@ -22,7 +22,7 @@ public class ShopItem {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "shop_id", referencedColumnName = "id")
-    @JsonIgnore
+//    @JsonIgnore
     private Shop shop;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

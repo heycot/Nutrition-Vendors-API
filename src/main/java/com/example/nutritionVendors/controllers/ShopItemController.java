@@ -20,16 +20,16 @@ public class ShopItemController {
     @Autowired
     private ShopItemService shopItemService;
 
-    @RequestMapping("/high-rating")
-    public ResponseEntity getHighRating() throws InternalError {
-        try{
-            List<ShopItem> shopItemDTOS = shopItemService.getHighRatingShopItem(10, 0);
-
-            return ResponseEntity.ok(shopItemDTOS);
-        } catch (InternalError | NullPointerException e){
-            throw new InternalException("Internal Server Error");
-        }
-    }
+//    @RequestMapping("/high-rating")
+//    public ResponseEntity getHighRating() throws InternalError {
+//        try{
+//            List<ShopItem> shopItemDTOS = shopItemService.getHighRatingShopItem(10, 0);
+//
+//            return ResponseEntity.ok(shopItemDTOS);
+//        } catch (InternalError | NullPointerException e){
+//            throw new InternalException("Internal Server Error");
+//        }
+//    }
 
     @RequestMapping("/high-rating-item")
     public ResponseEntity getHighRatingItem() throws InternalError {
