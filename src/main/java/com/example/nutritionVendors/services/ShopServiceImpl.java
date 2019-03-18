@@ -17,4 +17,9 @@ public class ShopServiceImpl implements ShopService {
     public List<Shop> findAllShop(Integer limit, Integer offset) {
         return shopRepository.findOrOrderByRating(limit, offset);
     }
+
+    @Override
+    public Shop findOneById(Integer id) {
+        return shopRepository.findOne(id);
+    }
 }
