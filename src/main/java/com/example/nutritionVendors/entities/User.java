@@ -23,6 +23,7 @@ public class User {
     private String avatar;
     private Timestamp create_date;
     private Integer status;
+    private String token;
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
@@ -156,5 +157,13 @@ public class User {
 
     public void setFavorites(List<Favorites> favorites) {
         this.favorites = favorites;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

@@ -25,16 +25,7 @@ public class ShopItemServiceImpl implements ShopItemService {
 
     @Override
     public List<ShopItemDTO> getHighRatingItem(Integer limit, Integer offset) {
-
-        List<ShopItemDTO> shopItemDTOS = new ArrayList<>();
-
-        shopItemDTOS = dtoShopItemRepository.getHighRatingItem(limit, offset);
-//        for (ShopItemDTO item: shopItemDTOS) {
-//            Document documents = documentRepository.getFirstByShopItem_Id(item.getId());
-//            item.setAvatar(documents.getLink());
-//        }
-
-        return shopItemDTOS;
+        return dtoShopItemRepository.getHighRatingItem(limit, offset);
     }
 
     @Override
@@ -51,5 +42,10 @@ public class ShopItemServiceImpl implements ShopItemService {
     public List<ShopItemDTO> getAllByShopId(Integer id, Integer limit, Integer offset) {
 
         return dtoShopItemRepository.getAllByShopId(id, limit, offset);
+    }
+
+    @Override
+    public ShopItemDTO getOneHighRatingItem(Integer id) {
+        return dtoShopItemRepository.getOneById(id);
     }
 }

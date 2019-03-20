@@ -45,6 +45,18 @@ public class ShopItemController {
         }
     }
 
+    @GetMapping("/high-rating-item/{id}")
+    public ResponseEntity getOneHighRatingItem(@PathVariable(name = "id") Integer id ) throws InternalError {
+        try{
+            ShopItemDTO shopItemDTO = shopItemService.getOneHighRatingItem(id);
+
+            return ResponseEntity.ok(shopItemDTO);
+        } catch (InternalError | NullPointerException e){
+            System.out.println(e.getCause());
+            throw new InternalException("Internal Server Error");
+        }
+    }
+
     @RequestMapping("/{id}")
     public ResponseEntity getOne(@PathVariable(value = "id") Integer id) throws InternalError {
         try {
