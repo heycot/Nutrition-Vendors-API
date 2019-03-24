@@ -48,4 +48,9 @@ public class ShopItemServiceImpl implements ShopItemService {
     public ShopItemDTO getOneHighRatingItem(Integer id) {
         return dtoShopItemRepository.getOneById(id);
     }
+
+    @Override
+    public List<ShopItemDTO> searchItema(String searchText) {
+        return dtoShopItemRepository.searchItem(searchText);
+    }
 }

@@ -33,6 +33,18 @@ public class ShopItemController {
 //        }
 //    }
 
+    @GetMapping("/search/{searchText}")
+    public ResponseEntity getHighRatingItem(@PathVariable(name = "searchText") String searchText) throws InternalError {
+        try{
+            List<ShopItemDTO> shopItemDTOS = shopItemService.searchItema(searchText);
+
+            return ResponseEntity.ok(shopItemDTOS);
+        } catch (InternalError | NullPointerException e){
+            System.out.println(e.getCause());
+            throw new InternalException("Internal Server Error");
+        }
+    }
+
     @RequestMapping("/high-rating/offset/{off}")
     public ResponseEntity getHighRatingItem(@PathVariable(name = "off") Integer offset) throws InternalError {
         try{
