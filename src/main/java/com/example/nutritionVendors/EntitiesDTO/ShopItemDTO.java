@@ -85,4 +85,6 @@ public class ShopItemDTO {
     public BigInteger getFavorites_number() {
         return favorites_number;
     }
+
+
 }

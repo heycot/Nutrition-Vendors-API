@@ -73,4 +73,7 @@ public interface DTOShopItemRepository extends JpaRepository<ShopItemDTO, Intege
             " left join document on shopitem.id = document.shopitem_id" +
             " group by shopitem.id, item.name " , nativeQuery = true)
     List<ShopItemDTO> getAll();
+
+    @Query(value = "select link from document  where shopitem_id = ?1 limit 1", nativeQuery = true)
+    String findAvatarById(Integer id);
 }

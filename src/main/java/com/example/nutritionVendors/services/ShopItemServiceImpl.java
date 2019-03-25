@@ -25,7 +25,14 @@ public class ShopItemServiceImpl implements ShopItemService {
 
     @Override
     public List<ShopItemDTO> getHighRatingItem(Integer limit, Integer offset) {
-        return dtoShopItemRepository.getHighRatingItem(limit, offset);
+
+        List<ShopItemDTO> shopItemDTOS = dtoShopItemRepository.getHighRatingItem(limit, offset);
+
+        for (int i = 0; i < shopItemDTOS.size(); i++) {
+            String avatar = dtoShopItemRepository.findAvatarById(shopItemDTOS.get(i).getId());
+            shopItemDTOS.get(i).setAvatar(avatar);
+        }
+        return shopItemDTOS;
     }
 
     @Override
