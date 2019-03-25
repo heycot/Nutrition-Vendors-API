@@ -33,12 +33,36 @@ public class ShopItemController {
 //        }
 //    }
 
-    @RequestMapping("/high-rating-item")
-    public ResponseEntity getHighRatingItem() throws InternalError {
+    @GetMapping("/search/{searchText}")
+    public ResponseEntity getHighRatingItem(@PathVariable(name = "searchText") String searchText) throws InternalError {
         try{
-            List<ShopItemDTO> shopItemDTOS = shopItemService.getHighRatingItem(10, 0);
+            List<ShopItemDTO> shopItemDTOS = shopItemService.searchItema(searchText);
 
             return ResponseEntity.ok(shopItemDTOS);
+        } catch (InternalError | NullPointerException e){
+            System.out.println(e.getCause());
+            throw new InternalException("Internal Server Error");
+        }
+    }
+
+    @RequestMapping("/high-rating/offset/{off}")
+    public ResponseEntity getHighRatingItem(@PathVariable(name = "off") Integer offset) throws InternalError {
+        try{
+            List<ShopItemDTO> shopItemDTOS = shopItemService.getHighRatingItem(10, offset);
+
+            return ResponseEntity.ok(shopItemDTOS);
+        } catch (InternalError | NullPointerException e){
+            System.out.println(e.getCause());
+            throw new InternalException("Internal Server Error");
+        }
+    }
+
+    @GetMapping("/high-rating-item/{id}")
+    public ResponseEntity getOneHighRatingItem(@PathVariable(name = "id") Integer id ) throws InternalError {
+        try{
+            ShopItemDTO shopItemDTO = shopItemService.getOneHighRatingItem(id);
+
+            return ResponseEntity.ok(shopItemDTO);
         } catch (InternalError | NullPointerException e){
             System.out.println(e.getCause());
             throw new InternalException("Internal Server Error");

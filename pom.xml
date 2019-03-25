@@ -122,7 +122,14 @@
 			<!--<version>3.2.0</version>-->
 		</dependency>
 
-    </dependencies>
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<!--<version>4.1.4.RELEASE</version>-->
+		</dependency>
+
+	</dependencies>
 
 	<build>
 		<plugins>

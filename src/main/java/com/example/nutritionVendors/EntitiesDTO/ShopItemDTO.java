@@ -17,24 +17,10 @@ public class ShopItemDTO {
     private String name;
     private String avatar;
 
-//    private List<Document> documents;
 
 
     public ShopItemDTO() {
     }
-
-    //
-//    public ShopItemDTO(Integer id, Double price, Integer status, Double rating, Integer comment_number, Integer favorites_number, String name) {
-//        this.id = id;
-//        this.price = price;
-//        this.status = status;
-//        this.rating = rating;
-//        this.comment_number = comment_number;
-//        this.favorites_number = favorites_number;
-//        this.name = name;
-//    }
-//
-
 
     public void setComment_number(BigInteger comment_number) {
         this.comment_number = comment_number;
@@ -92,11 +78,11 @@ public class ShopItemDTO {
         this.name = name;
     }
 
-//    public List<Document> getDocuments() {
-//        return documents;
-//    }
-//
-//    public void setDocuments(List<Document> documents) {
-//        this.documents = documents;
-//    }
+    public BigInteger getComment_number() {
+        return comment_number;
+    }
+
+    public BigInteger getFavorites_number() {
+        return favorites_number;
+    }
 }

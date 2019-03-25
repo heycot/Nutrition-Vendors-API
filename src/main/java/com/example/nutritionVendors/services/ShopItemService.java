@@ -16,4 +16,8 @@ public interface ShopItemService {
     List<ShopItemDTO> getAllByShopId(Integer id, Integer limit, Integer offset);
 
     List<ShopItemDTO> getAll();
+
+    ShopItemDTO getOneHighRatingItem(Integer id);
+
+    List<ShopItemDTO> searchItema(String searchText);
 }
