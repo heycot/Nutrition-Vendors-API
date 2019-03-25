@@ -64,4 +64,10 @@ public class ShopItemController {
         }
     }
 
+    @GetMapping("/all")
+    public ResponseEntity getAll() {
+        return ResponseEntity.ok(shopItemService.getAll());
+    }
+
+
 }

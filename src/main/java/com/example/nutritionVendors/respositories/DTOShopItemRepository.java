@@ -37,4 +37,15 @@ public interface DTOShopItemRepository extends JpaRepository<ShopItemDTO, Intege
             " group by shopitem.id, item.name order by shopitem.rating desc limit ?2 offset ?3", nativeQuery = true)
     List<ShopItemDTO> getAllByShopId(Integer shopId, Integer limit, Integer offset);
 
+    @Query(value = "select shopitem.id, shopitem.price, shopitem.status, shopitem.rating, " +
+            " count (comment.id in (select comment.id from comment where comment.shopitem_id = shopitem.id)) as comment_number, " +
+            " count (favorites.id in (select favorites.id from favorites where favorites.shopitem_id = shopitem.id)) as favorites_number," +
+            " item.name as name, " +
+            " (select link from document left join shopitem on document.shopitem_id = shopitem.id limit 1 ) as avatar from shopitem " +
+            " left join comment on shopitem.id = comment.shopitem_id " +
+            " left join favorites on shopitem.id = favorites.shopitem_id" +
+            " left join item on shopitem.item_id = item.id" +
+            " left join document on shopitem.id = document.shopitem_id" +
+            " group by shopitem.id, item.name ", nativeQuery = true)
+    List<ShopItemDTO> getAll();
 }

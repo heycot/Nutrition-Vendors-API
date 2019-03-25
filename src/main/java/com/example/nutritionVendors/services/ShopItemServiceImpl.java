@@ -52,4 +52,9 @@ public class ShopItemServiceImpl implements ShopItemService {
 
         return dtoShopItemRepository.getAllByShopId(id, limit, offset);
     }
+
+    @Override
+    public List<ShopItemDTO> getAll() {
+        return dtoShopItemRepository.getAll();
+    }
 }

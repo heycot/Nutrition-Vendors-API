@@ -2,6 +2,7 @@ package com.example.nutritionVendors.services;
 
 import com.example.nutritionVendors.EntitiesDTO.ShopItemDTO;
 import com.example.nutritionVendors.entities.ShopItem;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -13,4 +14,6 @@ public interface ShopItemService {
     ShopItem getOne(Integer id);
 
     List<ShopItemDTO> getAllByShopId(Integer id, Integer limit, Integer offset);
+
+    List<ShopItemDTO> getAll();
 }
