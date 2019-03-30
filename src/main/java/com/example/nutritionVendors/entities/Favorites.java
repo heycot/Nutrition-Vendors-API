@@ -7,6 +7,7 @@ import javax.persistence.*;
 //@Data
 @Entity
 @Table(name = "favorites", schema = "public")
+//@Table(name = "favorites") //, schema = "public")
 public class Favorites {
 
     @Id

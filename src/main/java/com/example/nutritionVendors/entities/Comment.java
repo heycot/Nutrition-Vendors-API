@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 //@Data
 @Entity
 @Table(name = "comment", schema = "public")
+//@Table(name = "comment") //, schema = "public")
 public class Comment {
 
     @Id

@@ -11,12 +11,13 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "shopitem", schema = "public")
+//@Table(name = "shopitem") //, schema = "public")
 public class ShopItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer price;
+    private Double price;
     private Integer status;
     private Double rating;
 
@@ -78,11 +79,11 @@ public class ShopItem {
         this.id = id;
     }
 
-    public Integer getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
