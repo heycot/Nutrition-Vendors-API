@@ -19,5 +19,5 @@ public interface ShopItemService {
 
     ShopItemDTO getOneHighRatingItem(Integer id);
 
-    List<ShopItemDTO> searchItema(String searchText);
+    List<ShopItemDTO> searchItem(String searchText);
 }

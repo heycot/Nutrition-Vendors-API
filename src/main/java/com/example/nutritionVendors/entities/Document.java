@@ -15,11 +15,21 @@ public class Document {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String link;
+    private Integer priority;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     @JoinColumn(name = "shopitem_id", referencedColumnName = "id")
     private ShopItem shopItem;
+
+
+    public Integer getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Integer priority) {
+        this.priority = priority;
+    }
 
     public Document(String link, ShopItem shopItem) {
         this.link = link;

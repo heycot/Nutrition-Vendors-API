@@ -2,9 +2,7 @@ package com.example.nutritionVendors.services;
 
 import com.example.nutritionVendors.EntitiesDTO.ShopItemDTO;
 import com.example.nutritionVendors.entities.ShopItem;
-import com.example.nutritionVendors.respositories.DTOShopItemRepository;
-import com.example.nutritionVendors.respositories.DocumentRepository;
-import com.example.nutritionVendors.respositories.ShopItemRepository;
+import com.example.nutritionVendors.respositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,15 +20,23 @@ public class ShopItemServiceImpl implements ShopItemService {
     @Autowired
     private DTOShopItemRepository dtoShopItemRepository;
 
+    @Autowired
+    private FavoritesRepository favoritesRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
+
 
     @Override
     public List<ShopItemDTO> getHighRatingItem(Integer limit, Integer offset) {
 
-        List<ShopItemDTO> shopItemDTOS = dtoShopItemRepository.getHighRatingItem(limit, offset);
+        List<ShopItemDTO> shopItemDTOS = dtoShopItemRepository.getHighRatingItembbbbbbbbbbbbbbbbbbbbbbb(limit, offset);
 
         for (int i = 0; i < shopItemDTOS.size(); i++) {
-            String avatar = dtoShopItemRepository.findAvatarById(shopItemDTOS.get(i).getId());
-            shopItemDTOS.get(i).setAvatar(avatar);
+//            String avatar = dtoShopItemRepository.findAvatarById(shopItemDTOS.get(i).getId());
+            shopItemDTOS.get(i).setAvatar(documentRepository.getByShopItemIdAndAndPriority(shopItemDTOS.get(i).getId(), 1).getLink());
+            shopItemDTOS.get(i).setFavorites_number(favoritesRepository.countByShopItemId(shopItemDTOS.get(i).getId()));
+            shopItemDTOS.get(i).setComment_number(commentRepository.countByShopItemId(shopItemDTOS.get(i).getId()));
         }
         return shopItemDTOS;
     }
@@ -62,7 +68,7 @@ public class ShopItemServiceImpl implements ShopItemService {
     }
 
     @Override
-    public List<ShopItemDTO> searchItema(String searchText) {
-        return dtoShopItemRepository.searchItem(searchText);
+    public List<ShopItemDTO> searchItem(String searchText) {
+        return dtoShopItemRepository.searchItem("%" +searchText + "%");
     }
 }

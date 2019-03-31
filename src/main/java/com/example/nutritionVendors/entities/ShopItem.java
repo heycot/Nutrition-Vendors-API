@@ -20,6 +20,8 @@ public class ShopItem {
     private Double price;
     private Integer status;
     private Double rating;
+    private Integer priority;
+
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "shop_id", referencedColumnName = "id")
@@ -54,6 +56,7 @@ public class ShopItem {
 //        this.favorites = favorites;
 //        this.comments = comments;
 //    }
+
 
     public Shop getShop() {
         return shop;

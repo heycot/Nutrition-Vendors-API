@@ -36,7 +36,7 @@ public class ShopItemController {
     @GetMapping("/search/{searchText}")
     public ResponseEntity getHighRatingItem(@PathVariable(name = "searchText") String searchText) throws InternalError {
         try{
-            List<ShopItemDTO> shopItemDTOS = shopItemService.searchItema(searchText);
+            List<ShopItemDTO> shopItemDTOS = shopItemService.searchItem(searchText);
 
             return ResponseEntity.ok(shopItemDTOS);
         } catch (InternalError | NullPointerException e){
@@ -48,7 +48,7 @@ public class ShopItemController {
     @RequestMapping("/high-rating/offset/{off}")
     public ResponseEntity getHighRatingItem(@PathVariable(name = "off") Integer offset) throws InternalError {
         try{
-            List<ShopItemDTO> shopItemDTOS = shopItemService.getHighRatingItem(10, offset);
+            List<ShopItemDTO> shopItemDTOS = shopItemService.getHighRatingItem(0, offset);
 
             return ResponseEntity.ok(shopItemDTOS);
         } catch (InternalError | NullPointerException e){
