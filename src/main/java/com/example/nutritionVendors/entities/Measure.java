@@ -9,8 +9,8 @@ import java.util.List;
 
 //@Data
 @Entity
-@Table(name = "measure", schema = "public")
-//@Table(name = "measure") //, schema = "public")
+//@Table(name = "measure", schema = "public")
+@Table(name = "measure") //, schema = "public")
 public class Measure {
 
     @Id
