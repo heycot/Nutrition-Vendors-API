@@ -48,7 +48,7 @@ public class ShopItemController {
     @RequestMapping("/high-rating/offset/{off}")
     public ResponseEntity getHighRatingItem(@PathVariable(name = "off") Integer offset) throws InternalError {
         try{
-            List<ShopItemDTO> shopItemDTOS = shopItemService.getHighRatingItem(0, offset);
+            List<ShopItemDTO> shopItemDTOS = shopItemService.getHighRatingItem(offset, 10);
 
             return ResponseEntity.ok(shopItemDTOS);
         } catch (InternalError | NullPointerException e){

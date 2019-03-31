@@ -20,7 +20,6 @@ public class ShopItem {
     private Double price;
     private Integer status;
     private Double rating;
-    private Integer priority;
 
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

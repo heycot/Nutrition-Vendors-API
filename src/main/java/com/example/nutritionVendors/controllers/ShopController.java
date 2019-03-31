@@ -19,7 +19,7 @@ public class ShopController {
     @GetMapping("/{offset}")
     public ResponseEntity findAllShop(@PathVariable Integer offset) {
         try {
-            return ResponseEntity.ok(shopService.findAllShop(10, offset));
+            return ResponseEntity.ok(shopService.findAllShop(offset, 10));
         } catch (Exception e) {
             System.out.println("exception: " + e.getCause());
 
