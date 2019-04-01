@@ -63,6 +63,6 @@ public class ShopItemServiceImpl implements ShopItemService {
 
     @Override
     public List<ShopItemDTO> searchItema(String searchText) {
-        return dtoShopItemRepository.searchItem(searchText);
+        return dtoShopItemRepository.searchItem('%' + searchText + '%');
     }
 }
