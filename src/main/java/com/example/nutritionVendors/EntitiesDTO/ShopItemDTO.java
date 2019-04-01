@@ -12,8 +12,8 @@ public class ShopItemDTO {
     private Double price;
     private Integer status;
     private Double rating;
-    private BigInteger comment_number;
-    private BigInteger favorites_number;
+    private Integer comment_number;
+    private Integer favorites_number;
     private String name;
     private String shop_name;
     private String avatar;
@@ -31,11 +31,11 @@ public class ShopItemDTO {
         this.shop_name = shop_name;
     }
 
-    public void setComment_number(BigInteger comment_number) {
+    public void setComment_number(Integer comment_number) {
         this.comment_number = comment_number;
     }
 
-    public void setFavorites_number(BigInteger favorites_number) {
+    public void setFavorites_number(Integer favorites_number) {
         this.favorites_number = favorites_number;
     }
 
@@ -87,11 +87,11 @@ public class ShopItemDTO {
         this.name = name;
     }
 
-    public BigInteger getComment_number() {
+    public Integer getComment_number() {
         return comment_number;
     }
 
-    public BigInteger getFavorites_number() {
+    public Integer getFavorites_number() {
         return favorites_number;
     }
 

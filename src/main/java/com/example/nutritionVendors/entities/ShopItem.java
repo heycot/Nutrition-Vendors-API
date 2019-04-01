@@ -10,8 +10,8 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "shopitem", schema = "public")
-//@Table(name = "shopitem") //, schema = "public")
+//@Table(name = "shopitem", schema = "public")
+@Table(name = "shopitem") //, schema = "public")
 public class ShopItem {
 
     @Id
@@ -20,6 +20,7 @@ public class ShopItem {
     private Double price;
     private Integer status;
     private Double rating;
+
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "shop_id", referencedColumnName = "id")
@@ -54,6 +55,7 @@ public class ShopItem {
 //        this.favorites = favorites;
 //        this.comments = comments;
 //    }
+
 
     public Shop getShop() {
         return shop;

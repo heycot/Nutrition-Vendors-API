@@ -32,4 +32,9 @@ public class UserServiceImpl implements UserService {
     public User signUp(User user) {
         return userRepository.save(user);
     }
+
+    @Override
+    public User getOneById(Integer id) {
+        return userRepository.getOne(id);
+    }
 }

@@ -13,4 +13,6 @@ public interface UserService {
     List<User> findAll();
 
     User signUp(User user);
+
+    User getOneById(Integer id);
 }

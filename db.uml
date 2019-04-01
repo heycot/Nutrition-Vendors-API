@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>508cc8f5-329e-4249-93d2-7490e4110969.DATABASE:ddntq4gre733tp</OriginalElement>
+  <nodes>
+    <node x="39.7265625" y="669.0">508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.item</node>
+    <node x="254.0" y="325.0">508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.location</node>
+    <node x="127.0" y="369.0">508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.category</node>
+    <node x="88.625" y="1181.0">508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.document</node>
+    <node x="281.75" y="592.0">508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.shop</node>
+    <node x="345.6015625" y="1181.0">508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.favorites</node>
+    <node x="266.5" y="0.0">508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.city</node>
+    <node x="0.0" y="358.0">508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.measure</node>
+    <node x="446.578125" y="270.0">508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.user</node>
+    <node x="526.6015625" y="1126.0">508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.comment</node>
+    <node x="175.5546875" y="914.0">508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.shopitem</node>
+    <node x="256.0" y="124.0">508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.area</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.location" target="508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.area">
+      <point x="0.0" y="-81.0" />
+      <point x="0.0" y="48.0" />
+    </edge>
+    <edge source="508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.shop" target="508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.user">
+      <point x="38.25" y="-136.0" />
+      <point x="396.5" y="567.0" />
+      <point x="470.578125" y="567.0" />
+      <point x="-48.0" y="136.0" />
+    </edge>
+    <edge source="508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.document" target="508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.shopitem">
+      <point x="0.0" y="-48.0" />
+      <point x="169.125" y="1106.0" />
+      <point x="198.0546875" y="1106.0" />
+      <point x="-45.0" y="81.0" />
+    </edge>
+    <edge source="508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.item" target="508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.category">
+      <point x="39.25" y="-59.0" />
+      <point x="157.4765625" y="567.0" />
+      <point x="180.5" y="567.0" />
+      <point x="0.0" y="37.0" />
+    </edge>
+    <edge source="508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.shopitem" target="508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.shop">
+      <point x="33.75" y="-81.0" />
+      <point x="276.8046875" y="889.0" />
+      <point x="358.25" y="889.0" />
+      <point x="0.0" y="136.0" />
+    </edge>
+    <edge source="508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.favorites" target="508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.shopitem">
+      <point x="-40.25" y="-48.0" />
+      <point x="385.8515625" y="1106.0" />
+      <point x="243.0546875" y="1106.0" />
+      <point x="0.0" y="81.0" />
+    </edge>
+    <edge source="508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.area" target="508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.city">
+      <point x="0.0" y="-48.0" />
+      <point x="0.0" y="37.0" />
+    </edge>
+    <edge source="508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.comment" target="508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.user">
+      <point x="40.25" y="-103.0" />
+      <point x="647.3515625" y="567.0" />
+      <point x="566.578125" y="567.0" />
+      <point x="48.0" y="136.0" />
+    </edge>
+    <edge source="508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.favorites" target="508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.user">
+      <point x="40.25" y="-48.0" />
+      <point x="466.3515625" y="1106.0" />
+      <point x="479.53125" y="1106.0" />
+      <point x="479.53125" y="567.0" />
+      <point x="518.578125" y="567.0" />
+      <point x="0.0" y="136.0" />
+    </edge>
+    <edge source="508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.item" target="508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.measure">
+      <point x="-39.25" y="-59.0" />
+      <point x="78.9765625" y="567.0" />
+      <point x="53.5" y="567.0" />
+      <point x="0.0" y="48.0" />
+    </edge>
+    <edge source="508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.shopitem" target="508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.item">
+      <point x="-33.75" y="-81.0" />
+      <point x="209.3046875" y="889.0" />
+      <point x="118.2265625" y="889.0" />
+      <point x="0.0" y="59.0" />
+    </edge>
+    <edge source="508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.shop" target="508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.location">
+      <point x="-38.25" y="-136.0" />
+      <point x="0.0" y="81.0" />
+    </edge>
+    <edge source="508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.comment" target="508cc8f5-329e-4249-93d2-7490e4110969.TABLE:ddntq4gre733tp.public.shopitem">
+      <point x="-40.25" y="-103.0" />
+      <point x="566.8515625" y="1096.0" />
+      <point x="288.0546875" y="1096.0" />
+      <point x="45.0" y="81.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.48372781065088755" x="344.0" y="666.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Key columns</Category>
+    <Category>Columns</Category>
+  </Categories>
+</Diagram>
+
