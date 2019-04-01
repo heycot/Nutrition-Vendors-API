@@ -10,8 +10,8 @@ import java.util.List;
 
 @Data
 @Entity
-//@Table(name = "shopitem", schema = "public")
-@Table(name = "shopitem") //, schema = "public")
+@Table(name = "shopitem", schema = "public")
+//@Table(name = "shopitem") //, schema = "public")
 public class ShopItem {
 
     @Id

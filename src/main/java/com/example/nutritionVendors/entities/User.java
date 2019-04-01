@@ -8,8 +8,8 @@ import java.util.List;
 
 //@Data
 @Entity
-//@Table(name = "user", schema = "public")
-@Table(name = "user") //, schema = "public")
+@Table(name = "user", schema = "public")
+//@Table(name = "user") //, schema = "public")
 public class User {
 
     @Id

@@ -21,7 +21,7 @@ public interface DTOShopItemRepository extends JpaRepository<ShopItemDTO, Intege
             " left join item on shopitem.item_id = item.id" +
             " left join document on shopitem.id = document.shopitem_id" +
             " left join shop on shopitem.shop_id = shop.id " +
-            " group by shopitem.id, item.name, shop.name order by shopitem.rating desc limit ?1, ?2", nativeQuery = true)
+            " group by shopitem.id, item.name, shop.name order by shopitem.rating desc limit ?1 offset ?2", nativeQuery = true)
     List<ShopItemDTO> getHighRatingItem(Integer limit, Integer offset);
 
     @Query(value = "select shopitem.id, shopitem.price, shopitem.status, shopitem.rating, " +
@@ -34,7 +34,7 @@ public interface DTOShopItemRepository extends JpaRepository<ShopItemDTO, Intege
             " left join item on shopitem.item_id = item.id" +
             " left join document on shopitem.id = document.shopitem_id" +
             " left join shop on shopitem.shop_id = shop.id " +
-            " group by shopitem.id, item.name, shop.name order by shopitem.rating desc limit ?1, ?2", nativeQuery = true)
+            " group by shopitem.id, item.name, shop.name order by shopitem.rating desc limit ?1 offset ?2", nativeQuery = true)
     List<ShopItemDTO> getHighRatingItembbbbbbbbbbbbbbbbbbbbbbb(Integer limit, Integer offset);
 
 

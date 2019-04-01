@@ -16,10 +16,10 @@ public class ShopController {
     @Autowired
     private ShopService shopService;
 
-    @GetMapping("/{offset}")
+    @GetMapping("/offset/{offset}")
     public ResponseEntity findAllShop(@PathVariable Integer offset) {
         try {
-            return ResponseEntity.ok(shopService.findAllShop(offset, 10));
+            return ResponseEntity.ok(shopService.findAllShop(10, offset));
         } catch (Exception e) {
             System.out.println("exception: " + e.getCause());
 
