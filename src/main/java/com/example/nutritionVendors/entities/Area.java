@@ -1,12 +1,13 @@
 package com.example.nutritionVendors.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
-//@Data
+@Data
 @Entity
 //@Table(name = "area", schema = "public")
 @Table(name = "area")

@@ -89,25 +89,25 @@
 			<artifactId>jsonassert</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>9.4-1201-jdbc4</version>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>org.postgresql</groupId>-->
+			<!--<artifactId>postgresql</artifactId>-->
+			<!--<version>9.4-1201-jdbc4</version>-->
+		<!--</dependency>-->
 
 
 		<!-- https://mvnrepository.com/artifact/org.postgresql/pgjdbc-benchmark -->
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>pgjdbc-benchmark</artifactId>
-			<version>42.2.0</version>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>org.postgresql</groupId>-->
+			<!--<artifactId>pgjdbc-benchmark</artifactId>-->
+			<!--<version>42.2.0</version>-->
+		<!--</dependency>-->
 
-		<dependency>
-		<groupId>com.zaxxer</groupId>
-		<artifactId>HikariCP</artifactId>
-		<!--<version>3.2.0</version>-->
-		</dependency>
+		<!--<dependency>-->
+		<!--<groupId>com.zaxxer</groupId>-->
+		<!--<artifactId>HikariCP</artifactId>-->
+		<!--&lt;!&ndash;<version>3.2.0</version>&ndash;&gt;-->
+		<!--</dependency>-->
 
 
 		<dependency>
@@ -136,12 +136,6 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<!--<version>5.1.6</version>-->
 		</dependency>
-
-		<!--<dependency>-->
-			<!--<groupId>org.hibernate</groupId>-->
-			<!--<artifactId>hibernate-search-orm</artifactId>-->
-			<!--<version>5.8.2.Final</version>-->
-		<!--</dependency>-->
 
 	</dependencies>
 
