@@ -28,7 +28,7 @@ public interface DTOShopItemRepository extends JpaRepository<ShopItemDTO, Intege
             " 0 as comment_number, " +
             " 0 as favorites_number," +
             " item.name as name, shop.name as shop_name, " +
-            " '' as avatar from shopitem " +
+            " '' as avatar, 0 as love_status from shopitem" +
             " left join comment on shopitem.id = comment.shopitem_id " +
             " left join favorites on shopitem.id = favorites.shopitem_id" +
             " left join item on shopitem.item_id = item.id" +

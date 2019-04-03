@@ -17,6 +17,7 @@ public class ShopItemDTO {
     private String name;
     private String shop_name;
     private String avatar;
+    private Integer love_status;
 
 
 
@@ -95,5 +96,11 @@ public class ShopItemDTO {
         return favorites_number;
     }
 
+    public Integer getLove_status() {
+        return love_status;
+    }
 
+    public void setLove_status(Integer love_status) {
+        this.love_status = love_status;
+    }
 }
