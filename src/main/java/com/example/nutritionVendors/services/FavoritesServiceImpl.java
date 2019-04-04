@@ -1,7 +1,50 @@
 package com.example.nutritionVendors.services;
 
+import com.example.nutritionVendors.EntitiesDTO.FavoritesDTO;
+import com.example.nutritionVendors.entities.Favorites;
+import com.example.nutritionVendors.respositories.DTOFavoritesRepository;
+import com.example.nutritionVendors.respositories.FavoritesRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class FavoritesServiceImpl implements FavoritesService {
+
+    @Autowired
+    private FavoritesRepository favoritesRepository;
+
+    @Autowired
+    private DTOFavoritesRepository DTOFavoritesRepository;
+
+    @Autowired
+    private ShopItemService shopItemService;
+
+    @Autowired
+    private UserService userService;
+
+    @Override
+    public FavoritesDTO loveOne(Integer id, Integer userId, Integer status) {
+        Favorites favorites = favoritesRepository.findByShopItemIdAndUserId(id, userId);
+
+        if (favorites == null) {
+            favorites.setId(0);
+            favorites.setStatus(1);
+            favorites.setShopItem(shopItemService.getOne(id));
+            favorites.setUser(userService.getOneById(userId));
+
+            favoritesRepository.save(favorites);
+        } else {
+            favorites.setStatus(status);
+            favoritesRepository.save(favorites);
+        }
+
+        return new FavoritesDTO(favorites.getId(), favorites.getShopItem().getId(), favorites.getUser().getId(), favorites.getStatus());
+    }
+
+    @Override
+    public List<FavoritesDTO> findAllByuserId(Integer userId) {
+        return DTOFavoritesRepository.findAllByUser_id(userId);
+    }
 }

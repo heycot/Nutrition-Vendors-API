@@ -13,21 +13,34 @@ public class Favorites {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private Integer status;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "shopitem_id", referencedColumnName = "id")
     private ShopItem shopItem;
 
     public Favorites() {
     }
 
+
+
     public Favorites(User user, ShopItem shopItem) {
         this.user = user;
         this.shopItem = shopItem;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Integer getId() {

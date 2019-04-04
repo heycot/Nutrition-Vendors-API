@@ -57,6 +57,7 @@ public class ShopItemServiceImpl implements ShopItemService {
     }
 
 
+
     @Override
     public List<ShopItemDTO> getAllByShopId(Integer id, Integer limit, Integer offset, Integer userId) {
         List<ShopItemDTO> shopItemDTOS = dtoShopItemRepository.getAllByShopId(id, limit, offset);
@@ -86,7 +87,7 @@ public class ShopItemServiceImpl implements ShopItemService {
 
     public List<ShopItemDTO> updateLove_Status(List<ShopItemDTO> shopItemDTOS, Integer userId) {
         for (int i = 0; i < shopItemDTOS.size(); i++ ) {
-            if ( favoritesRepository.findByShopItemIdAndUserId(shopItemDTOS.get(i).getId(), userId) != null) {
+            if ( favoritesRepository.findByShopItemIdAndUserIdAndStatus(shopItemDTOS.get(i).getId(), userId, 1) != null) {
 
                 shopItemDTOS.get(i).setLove_status(1);
             } else {

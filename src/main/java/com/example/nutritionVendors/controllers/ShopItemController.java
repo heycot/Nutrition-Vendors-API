@@ -3,6 +3,7 @@ package com.example.nutritionVendors.controllers;
 import com.example.nutritionVendors.EntitiesDTO.ShopItemDTO;
 import com.example.nutritionVendors.entities.ShopItem;
 import com.example.nutritionVendors.entities.User;
+import com.example.nutritionVendors.services.FavoritesService;
 import com.example.nutritionVendors.services.ShopItemService;
 import com.example.nutritionVendors.services.UserService;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
@@ -27,6 +28,9 @@ public class ShopItemController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private FavoritesService favoritesService;
 
 //    @RequestMapping("/high-rating")
 //    public ResponseEntity getHighRating() throws InternalError {
@@ -121,5 +125,23 @@ public class ShopItemController {
         return ResponseEntity.ok(shopItemService.getAll());
     }
 
+
+    @GetMapping("/love/{id}/{status}")
+    public ResponseEntity loveOneitem(@RequestHeader(value = "Authorization") String authorizationHeader, @PathVariable(value = "id") Integer shopItemId, @PathVariable(value = "status") Integer status) throws InternalError {
+        try {
+
+            if (authorizationHeader == null || authorizationHeader == "") {
+                return new ResponseEntity<>("Authorization token is wrong", HttpStatus.NOT_FOUND);
+
+            } else {
+                User user = userService.findByToken(authorizationHeader);
+                return ResponseEntity.ok(favoritesService.loveOne(shopItemId, user.getId(), status));
+            }
+
+        } catch (Exception e){
+            System.out.println("exception: " + e.getCause());
+            return new ResponseEntity<>("internal exception", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }

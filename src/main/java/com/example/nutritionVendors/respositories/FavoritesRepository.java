@@ -9,5 +9,7 @@ public interface FavoritesRepository extends JpaRepository<Favorites, Integer> {
 
     Integer countByShopItemId(Integer id);
 
+    Favorites findByShopItemIdAndUserIdAndStatus(Integer shopItemId, Integer userId, Integer status);
+
     Favorites findByShopItemIdAndUserId(Integer shopItemId, Integer userId);
 }
