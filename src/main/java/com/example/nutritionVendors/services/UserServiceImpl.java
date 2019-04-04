@@ -1,6 +1,8 @@
 package com.example.nutritionVendors.services;
 
+import com.example.nutritionVendors.EntitiesDTO.UserDTO;
 import com.example.nutritionVendors.entities.User;
+import com.example.nutritionVendors.library.UserTokenHandle;
 import com.example.nutritionVendors.respositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,9 +15,18 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    private UserTokenHandle userTokenHandle = new UserTokenHandle();
+
     @Override
-    public User findOneByNameAndPassword(String username, String password) {
-        return userRepository.findOneByNameAndPassword(username, password);
+    public User findOneByEmailAndPassword(String email, String password) {
+        User user = userRepository.findByEmailAndPassword(email, password);
+
+        if (user != null ) {
+            user.setToken(userTokenHandle.generateUserToken(user.getId()));
+            userRepository.save(user);
+        }
+
+        return user;
     }
 
     @Override
@@ -37,4 +48,5 @@ public class UserServiceImpl implements UserService {
     public User getOneById(Integer id) {
         return userRepository.getOne(id);
     }
+
 }
