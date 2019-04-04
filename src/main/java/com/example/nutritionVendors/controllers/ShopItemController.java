@@ -43,7 +43,7 @@ public class ShopItemController {
     public ResponseEntity searchItem(@RequestHeader(value = "Authorization") String authorizationHeader, @PathVariable(name = "searchText") String searchText) throws InternalError {
         try{
 
-            if (authorizationHeader == null || authorizationHeader == "") {
+            if (authorizationHeader == null || authorizationHeader == "" || authorizationHeader == "guest") {
                 return  ResponseEntity.ok(shopItemService.searchItem(searchText, 0));
 
             } else {
@@ -62,7 +62,7 @@ public class ShopItemController {
     public ResponseEntity getHighRatingItem(@RequestHeader(value = "Authorization") String authorizationHeader, @PathVariable(name = "off") Integer offset) throws InternalError {
         try{
 
-            if (authorizationHeader == null || authorizationHeader == "") {
+            if (authorizationHeader == null || authorizationHeader == "" || authorizationHeader == "guest") {
                 return ResponseEntity.ok(shopItemService.getHighRatingItem(offset, 10, 0));
 
             } else {
@@ -90,7 +90,7 @@ public class ShopItemController {
 //    }
 
     @RequestMapping("/{id}")
-    public ResponseEntity getOne(@PathVariable(value = "id") Integer id) throws InternalError {
+    public ResponseEntity getOne(@RequestHeader(value = "Authorization") String authorizationHeader, @PathVariable(value = "id") Integer id) throws InternalError {
         try {
             return ResponseEntity.ok(shopItemService.getOne(id));
         } catch (Exception e) {
