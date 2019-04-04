@@ -15,4 +15,6 @@ public interface UserService {
     User signUp(User user);
 
     User getOneById(Integer id);
+
+    User findByToken(String authorizationHeader);
 }

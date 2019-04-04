@@ -49,4 +49,9 @@ public class UserServiceImpl implements UserService {
         return userRepository.getOne(id);
     }
 
+    @Override
+    public User findByToken(String authorizationHeader) {
+        return userRepository.findByToken(authorizationHeader);
+    }
+
 }

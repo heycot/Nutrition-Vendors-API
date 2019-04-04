@@ -27,35 +27,16 @@ public class ShopItemServiceImpl implements ShopItemService {
     private CommentRepository commentRepository;
 
 
-    @Override
-    public List<ShopItemDTO> getHighRatingItem(Integer limit, Integer offset) {
-
-        List<ShopItemDTO> shopItemDTOS = dtoShopItemRepository.getHighRatingItembbbbbbbbbbbbbbbbbbbbbbb(limit, offset);
-
-        for (int i = 0; i < shopItemDTOS.size(); i++) {
-//            String avatar = dtoShopItemRepository.findAvatarById(shopItemDTOS.get(i).getId());
-            shopItemDTOS.get(i).setAvatar(documentRepository.getByShopItemIdAndAndPriority(shopItemDTOS.get(i).getId(), 1).getLink());
-            shopItemDTOS.get(i).setFavorites_number(favoritesRepository.countByShopItemId(shopItemDTOS.get(i).getId()));
-            shopItemDTOS.get(i).setComment_number(commentRepository.countByShopItemId(shopItemDTOS.get(i).getId()));
-        }
-        return shopItemDTOS;
-    }
-
-    @Override
-    public List<ShopItem> getHighRatingShopItem(Integer limit, Integer offset) {
-        return shopItemRepository.findHighRatingItem(limit, offset);
-    }
+//    @Override
+//    public List<ShopItem> getHighRatingShopItem(Integer limit, Integer offset) {
+//        return shopItemRepository.findHighRatingItem(limit, offset);
+//    }
 
     @Override
     public ShopItem getOne(Integer id) {
         return shopItemRepository.findOneById(id);
     }
 
-    @Override
-    public List<ShopItemDTO> getAllByShopId(Integer id, Integer limit, Integer offset) {
-
-        return dtoShopItemRepository.getAllByShopId(id, limit, offset);
-    }
 
     @Override
     public List<ShopItemDTO> getAll() {
@@ -68,7 +49,51 @@ public class ShopItemServiceImpl implements ShopItemService {
     }
 
     @Override
-    public List<ShopItemDTO> searchItem(String searchText) {
-        return dtoShopItemRepository.searchItem("%" +searchText + "%");
+    public List<ShopItemDTO> searchItem(String searchText, Integer userId) {
+        List<ShopItemDTO> itemDTOList = dtoShopItemRepository.searchItem("%" +searchText + "%");
+        itemDTOList = updateLove_Status(itemDTOList, userId);
+
+        return itemDTOList;
+    }
+
+
+    @Override
+    public List<ShopItemDTO> getAllByShopId(Integer id, Integer limit, Integer offset, Integer userId) {
+        List<ShopItemDTO> shopItemDTOS = dtoShopItemRepository.getAllByShopId(id, limit, offset);
+
+        shopItemDTOS = updateLove_Status(shopItemDTOS, userId);
+
+        return dtoShopItemRepository.getAllByShopId(id, limit, offset);
+    }
+
+
+    @Override
+    public List<ShopItemDTO> getHighRatingItem(Integer limit, Integer offset, Integer userId) {
+
+        List<ShopItemDTO> shopItemDTOS = dtoShopItemRepository.getHighRatingItem(limit, offset);
+
+        for (int i = 0; i < shopItemDTOS.size(); i++) {
+//            String avatar = dtoShopItemRepository.findAvatarById(shopItemDTOS.get(i).getId());
+            shopItemDTOS.get(i).setAvatar(documentRepository.getByShopItemIdAndAndPriority(shopItemDTOS.get(i).getId(), 1).getLink());
+            shopItemDTOS.get(i).setFavorites_number(favoritesRepository.countByShopItemId(shopItemDTOS.get(i).getId()));
+            shopItemDTOS.get(i).setComment_number(commentRepository.countByShopItemId(shopItemDTOS.get(i).getId()));
+
+        }
+
+        shopItemDTOS = updateLove_Status(shopItemDTOS, userId);
+        return shopItemDTOS;
+    }
+
+    public List<ShopItemDTO> updateLove_Status(List<ShopItemDTO> shopItemDTOS, Integer userId) {
+        for (int i = 0; i < shopItemDTOS.size(); i++ ) {
+            if ( favoritesRepository.findByShopItemIdAndUserId(shopItemDTOS.get(i).getId(), userId) != null) {
+
+                shopItemDTOS.get(i).setLove_status(1);
+            } else {
+                shopItemDTOS.get(i).setLove_status(0);
+            }
+        }
+
+        return shopItemDTOS;
     }
 }

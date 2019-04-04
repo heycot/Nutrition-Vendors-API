@@ -2,7 +2,9 @@ package com.example.nutritionVendors.controllers;
 
 import com.example.nutritionVendors.EntitiesDTO.ShopItemDTO;
 import com.example.nutritionVendors.entities.ShopItem;
+import com.example.nutritionVendors.entities.User;
 import com.example.nutritionVendors.services.ShopItemService;
+import com.example.nutritionVendors.services.UserService;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,6 +24,9 @@ public class ShopItemController {
 
     @Autowired
     private ShopItemService shopItemService;
+
+    @Autowired
+    private UserService userService;
 
 //    @RequestMapping("/high-rating")
 //    public ResponseEntity getHighRating() throws InternalError {
@@ -34,11 +40,18 @@ public class ShopItemController {
 //    }
 
     @GetMapping("/search/{searchText}")
-    public ResponseEntity getHighRatingItem(@PathVariable(name = "searchText") String searchText) throws InternalError {
+    public ResponseEntity searchItem(@RequestHeader(value = "Authorization") String authorizationHeader, @PathVariable(name = "searchText") String searchText) throws InternalError {
         try{
-            List<ShopItemDTO> shopItemDTOS = shopItemService.searchItem(searchText);
 
-            return ResponseEntity.ok(shopItemDTOS);
+            if (authorizationHeader == null || authorizationHeader == "") {
+                return  ResponseEntity.ok(shopItemService.searchItem(searchText, 0));
+
+            } else {
+                User user = userService.findByToken(authorizationHeader);
+                return ResponseEntity.ok(shopItemService.searchItem(searchText, user.getId()));
+            }
+
+
         } catch (InternalError | NullPointerException e){
             System.out.println(e.getCause());
             throw new InternalException("Internal Server Error");
@@ -46,28 +59,35 @@ public class ShopItemController {
     }
 
     @RequestMapping("/high-rating/offset/{off}")
-    public ResponseEntity getHighRatingItem(@PathVariable(name = "off") Integer offset) throws InternalError {
+    public ResponseEntity getHighRatingItem(@RequestHeader(value = "Authorization") String authorizationHeader, @PathVariable(name = "off") Integer offset) throws InternalError {
         try{
-            List<ShopItemDTO> shopItemDTOS = shopItemService.getHighRatingItem(offset, 10);
 
-            return ResponseEntity.ok(shopItemDTOS);
+            if (authorizationHeader == null || authorizationHeader == "") {
+                return ResponseEntity.ok(shopItemService.getHighRatingItem(offset, 10, 0));
+
+            } else {
+                User user = userService.findByToken(authorizationHeader);
+                return ResponseEntity.ok(shopItemService.getHighRatingItem(offset, 10, user.getId()));
+            }
+
         } catch (InternalError | NullPointerException e){
             System.out.println(e.getCause());
             throw new InternalException("Internal Server Error");
         }
     }
 
-    @GetMapping("/high-rating-item/{id}")
-    public ResponseEntity getOneHighRatingItem(@PathVariable(name = "id") Integer id ) throws InternalError {
-        try{
-            ShopItemDTO shopItemDTO = shopItemService.getOneHighRatingItem(id);
-
-            return ResponseEntity.ok(shopItemDTO);
-        } catch (InternalError | NullPointerException e){
-            System.out.println(e.getCause());
-            throw new InternalException("Internal Server Error");
-        }
-    }
+//    @GetMapping("/high-rating-item/{id}")
+//    public ResponseEntity getOneHighRatingItem( @PathVariable(name = "id") Integer id ) throws InternalError {
+//        try{
+//
+//            ShopItemDTO shopItemDTO = shopItemService.getOneHighRatingItem(id);
+//
+//            return ResponseEntity.ok(shopItemDTO);
+//        } catch (InternalError | NullPointerException e){
+//            System.out.println(e.getCause());
+//            throw new InternalException("Internal Server Error");
+//        }
+//    }
 
     @RequestMapping("/{id}")
     public ResponseEntity getOne(@PathVariable(value = "id") Integer id) throws InternalError {
@@ -79,9 +99,17 @@ public class ShopItemController {
     }
 
     @GetMapping("/shop/{id}/{offset}")
-    public ResponseEntity getAllByShopId(@PathVariable(name = "id") Integer id, @PathVariable(name = "offset") Integer offset){
+    public ResponseEntity getAllByShopId(@RequestHeader(value = "Authorization") String authorizationHeader, @PathVariable(name = "id") Integer id, @PathVariable(name = "offset") Integer offset){
         try {
-            return ResponseEntity.ok(shopItemService.getAllByShopId(id, 10, offset));
+
+            if (authorizationHeader == null || authorizationHeader == "") {
+                return ResponseEntity.ok(shopItemService.getAllByShopId(id, 10, offset, 0));
+
+            } else {
+                User user = userService.findByToken(authorizationHeader);
+                return ResponseEntity.ok(shopItemService.getAllByShopId(id, 10, offset, user.getId()));
+            }
+
         } catch (Exception e){
             System.out.println("exception: " + e.getCause());
             return new ResponseEntity<>("internal exception", HttpStatus.INTERNAL_SERVER_ERROR);

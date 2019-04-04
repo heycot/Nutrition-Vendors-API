@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface FavoritesRepository extends JpaRepository<Favorites, Integer> {
 
     Integer countByShopItemId(Integer id);
+
+    Favorites findByShopItemIdAndUserId(Integer shopItemId, Integer userId);
 }

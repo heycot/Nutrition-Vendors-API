@@ -16,4 +16,6 @@ public interface UserRepository extends JpaRepository<User , Integer> {
 //    @Query("UPDATE user u SET u.token = :token WHERE u.id = :id")
 //    int saveToken(@Param("token") String token, @Param("id") Integer id);
 
+    User findByToken(String token);
+
 }
