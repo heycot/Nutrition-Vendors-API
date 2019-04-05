@@ -1,7 +1,14 @@
 package com.example.nutritionVendors.controllers;
 
+import com.example.nutritionVendors.EntitiesDTO.UserDTO;
+import com.example.nutritionVendors.entities.Comment;
+import com.example.nutritionVendors.entities.Favorites;
+import com.example.nutritionVendors.entities.Shop;
 import com.example.nutritionVendors.entities.User;
 import com.example.nutritionVendors.library.UserTokenHandle;
+import com.example.nutritionVendors.services.CommentService;
+import com.example.nutritionVendors.services.FavoritesService;
+import com.example.nutritionVendors.services.ShopService;
 import com.example.nutritionVendors.services.UserService;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
@@ -13,6 +20,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -23,12 +31,21 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    private UserTokenHandle tokenHandle = new UserTokenHandle();
+    @Autowired
+    private ShopService shopService;
+
+    @Autowired
+    private CommentService commentService;
+
+    @Autowired
+    private FavoritesService favoritesService;
+
 
     @PostMapping("/login")
-    public ResponseEntity login(@Valid @RequestBody User user) {
+    public ResponseEntity login(@RequestBody User user) throws InternalError {
 
         try {
+
             User user1 = userService.findOneByEmailAndPassword(user.getEmail(), user.getPassword());
 
             return ResponseEntity.ok(user1);
@@ -38,13 +55,27 @@ public class UserController {
         }
     }
 
+
     @PostMapping("/signup")
-    public ResponseEntity signup(@Valid @RequestBody User user) {
+    public ResponseEntity signup(@RequestBody UserDTO userDTO) throws InternalError {
 
         try {
-            User user1 = userService.signUp(user);
 
-            return ResponseEntity.ok(user1);
+
+            User user = new User();
+            List<Shop> shops = new ArrayList<>();
+            List<Comment> comments = new ArrayList<>();
+            List<Favorites> favorites = new ArrayList<>();
+
+            user.setUser_name(userDTO.getUser_name());
+            user.setEmail(userDTO.getEmail());
+            user.setPassword(userDTO.getPassword());
+            user.setPhone(userDTO.getPhone());
+            user.setShops(shops);
+            user.setFavorites(favorites);
+            user.setComments(comments);
+
+            return ResponseEntity.ok(userService.signUp(user));
         } catch (Exception e) {
             System.out.println("exception: " + e.getMessage());
             return new ResponseEntity<>("internal exception with sign up", HttpStatus.EXPECTATION_FAILED);
