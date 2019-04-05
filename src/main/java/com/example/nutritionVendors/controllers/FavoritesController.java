@@ -9,8 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(DocumentController.BASE_URL)
+@RequestMapping(FavoritesController.BASE_URL)
 public class FavoritesController {
+
     public final static String BASE_URL = "/api/favorites";
 
     @Autowired
@@ -18,6 +19,7 @@ public class FavoritesController {
 
     @Autowired
     private UserService userService;
+
 
     @GetMapping("/user")
     public ResponseEntity findAllByUserId(@RequestHeader(value = "Authorization") String authorizationHeader) throws InternalError {

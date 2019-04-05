@@ -29,12 +29,13 @@ public class FavoritesServiceImpl implements FavoritesService {
         Favorites favorites = favoritesRepository.findByShopItemIdAndUserId(id, userId);
 
         if (favorites == null) {
+            favorites = new Favorites();
             favorites.setId(0);
             favorites.setStatus(1);
             favorites.setShopItem(shopItemService.getOne(id));
             favorites.setUser(userService.getOneById(userId));
 
-            favoritesRepository.save(favorites);
+            favorites = favoritesRepository.save(favorites);
         } else {
             favorites.setStatus(status);
             favoritesRepository.save(favorites);
