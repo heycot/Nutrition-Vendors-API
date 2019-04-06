@@ -48,4 +48,9 @@ public class FavoritesServiceImpl implements FavoritesService {
     public List<FavoritesDTO> findAllByuserId(Integer userId) {
         return DTOFavoritesRepository.findAllByUser_id(userId);
     }
+
+    @Override
+    public List<FavoritesDTO> findAllByuserLoved(Integer userId) {
+        return null;
+    }
 }

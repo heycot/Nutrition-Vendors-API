@@ -1,6 +1,8 @@
 package com.example.nutritionVendors.services;
 
+import com.example.nutritionVendors.EntitiesDTO.FavoritesDTO;
 import com.example.nutritionVendors.EntitiesDTO.ShopItemDTO;
+import com.example.nutritionVendors.entities.Favorites;
 import com.example.nutritionVendors.entities.ShopItem;
 import com.example.nutritionVendors.respositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class ShopItemServiceImpl implements ShopItemService {
 
     @Autowired
     private FavoritesRepository favoritesRepository;
+
+    @Autowired
+    private DTOFavoritesRepository dtoFavoritesRepository;
 
     @Autowired
     private CommentRepository commentRepository;
@@ -56,6 +61,22 @@ public class ShopItemServiceImpl implements ShopItemService {
         return itemDTOList;
     }
 
+    @Override
+    public List<ShopItemDTO> findAllByUserLoved(Integer userId) {
+        List<FavoritesDTO> favoritesDTOS = dtoFavoritesRepository.findAllByUser_idAndStatus(userId, 1);
+        List<ShopItemDTO> shopItemDTOS = new ArrayList<>();
+        ShopItemDTO item = new ShopItemDTO();
+
+        for (int i = 0; i < favoritesDTOS.size(); i++) {
+            item = dtoShopItemRepository.findOneById(favoritesDTOS.get(i).getShopitem_id());
+            item.setAvatar(documentRepository.getByShopItemIdAndAndPriority(item.getId(), 1).getLink());
+            item.setFavorites_number(favoritesRepository.countByShopItemId(item.getId()));
+            item.setComment_number(commentRepository.countByShopItemId(item.getId()));
+            shopItemDTOS.add(item);
+        }
+
+        return shopItemDTOS;
+    }
 
 
     @Override

@@ -15,12 +15,17 @@ import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import javax.ws.rs.Consumes;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -57,23 +62,35 @@ public class UserController {
 
 
     @PostMapping("/signup")
-    public ResponseEntity signup(@RequestBody UserDTO userDTO) throws InternalError {
+    @Consumes({"application/json", MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity signup(@RequestBody UserDTO userDTO, @RequestParam(value = "files", required = false) MultipartFile file) throws InternalError {
 
         try {
-
+            Date date= new Date();
+            long time = date.getTime();
+            Timestamp ts = new Timestamp(time);
 
             User user = new User();
             List<Shop> shops = new ArrayList<>();
             List<Comment> comments = new ArrayList<>();
             List<Favorites> favorites = new ArrayList<>();
 
+            user.setId(0);
+            user.setPhone("");
+            user.setToken("");
+            user.setAvatar(userDTO.getAvatar());
+            user.setCreate_date(ts);
+            user.setBirthday(ts);
+            user.setAddress("");
+            user.setStatus(1);
             user.setUser_name(userDTO.getUser_name());
             user.setEmail(userDTO.getEmail());
             user.setPassword(userDTO.getPassword());
-            user.setPhone(userDTO.getPhone());
             user.setShops(shops);
             user.setFavorites(favorites);
             user.setComments(comments);
+
+            userService.saveImage(user, file);
 
             return ResponseEntity.ok(userService.signUp(user));
         } catch (Exception e) {
@@ -81,6 +98,7 @@ public class UserController {
             return new ResponseEntity<>("internal exception with sign up", HttpStatus.EXPECTATION_FAILED);
         }
     }
+
 
     @GetMapping("/{id}")
     public  ResponseEntity getOne(@PathVariable(name = "id") Integer id){

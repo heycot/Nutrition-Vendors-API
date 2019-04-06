@@ -22,4 +22,5 @@ public interface ShopItemService {
 
     List<ShopItemDTO> searchItem(String searchText, Integer userId);
 
+    List<ShopItemDTO> findAllByUserLoved(Integer userId);
 }

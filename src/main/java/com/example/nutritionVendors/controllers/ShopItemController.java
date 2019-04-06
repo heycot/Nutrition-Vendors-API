@@ -144,4 +144,23 @@ public class ShopItemController {
         }
     }
 
+
+    @GetMapping("/love/offset")
+    public ResponseEntity loveOneitem(@RequestHeader(value = "Authorization") String authorizationHeader) throws InternalError {
+        try {
+
+            if (authorizationHeader == null || authorizationHeader == "") {
+                return new ResponseEntity<>("Authorization token is wrong", HttpStatus.NOT_FOUND);
+
+            } else {
+                User user = userService.findByToken(authorizationHeader);
+                return ResponseEntity.ok(shopItemService.findAllByUserLoved(user.getId()));
+            }
+
+        } catch (Exception e){
+            System.out.println("exception: " + e.getCause());
+            return new ResponseEntity<>("internal exception", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
