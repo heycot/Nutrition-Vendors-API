@@ -163,4 +163,24 @@ public class ShopItemController {
         }
     }
 
+    @GetMapping("/category/{id}/{off}")
+    public ResponseEntity findAllByCategory(@RequestHeader(value = "Authorization") String authorizationHeader,
+                                            @PathVariable(name = "id") Integer id, @PathVariable(name = "off") Integer offset) throws InternalError {
+
+        try {
+
+            if (authorizationHeader == null || authorizationHeader == "") {
+                return ResponseEntity.ok(shopItemService.findAllByCategory(id, 0, offset));
+
+            } else {
+                User user = userService.findByToken(authorizationHeader);
+                return ResponseEntity.ok(shopItemService.findAllByCategory(id, user.getId(), offset));
+            }
+
+        } catch (Exception e){
+            System.out.println("exception: " + e.getCause());
+            return new ResponseEntity<>("internal exception", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

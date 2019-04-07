@@ -1,5 +1,7 @@
 package com.example.nutritionVendors.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
@@ -16,6 +18,7 @@ public class Category {
     private String name;
 
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Item> items;
 
     public Category(String name, List<Item> items) {

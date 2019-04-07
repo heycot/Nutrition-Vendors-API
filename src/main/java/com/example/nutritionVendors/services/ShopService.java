@@ -9,4 +9,8 @@ public interface ShopService {
     List<Shop> findAllShop(Integer limit, Integer offset);
 
     Shop findOneById(Integer id);
+
+    List<Shop>  findNearestByUserLocation(Double latitude, Double longitude, Integer offset);
+
+    List<Shop> findAllNewest(Integer offset);
 }

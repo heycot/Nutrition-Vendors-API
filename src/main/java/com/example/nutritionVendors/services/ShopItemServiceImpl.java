@@ -2,6 +2,7 @@ package com.example.nutritionVendors.services;
 
 import com.example.nutritionVendors.EntitiesDTO.FavoritesDTO;
 import com.example.nutritionVendors.EntitiesDTO.ShopItemDTO;
+import com.example.nutritionVendors.entities.Document;
 import com.example.nutritionVendors.entities.Favorites;
 import com.example.nutritionVendors.entities.ShopItem;
 import com.example.nutritionVendors.respositories.*;
@@ -69,6 +70,7 @@ public class ShopItemServiceImpl implements ShopItemService {
 
         for (int i = 0; i < favoritesDTOS.size(); i++) {
             item = dtoShopItemRepository.findOneById(favoritesDTOS.get(i).getShopitem_id());
+            item.setLove_status(1);
             item.setAvatar(documentRepository.getByShopItemIdAndAndPriority(item.getId(), 1).getLink());
             item.setFavorites_number(favoritesRepository.countByShopItemId(item.getId()));
             item.setComment_number(commentRepository.countByShopItemId(item.getId()));
@@ -78,32 +80,27 @@ public class ShopItemServiceImpl implements ShopItemService {
         return shopItemDTOS;
     }
 
+    @Override
+    public List<ShopItemDTO> findAllByCategory(Integer categoryId, Integer userId, Integer offset) {
+        return updateInfors(dtoShopItemRepository.findAllByCategory(categoryId, offset, 10), userId);
+    }
+
 
     @Override
     public List<ShopItemDTO> getAllByShopId(Integer id, Integer limit, Integer offset, Integer userId) {
         List<ShopItemDTO> shopItemDTOS = dtoShopItemRepository.getAllByShopId(id, limit, offset);
 
-        shopItemDTOS = updateLove_Status(shopItemDTOS, userId);
+        if (userId > 0) {
+            shopItemDTOS = updateLove_Status(shopItemDTOS, userId);
+        }
 
-        return dtoShopItemRepository.getAllByShopId(id, limit, offset);
+        return shopItemDTOS;
     }
 
 
     @Override
     public List<ShopItemDTO> getHighRatingItem(Integer limit, Integer offset, Integer userId) {
-
-        List<ShopItemDTO> shopItemDTOS = dtoShopItemRepository.getHighRatingItem(limit, offset);
-
-        for (int i = 0; i < shopItemDTOS.size(); i++) {
-//            String avatar = dtoShopItemRepository.findAvatarById(shopItemDTOS.get(i).getId());
-            shopItemDTOS.get(i).setAvatar(documentRepository.getByShopItemIdAndAndPriority(shopItemDTOS.get(i).getId(), 1).getLink());
-            shopItemDTOS.get(i).setFavorites_number(favoritesRepository.countByShopItemId(shopItemDTOS.get(i).getId()));
-            shopItemDTOS.get(i).setComment_number(commentRepository.countByShopItemId(shopItemDTOS.get(i).getId()));
-
-        }
-
-        shopItemDTOS = updateLove_Status(shopItemDTOS, userId);
-        return shopItemDTOS;
+        return updateInfors(dtoShopItemRepository.getHighRatingItem(limit, offset), userId);
     }
 
     public List<ShopItemDTO> updateLove_Status(List<ShopItemDTO> shopItemDTOS, Integer userId) {
@@ -115,7 +112,25 @@ public class ShopItemServiceImpl implements ShopItemService {
                 shopItemDTOS.get(i).setLove_status(0);
             }
         }
+        return shopItemDTOS;
+    }
 
+    public List<ShopItemDTO> updateInfors(List<ShopItemDTO> shopItemDTOS, Integer userId) {
+        for (int i = 0; i < shopItemDTOS.size(); i++) {
+            Document document = documentRepository.getByShopItemIdAndAndPriority(shopItemDTOS.get(i).getId(), 1);
+            if (document != null) {
+                shopItemDTOS.get(i).setAvatar(document.getLink());
+            } else {
+                shopItemDTOS.get(i).setAvatar("full_logo");
+            }
+            shopItemDTOS.get(i).setFavorites_number(favoritesRepository.countByShopItemId(shopItemDTOS.get(i).getId()));
+            shopItemDTOS.get(i).setComment_number(commentRepository.countByShopItemId(shopItemDTOS.get(i).getId()));
+
+        }
+
+        if (userId >0 ){
+            shopItemDTOS = updateLove_Status(shopItemDTOS, userId);
+        }
         return shopItemDTOS;
     }
 }

@@ -22,4 +22,14 @@ public class ShopServiceImpl implements ShopService {
     public Shop findOneById(Integer id) {
         return shopRepository.findOne(id);
     }
+
+    @Override
+    public List<Shop> findNearestByUserLocation(Double latitude, Double longitude, Integer offset) {
+        return shopRepository.findNearestUserLocation(latitude, longitude, offset, 10);
+    }
+
+    @Override
+    public List<Shop> findAllNewest(Integer offset) {
+        return shopRepository.findNewest(offset, 10);
+    }
 }

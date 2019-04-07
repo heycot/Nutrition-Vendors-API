@@ -2,8 +2,6 @@ package com.example.nutritionVendors.services;
 
 import com.example.nutritionVendors.EntitiesDTO.ShopItemDTO;
 import com.example.nutritionVendors.entities.ShopItem;
-import org.springframework.http.ResponseEntity;
-import sun.jvm.hotspot.utilities.IntegerEnum;
 
 import java.util.List;
 
@@ -23,4 +21,6 @@ public interface ShopItemService {
     List<ShopItemDTO> searchItem(String searchText, Integer userId);
 
     List<ShopItemDTO> findAllByUserLoved(Integer userId);
+
+    List<ShopItemDTO> findAllByCategory(Integer categoryId, Integer userId, Integer offset);
 }
