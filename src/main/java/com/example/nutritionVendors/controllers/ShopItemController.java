@@ -15,6 +15,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,16 +49,18 @@ public class ShopItemController {
     public ResponseEntity searchItem(@RequestHeader(value = "Authorization") String authorizationHeader, @PathVariable(name = "searchText") String searchText) throws InternalError {
         try{
 
+            String result = java.net.URLDecoder.decode(searchText, StandardCharsets.UTF_8.name());
+
             if (authorizationHeader == null || authorizationHeader == "" || authorizationHeader == "guest") {
-                return  ResponseEntity.ok(shopItemService.searchItem(searchText, 0));
+                return  ResponseEntity.ok(shopItemService.searchItem(result, 0));
 
             } else {
                 User user = userService.findByToken(authorizationHeader);
-                return ResponseEntity.ok(shopItemService.searchItem(searchText, user.getId()));
+                return ResponseEntity.ok(shopItemService.searchItem(result, user.getId()));
             }
 
 
-        } catch (InternalError | NullPointerException e){
+        } catch (InternalError | NullPointerException | UnsupportedEncodingException e){
             System.out.println(e.getCause());
             throw new InternalException("Internal Server Error");
         }

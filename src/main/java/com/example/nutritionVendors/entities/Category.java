@@ -16,17 +16,27 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+    private String icon;
 
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Item> items;
 
-    public Category(String name, List<Item> items) {
+    public Category(String name, String icon, List<Item> items) {
         this.name = name;
+        this.icon = icon;
         this.items = items;
     }
 
     public Category() {
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public Integer getId() {
