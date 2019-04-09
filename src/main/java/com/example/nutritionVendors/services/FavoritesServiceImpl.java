@@ -2,6 +2,7 @@ package com.example.nutritionVendors.services;
 
 import com.example.nutritionVendors.EntitiesDTO.FavoritesDTO;
 import com.example.nutritionVendors.entities.Favorites;
+import com.example.nutritionVendors.entities.User;
 import com.example.nutritionVendors.respositories.DTOFavoritesRepository;
 import com.example.nutritionVendors.respositories.FavoritesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class FavoritesServiceImpl implements FavoritesService {
     private UserService userService;
 
     @Override
-    public FavoritesDTO loveOne(Integer id, Integer userId, Integer status) {
+    public FavoritesDTO loveOne(Integer id, Integer userId) {
         Favorites favorites = favoritesRepository.findByShopItemIdAndUserId(id, userId);
 
         if (favorites == null) {
@@ -37,7 +38,12 @@ public class FavoritesServiceImpl implements FavoritesService {
 
             favorites = favoritesRepository.save(favorites);
         } else {
-            favorites.setStatus(status);
+            if (favorites.getStatus() == 1) {
+                favorites.setStatus(0);
+            } else {
+                favorites.setStatus(1);
+            }
+
             favoritesRepository.save(favorites);
         }
 
@@ -52,5 +58,10 @@ public class FavoritesServiceImpl implements FavoritesService {
     @Override
     public List<FavoritesDTO> findAllByuserLoved(Integer userId) {
         return null;
+    }
+
+    @Override
+    public Favorites getLoveStatus(Integer shopitem_id, User user) {
+        return favoritesRepository.findByShopItemIdAndStatusAndUserId(shopitem_id, 1, user.getId());
     }
 }

@@ -1,5 +1,6 @@
 package com.example.nutritionVendors.controllers;
 
+import com.example.nutritionVendors.entities.Favorites;
 import com.example.nutritionVendors.entities.User;
 import com.example.nutritionVendors.services.FavoritesService;
 import com.example.nutritionVendors.services.UserService;
@@ -37,4 +38,48 @@ public class FavoritesController {
             return new ResponseEntity<>("internal exception", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    @GetMapping("/check/{shopitem_id}")
+    public ResponseEntity getLoveStatus(@RequestHeader(value = "Authorization") String authorizationHeader, @PathVariable(name = "shopitem_id") Integer shopitem_id) throws InternalError {
+        try {
+
+            if (authorizationHeader == null || authorizationHeader == "") {
+                return ResponseEntity.ok(new Favorites());
+
+            } else {
+                User user = userService.findByToken(authorizationHeader);
+                Favorites favorites = favoritesService.getLoveStatus(shopitem_id, user);
+                if (favorites == null ) {
+                    return ResponseEntity.ok(new Favorites());
+                } else {
+                    return ResponseEntity.ok(favorites);
+                }
+            }
+
+        } catch (Exception e){
+            System.out.println("exception: " + e.getCause());
+            return new ResponseEntity<>("internal exception", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @GetMapping("/love/{id}")
+    public ResponseEntity loveOneitem(@RequestHeader(value = "Authorization") String authorizationHeader, @PathVariable(value = "id") Integer shopItemId) throws InternalError {
+        try {
+
+            if (authorizationHeader == null || authorizationHeader == "") {
+                return new ResponseEntity<>("Authorization token is wrong", HttpStatus.NOT_FOUND);
+
+            } else {
+                User user = userService.findByToken(authorizationHeader);
+                return ResponseEntity.ok(favoritesService.loveOne(shopItemId, user.getId()));
+            }
+
+        } catch (Exception e){
+            System.out.println("exception: " + e.getCause());
+            return new ResponseEntity<>("internal exception", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

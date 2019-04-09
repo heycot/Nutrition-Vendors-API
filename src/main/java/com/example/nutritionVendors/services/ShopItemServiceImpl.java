@@ -86,6 +86,7 @@ public class ShopItemServiceImpl implements ShopItemService {
     }
 
 
+
     @Override
     public List<ShopItemDTO> getAllByShopId(Integer id, Integer limit, Integer offset, Integer userId) {
         List<ShopItemDTO> shopItemDTOS = dtoShopItemRepository.getAllByShopId(id, limit, offset);

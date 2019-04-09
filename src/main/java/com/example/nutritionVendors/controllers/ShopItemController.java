@@ -130,26 +130,7 @@ public class ShopItemController {
     }
 
 
-    @GetMapping("/love/{id}/{status}")
-    public ResponseEntity loveOneitem(@RequestHeader(value = "Authorization") String authorizationHeader, @PathVariable(value = "id") Integer shopItemId, @PathVariable(value = "status") Integer status) throws InternalError {
-        try {
-
-            if (authorizationHeader == null || authorizationHeader == "") {
-                return new ResponseEntity<>("Authorization token is wrong", HttpStatus.NOT_FOUND);
-
-            } else {
-                User user = userService.findByToken(authorizationHeader);
-                return ResponseEntity.ok(favoritesService.loveOne(shopItemId, user.getId(), status));
-            }
-
-        } catch (Exception e){
-            System.out.println("exception: " + e.getCause());
-            return new ResponseEntity<>("internal exception", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-
-    @GetMapping("/love/offset")
+    @GetMapping("/love")
     public ResponseEntity loveOneitem(@RequestHeader(value = "Authorization") String authorizationHeader) throws InternalError {
         try {
 
@@ -186,5 +167,6 @@ public class ShopItemController {
             return new ResponseEntity<>("internal exception", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
 }
