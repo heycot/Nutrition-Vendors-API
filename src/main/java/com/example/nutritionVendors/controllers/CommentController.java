@@ -64,6 +64,7 @@ public class CommentController {
                 Integer number_comment = shopItem.getComments().size();
                 Double rating = (shopItem.getRating() * number_comment + comment.getRating() ) / (number_comment + 1);
                 shopItem.setRating(rating);
+                shopItem.setComment_number(shopItem.getComment_number() + 1);
 
                 return ResponseEntity.ok(commentService.addOne(comment));
             }

@@ -3,6 +3,7 @@ package com.example.nutritionVendors.controllers;
 import com.example.nutritionVendors.EntitiesDTO.ShopItemDTO;
 import com.example.nutritionVendors.entities.ShopItem;
 import com.example.nutritionVendors.entities.User;
+import com.example.nutritionVendors.library.Contants;
 import com.example.nutritionVendors.services.FavoritesService;
 import com.example.nutritionVendors.services.ShopItemService;
 import com.example.nutritionVendors.services.UserService;
@@ -71,11 +72,11 @@ public class ShopItemController {
         try{
 
             if (authorizationHeader == null || authorizationHeader == "" || authorizationHeader == "guest") {
-                return ResponseEntity.ok(shopItemService.getHighRatingItem(offset, 10, 0));
+                return ResponseEntity.ok(shopItemService.getHighRatingItem(offset, Contants.LIMIT, 0));
 
             } else {
                 User user = userService.findByToken(authorizationHeader);
-                return ResponseEntity.ok(shopItemService.getHighRatingItem(offset, 10, user.getId()));
+                return ResponseEntity.ok(shopItemService.getHighRatingItem(offset, Contants.LIMIT, user.getId()));
             }
 
         } catch (InternalError | NullPointerException e){
@@ -111,11 +112,11 @@ public class ShopItemController {
         try {
 
             if (authorizationHeader == null || authorizationHeader == "") {
-                return ResponseEntity.ok(shopItemService.getAllByShopId(id, 10, offset, 0));
+                return ResponseEntity.ok(shopItemService.getAllByShopId(id, Contants.LIMIT, offset, 0));
 
             } else {
                 User user = userService.findByToken(authorizationHeader);
-                return ResponseEntity.ok(shopItemService.getAllByShopId(id, 10, offset, user.getId()));
+                return ResponseEntity.ok(shopItemService.getAllByShopId(id, Contants.LIMIT, offset, user.getId()));
             }
 
         } catch (Exception e){
@@ -139,7 +140,7 @@ public class ShopItemController {
 
             } else {
                 User user = userService.findByToken(authorizationHeader);
-                return ResponseEntity.ok(shopItemService.findAllByUserLoved(user.getId(), offset, 20));
+                return ResponseEntity.ok(shopItemService.findAllByUserLoved(user.getId(), offset, Contants.LIMIT));
             }
 
         } catch (Exception e){

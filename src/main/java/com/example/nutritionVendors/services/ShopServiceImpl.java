@@ -1,6 +1,7 @@
 package com.example.nutritionVendors.services;
 
 import com.example.nutritionVendors.entities.Shop;
+import com.example.nutritionVendors.library.Contants;
 import com.example.nutritionVendors.respositories.ShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,11 +26,11 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public List<Shop> findNearestByUserLocation(Double latitude, Double longitude, Integer offset) {
-        return shopRepository.findNearestUserLocation(latitude, longitude, offset, 10);
+        return shopRepository.findNearestUserLocation(latitude, longitude, offset, Contants.LIMIT);
     }
 
     @Override
     public List<Shop> findAllNewest(Integer offset) {
-        return shopRepository.findNewest(offset, 10);
+        return shopRepository.findNewest(offset, Contants.LIMIT);
     }
 }

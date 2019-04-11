@@ -20,6 +20,8 @@ public class ShopItem {
     private Double price;
     private Integer status;
     private Double rating;
+    private Integer comment_number;
+    private Integer favorites_number;
 
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -45,17 +47,21 @@ public class ShopItem {
     public ShopItem() {
     }
 
-//    public ShopItem(Integer price, Integer status, Double rating, Shop shop, Item item, List<Document> documents, List<Favorites> favorites, List<Comment> comments) {
-//        this.price = price;
-//        this.status = status;
-//        this.rating = rating;
-//        this.shop = shop;
-//        this.item = item;
-//        this.documents = documents;
-//        this.favorites = favorites;
-//        this.comments = comments;
-//    }
+    public Integer getFavorites_number() {
+        return favorites_number;
+    }
 
+    public void setFavorites_number(Integer favorites_number) {
+        this.favorites_number = favorites_number;
+    }
+
+    public Integer getComment_number() {
+        return comment_number;
+    }
+
+    public void setComment_number(Integer comment_number) {
+        this.comment_number = comment_number;
+    }
 
     public Shop getShop() {
         return shop;

@@ -1,6 +1,7 @@
 package com.example.nutritionVendors.controllers;
 
 import com.example.nutritionVendors.entities.Shop;
+import com.example.nutritionVendors.library.Contants;
 import com.example.nutritionVendors.services.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class ShopController {
     @GetMapping("/{offset}")
     public ResponseEntity findAllShop(@PathVariable Integer offset) {
         try {
-            return ResponseEntity.ok(shopService.findAllShop(offset, 10));
+            return ResponseEntity.ok(shopService.findAllShop(offset, Contants.LIMIT));
         } catch (Exception e) {
             System.out.println("exception: " + e.getCause());
 

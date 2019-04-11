@@ -5,6 +5,7 @@ import com.example.nutritionVendors.EntitiesDTO.ShopItemDTO;
 import com.example.nutritionVendors.entities.Document;
 import com.example.nutritionVendors.entities.Favorites;
 import com.example.nutritionVendors.entities.ShopItem;
+import com.example.nutritionVendors.library.Contants;
 import com.example.nutritionVendors.respositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,11 +33,6 @@ public class ShopItemServiceImpl implements ShopItemService {
     @Autowired
     private CommentRepository commentRepository;
 
-
-//    @Override
-//    public List<ShopItem> getHighRatingShopItem(Integer limit, Integer offset) {
-//        return shopItemRepository.findHighRatingItem(limit, offset);
-//    }
 
     @Override
     public ShopItem getOne(Integer id) {
@@ -72,8 +68,6 @@ public class ShopItemServiceImpl implements ShopItemService {
             item = dtoShopItemRepository.findOneById(favoritesDTOS.get(i).getShopitem_id());
             item.setLove_status(1);
             item.setAvatar(documentRepository.getByShopItemIdAndAndPriority(item.getId(), 1).getLink());
-            item.setFavorites_number(favoritesRepository.countByShopItemId(item.getId()));
-            item.setComment_number(commentRepository.countByShopItemId(item.getId()));
             shopItemDTOS.add(item);
         }
 
@@ -82,7 +76,7 @@ public class ShopItemServiceImpl implements ShopItemService {
 
     @Override
     public List<ShopItemDTO> findAllByCategory(Integer categoryId, Integer userId, Integer offset) {
-        return updateInfors(dtoShopItemRepository.findAllByCategory(categoryId, offset, 10), userId);
+        return updateInfors(dtoShopItemRepository.findAllByCategory(categoryId, offset, Contants.LIMIT), userId);
     }
 
 
@@ -122,11 +116,8 @@ public class ShopItemServiceImpl implements ShopItemService {
             if (document != null) {
                 shopItemDTOS.get(i).setAvatar(document.getLink());
             } else {
-                shopItemDTOS.get(i).setAvatar("full_logo");
+                shopItemDTOS.get(i).setAvatar("full_logo.jpg");
             }
-            shopItemDTOS.get(i).setFavorites_number(favoritesRepository.countByShopItemId(shopItemDTOS.get(i).getId()));
-            shopItemDTOS.get(i).setComment_number(commentRepository.countByShopItemId(shopItemDTOS.get(i).getId()));
-
         }
 
         if (userId >0 ){
