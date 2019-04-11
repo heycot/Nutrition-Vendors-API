@@ -4,6 +4,7 @@ import com.example.nutritionVendors.entities.ShopItem;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.sql.Timestamp;
 
 @Entity
 public class FavoritesDTO {
@@ -13,15 +14,35 @@ public class FavoritesDTO {
     private Integer shopitem_id;
     private Integer user_id;
     private Integer status;
+    private Timestamp create_date;
+    private Timestamp update_date;
 
     public FavoritesDTO() {
     }
 
-    public FavoritesDTO(Integer id, Integer shopitem_id, Integer user_id, Integer status) {
+    public FavoritesDTO(Integer id, Integer shopitem_id, Integer user_id, Integer status, Timestamp create_date, Timestamp update_date) {
         this.id = id;
         this.shopitem_id = shopitem_id;
         this.user_id = user_id;
         this.status = status;
+        this.create_date = create_date;
+        this.update_date = update_date;
+    }
+
+    public Timestamp getCreate_date() {
+        return create_date;
+    }
+
+    public void setCreate_date(Timestamp create_date) {
+        this.create_date = create_date;
+    }
+
+    public Timestamp getUpdate_date() {
+        return update_date;
+    }
+
+    public void setUpdate_date(Timestamp update_date) {
+        this.update_date = update_date;
     }
 
     public Integer getId() {

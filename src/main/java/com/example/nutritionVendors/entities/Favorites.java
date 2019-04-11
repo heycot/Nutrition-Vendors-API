@@ -3,6 +3,7 @@ package com.example.nutritionVendors.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 //@Data
 @Entity
@@ -14,6 +15,8 @@ public class Favorites {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer status;
+    private Timestamp create_date;
+    private Timestamp update_date;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
@@ -28,11 +31,20 @@ public class Favorites {
     public Favorites() {
     }
 
+    public Timestamp getCreate_date() {
+        return create_date;
+    }
 
+    public void setCreate_date(Timestamp create_date) {
+        this.create_date = create_date;
+    }
 
-    public Favorites(User user, ShopItem shopItem) {
-        this.user = user;
-        this.shopItem = shopItem;
+    public Timestamp getUpdate_date() {
+        return update_date;
+    }
+
+    public void setUpdate_date(Timestamp update_date) {
+        this.update_date = update_date;
     }
 
     public Integer getStatus() {

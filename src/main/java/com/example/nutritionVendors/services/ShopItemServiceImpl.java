@@ -63,10 +63,10 @@ public class ShopItemServiceImpl implements ShopItemService {
     }
 
     @Override
-    public List<ShopItemDTO> findAllByUserLoved(Integer userId) {
-        List<FavoritesDTO> favoritesDTOS = dtoFavoritesRepository.findAllByUser_idAndStatus(userId, 1);
+    public List<ShopItemDTO> findAllByUserLoved(Integer userId, Integer offset, Integer limit) {
+        List<FavoritesDTO> favoritesDTOS = dtoFavoritesRepository.findAllByUser_idAndStatus(userId, 1, offset, limit);
         List<ShopItemDTO> shopItemDTOS = new ArrayList<>();
-        ShopItemDTO item = new ShopItemDTO();
+        ShopItemDTO item;
 
         for (int i = 0; i < favoritesDTOS.size(); i++) {
             item = dtoShopItemRepository.findOneById(favoritesDTOS.get(i).getShopitem_id());

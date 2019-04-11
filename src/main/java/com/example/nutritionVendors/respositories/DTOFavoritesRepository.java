@@ -14,6 +14,6 @@ public interface DTOFavoritesRepository extends JpaRepository<FavoritesDTO, Inte
     @Query(value = "select * from favorites where user_id = ?1", nativeQuery = true)
     List<FavoritesDTO> findAllByUser_id(Integer user_id);
 
-    @Query(value = "select * from favorites where user_id = ?1 and status = ?2", nativeQuery = true)
-    List<FavoritesDTO> findAllByUser_idAndStatus(Integer user_id, Integer status);
+    @Query(value = "select * from favorites where user_id = ?1 and status = ?2 order by create_date, update_date desc limit ?3, ?4", nativeQuery = true)
+    List<FavoritesDTO> findAllByUser_idAndStatus(Integer user_id, Integer status, Integer offset, Integer limit);
 }

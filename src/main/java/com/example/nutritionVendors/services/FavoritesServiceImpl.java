@@ -8,6 +8,8 @@ import com.example.nutritionVendors.respositories.FavoritesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -27,6 +29,11 @@ public class FavoritesServiceImpl implements FavoritesService {
 
     @Override
     public FavoritesDTO loveOne(Integer id, Integer userId) {
+
+        Date date= new Date();
+        long time = date.getTime();
+        Timestamp ts = new Timestamp(time);
+
         Favorites favorites = favoritesRepository.findByShopItemIdAndUserId(id, userId);
 
         if (favorites == null) {
@@ -35,6 +42,8 @@ public class FavoritesServiceImpl implements FavoritesService {
             favorites.setStatus(1);
             favorites.setShopItem(shopItemService.getOne(id));
             favorites.setUser(userService.getOneById(userId));
+            favorites.setCreate_date(ts);
+            favorites.setUpdate_date(ts);
 
             favorites = favoritesRepository.save(favorites);
         } else {
@@ -44,10 +53,11 @@ public class FavoritesServiceImpl implements FavoritesService {
                 favorites.setStatus(1);
             }
 
+            favorites.setUpdate_date(ts);
             favoritesRepository.save(favorites);
         }
 
-        return new FavoritesDTO(favorites.getId(), favorites.getShopItem().getId(), favorites.getUser().getId(), favorites.getStatus());
+        return new FavoritesDTO(favorites.getId(), favorites.getShopItem().getId(), favorites.getUser().getId(), favorites.getStatus(), favorites.getCreate_date(), favorites.getUpdate_date());
     }
 
     @Override

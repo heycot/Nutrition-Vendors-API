@@ -20,7 +20,7 @@ public interface ShopItemService {
 
     List<ShopItemDTO> searchItem(String searchText, Integer userId);
 
-    List<ShopItemDTO> findAllByUserLoved(Integer userId);
+    List<ShopItemDTO> findAllByUserLoved(Integer userId, Integer offset, Integer limit);
 
     List<ShopItemDTO> findAllByCategory(Integer categoryId, Integer userId, Integer offset);
 

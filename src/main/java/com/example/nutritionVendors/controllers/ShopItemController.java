@@ -130,8 +130,8 @@ public class ShopItemController {
     }
 
 
-    @GetMapping("/love")
-    public ResponseEntity loveOneitem(@RequestHeader(value = "Authorization") String authorizationHeader) throws InternalError {
+    @GetMapping("/love/{offset}")
+    public ResponseEntity findAllByUserLoved(@RequestHeader(value = "Authorization") String authorizationHeader, @PathVariable(name = "offset") Integer offset) throws InternalError {
         try {
 
             if (authorizationHeader == null || authorizationHeader == "") {
@@ -139,7 +139,7 @@ public class ShopItemController {
 
             } else {
                 User user = userService.findByToken(authorizationHeader);
-                return ResponseEntity.ok(shopItemService.findAllByUserLoved(user.getId()));
+                return ResponseEntity.ok(shopItemService.findAllByUserLoved(user.getId(), offset, 20));
             }
 
         } catch (Exception e){
