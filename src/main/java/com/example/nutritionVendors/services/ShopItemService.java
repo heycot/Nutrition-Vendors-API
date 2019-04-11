@@ -24,4 +24,6 @@ public interface ShopItemService {
 
     List<ShopItemDTO> findAllByCategory(Integer categoryId, Integer userId, Integer offset);
 
+    List<ShopItem> findAllByShopIdHadComment(Integer shop_id, Integer id);
+
 }

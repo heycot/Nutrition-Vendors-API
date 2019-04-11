@@ -15,7 +15,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String user_name;
+    private String name;
     private String email;
     private String phone;
     private String password;
@@ -41,20 +41,6 @@ public class User {
     public User() {
     }
 
-//    public User(String user_name, String email, String phone, String password, Timestamp birthday, String address, String avatar, Timestamp create_date, Integer status, List<Shop> shops, List<Comment> comments, List<Favorites> favorites) {
-//        this.user_name = user_name;
-//        this.email = email;
-//        this.phone = phone;
-//        this.password = password;
-//        this.birthday = birthday;
-//        this.address = address;
-//        this.avatar = avatar;
-//        this.create_date = create_date;
-//        this.status = status;
-//        this.shops = shops;
-//        this.comments = comments;
-//        this.favorites = favorites;
-//    }
 
     public Integer getId() {
         return id;
@@ -64,12 +50,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public String getName() {
+        return name;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setUser_name(String name) {
+        this.name = name;
     }
 
     public String getEmail() {

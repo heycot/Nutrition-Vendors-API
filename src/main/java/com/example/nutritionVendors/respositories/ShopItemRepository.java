@@ -16,4 +16,7 @@ public interface ShopItemRepository extends JpaRepository<ShopItem, Integer> {
 
     @Query(value = "select * from shopitem where id = ?1", nativeQuery = true)
     ShopItem findOneById(Integer id);
+
+    @Query(value = "select * from  shopitem where shop_id = ?1 and comment_number > ?2 and id != ?3", nativeQuery = true)
+    List<ShopItem> findAllByShopIdAndComment_numberGreaterThanAndIdNot(Integer shop_id, Integer comment_number, Integer id);
 }

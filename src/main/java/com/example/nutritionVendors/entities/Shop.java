@@ -24,6 +24,7 @@ public class Shop {
     private Integer status;
     private String phone;
     private String avatar;
+    private String sell;
 
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -43,18 +44,13 @@ public class Shop {
     public Shop() {
     }
 
-    public Shop(String name, Double rating, String time_open, String  time_close, Timestamp create_date, Integer status, String phone, String avatar, Location location, User user, List<ShopItem> shopItems) {
-        this.name = name;
-        this.rating = rating;
-        this.time_open = time_open;
-        this.time_close = time_close;
-        this.create_date = create_date;
-        this.status = status;
-        this.phone = phone;
-        this.avatar = avatar;
-        this.location = location;
-        this.user = user;
-        this.shopItems = shopItems;
+
+    public String getSell() {
+        return sell;
+    }
+
+    public void setSell(String sell) {
+        this.sell = sell;
     }
 
     public Integer getId() {

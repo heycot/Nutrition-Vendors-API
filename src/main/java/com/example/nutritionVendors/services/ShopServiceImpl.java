@@ -1,6 +1,8 @@
 package com.example.nutritionVendors.services;
 
+import com.example.nutritionVendors.EntitiesDTO.ShopItemDTO;
 import com.example.nutritionVendors.entities.Shop;
+import com.example.nutritionVendors.entities.ShopItem;
 import com.example.nutritionVendors.library.Contants;
 import com.example.nutritionVendors.respositories.ShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,9 @@ public class ShopServiceImpl implements ShopService {
 
     @Autowired
     private ShopRepository shopRepository;
+
+    @Autowired
+    private ShopItemService shopItemService;
 
     @Override
     public List<Shop> findAllShop(Integer limit, Integer offset) {
@@ -32,5 +37,28 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public List<Shop> findAllNewest(Integer offset) {
         return shopRepository.findNewest(offset, Contants.LIMIT);
+    }
+
+//    @Override
+//    public Shop findOneByShopItemId(Integer id) {
+//        return shopRepository.findOneByShopItemId(id);
+//    }
+
+
+    @Override
+    public Shop findOneByShopItemId(List<ShopItem> shopItems) {
+        return shopRepository.findByShopItems(shopItems);
+    }
+
+    @Override
+    public void updateStatusWhenCommented(ShopItem shopItem) {
+        Integer shopid = shopRepository.findIdByShopItemId(shopItem.getId());
+
+        Shop shop = shopRepository.findOne(shopid);
+        List<ShopItem> shopItemList = shopItemService.findAllByShopIdHadComment(shop.getId(), shopItem.getId());
+        shop.setRating(shop.getRating() * shopItemList.size() + shopItem.getRating()/ (shopItemList.size() + 1));
+
+        shopRepository.save(shop);
+
     }
 }

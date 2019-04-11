@@ -79,6 +79,10 @@ public class ShopItemServiceImpl implements ShopItemService {
         return updateInfors(dtoShopItemRepository.findAllByCategory(categoryId, offset, Contants.LIMIT), userId);
     }
 
+    @Override
+    public List<ShopItem> findAllByShopIdHadComment(Integer shop_id, Integer id) {
+        return shopItemRepository.findAllByShopIdAndComment_numberGreaterThanAndIdNot(shop_id, 0, id);
+    }
 
 
     @Override

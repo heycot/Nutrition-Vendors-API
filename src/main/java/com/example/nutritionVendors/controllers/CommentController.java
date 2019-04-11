@@ -2,10 +2,12 @@ package com.example.nutritionVendors.controllers;
 
 import com.example.nutritionVendors.EntitiesDTO.CommentDTO;
 import com.example.nutritionVendors.entities.Comment;
+import com.example.nutritionVendors.entities.Shop;
 import com.example.nutritionVendors.entities.ShopItem;
 import com.example.nutritionVendors.entities.User;
 import com.example.nutritionVendors.services.CommentService;
 import com.example.nutritionVendors.services.ShopItemService;
+import com.example.nutritionVendors.services.ShopService;
 import com.example.nutritionVendors.services.UserService;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping(CommentController.BASE_URL)
@@ -28,6 +32,9 @@ public class CommentController {
 
     @Autowired
     private ShopItemService shopItemService;
+
+    @Autowired
+    private ShopService shopService;
 
 
     @PostMapping("/add")
@@ -65,6 +72,9 @@ public class CommentController {
                 Double rating = (shopItem.getRating() * number_comment + comment.getRating() ) / (number_comment + 1);
                 shopItem.setRating(rating);
                 shopItem.setComment_number(shopItem.getComment_number() + 1);
+
+                shopService.updateStatusWhenCommented(shopItem);
+
 
                 return ResponseEntity.ok(commentService.addOne(comment));
             }
