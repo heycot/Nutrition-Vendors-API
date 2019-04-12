@@ -52,10 +52,61 @@ public class ShopItemServiceImpl implements ShopItemService {
 
     @Override
     public List<ShopItemDTO> searchItem(String searchText, Integer userId) {
-        List<ShopItemDTO> itemDTOList = dtoShopItemRepository.searchItem("%" +searchText + "%");
-        itemDTOList = updateLove_Status(itemDTOList, userId);
+        List<ShopItemDTO> itemDTOList = dtoShopItemRepository.searchItem("%" +searchText + " %");
+        List<ShopItemDTO> itemDTOList1 = dtoShopItemRepository.searchItem("% " +searchText + " %");
+        for (int i =0 ; i < itemDTOList1.size(); i++) {
+            if ( !checkItemInList(itemDTOList, itemDTOList1.get(i)) ) {
+                itemDTOList.add(itemDTOList1.get(i));
+            }
+        }
 
-        return itemDTOList;
+        List<ShopItemDTO> itemDTOList2 = dtoShopItemRepository.searchItem("%" +searchText + "%");
+        for (int i =0 ; i < itemDTOList2.size(); i++) {
+            if ( !checkItemInList(itemDTOList, itemDTOList2.get(i)) ) {
+                itemDTOList.add(itemDTOList2.get(i));
+            }
+        }
+
+        itemDTOList = reSortListWithSearch(itemDTOList, searchText);
+
+        return updateInfors(itemDTOList, userId);
+    }
+
+    public List<ShopItemDTO> reSortListWithSearch(List<ShopItemDTO> array, String searchText) {
+        List<ShopItemDTO> list = new ArrayList<>();
+
+        for (int i = 0; i < array.size(); i++ ) {
+            if ( array.get(i).getName().toLowerCase() == searchText && !checkItemInList(list, array.get(i))) {
+                list.add(array.get(i));
+            }
+
+        }
+
+        for (int i = 0; i < array.size(); i++ ) {
+
+            if ( array.get(i).getName().toLowerCase().contains(searchText) && !checkItemInList(list, array.get(i))) {
+                list.add(array.get(i));
+            }
+        }
+
+        for (int i = 0; i < array.size(); i++ ) {
+
+            if (  !checkItemInList(list, array.get(i))) {
+                list.add(array.get(i));
+            }
+        }
+
+        return list;
+    }
+
+    public Boolean checkItemInList(List<ShopItemDTO> itemDTOS, ShopItemDTO itemDTO) {
+        for (int i  = 0; i < itemDTOS.size(); i++){
+            if (itemDTO.getId() == itemDTOS.get(i).getId()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override
