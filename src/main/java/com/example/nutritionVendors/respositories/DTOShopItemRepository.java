@@ -57,6 +57,7 @@ public interface DTOShopItemRepository extends JpaRepository<ShopItemDTO, Intege
             " left join shop on shopitem.shop_id = shop.id " +
             " left join location l on shop.location_id = l.id " +
             " where item.name like  ?1 or shop.name like ?1 or l.address like ?1" +
+//            " where item.name like  CONCAT('%', CONVERT (?1, BINARY), '%') or shop.name like CONCAT('%', CONVERT (?1, BINARY), '%') or l.address like CONCAT('%', CONVERT (?1, BINARY), '%')" +
             " group by shopitem.id, item.name, shop.name " , nativeQuery = true)
     List<ShopItemDTO> searchItem(String searchText);
 
