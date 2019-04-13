@@ -50,6 +50,7 @@ public class ShopItemController {
     public ResponseEntity searchItem(@RequestHeader(value = "Authorization") String authorizationHeader, @PathVariable(name = "searchText") String searchText) throws InternalError {
         try{
 
+
             String result = java.net.URLDecoder.decode(searchText, StandardCharsets.UTF_8.name());
 
             if (authorizationHeader == null || authorizationHeader == "" || authorizationHeader == "guest") {

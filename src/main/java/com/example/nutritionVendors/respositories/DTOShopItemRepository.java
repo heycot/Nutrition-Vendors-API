@@ -51,15 +51,17 @@ public interface DTOShopItemRepository extends JpaRepository<ShopItemDTO, Intege
     ShopItemDTO getOneById(Integer id);
 
     @Query(value = "select shopitem.id, shopitem.price, shopitem.status, shopitem.rating, shopitem.comment_number, shopitem.favorites_number," +
-            " item.name as name, shop.name as shop_name,  '' as avatar, 0 as love_status from shopitem" +
+            " item.name as name, shop.name as shop_name,  '' as avatar, 0 as love_status, l.address as address from shopitem" +
             " inner join item on shopitem.item_id = item.id" +
             " left join document on shopitem.id = document.shopitem_id" +
             " left join shop on shopitem.shop_id = shop.id " +
             " left join location l on shop.location_id = l.id " +
-            " where item.name like  ?1 or shop.name like ?1 or l.address like ?1" +
+//            " where item.name like  ?1 or shop.name like ?1 or l.address like ?1" +
+            " where item.name like  CONCAT('%', ?1, '%') or shop.name like CONCAT('%', ?1, '%') or l.address like CONCAT('%',?1, '%')" +
 //            " where item.name like  CONCAT('%', CONVERT (?1, BINARY), '%') or shop.name like CONCAT('%', CONVERT (?1, BINARY), '%') or l.address like CONCAT('%', CONVERT (?1, BINARY), '%')" +
             " group by shopitem.id, item.name, shop.name " , nativeQuery = true)
-    List<ShopItemDTO> searchItem(String searchText);
+    List<ShopItemDTO> searchItem(byte[] searchText);
+//    List<ShopItemDTO> searchItem(String searchText);
 
     @Query(value = "select shopitem.id, shopitem.price, shopitem.status, shopitem.rating, shopitem.comment_number, shopitem.favorites_number," +
             " item.name as name, shop.name as shop_name,  '' as avatar, 0 as love_status from shopitem" +

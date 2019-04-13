@@ -18,10 +18,19 @@ public class ShopItemDTO {
     private String shop_name;
     private String avatar;
     private Integer love_status;
+    private String address;
 
 
 
     public ShopItemDTO() {
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getShop_name() {

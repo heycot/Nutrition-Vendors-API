@@ -10,6 +10,7 @@ import com.example.nutritionVendors.respositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,52 +53,179 @@ public class ShopItemServiceImpl implements ShopItemService {
 
     @Override
     public List<ShopItemDTO> searchItem(String searchText, Integer userId) {
-        List<ShopItemDTO> itemDTOList = dtoShopItemRepository.searchItem("%" +searchText + " %");
-        List<ShopItemDTO> itemDTOList1 = dtoShopItemRepository.searchItem("% " +searchText + " %");
-        for (int i =0 ; i < itemDTOList1.size(); i++) {
-            if ( !checkItemInList(itemDTOList, itemDTOList1.get(i)) ) {
-                itemDTOList.add(itemDTOList1.get(i));
-            }
+
+        String[] searchTexts =  searchText.split(" ");
+        List<ShopItemDTO> resultSearch = new ArrayList<>();
+
+        for (int i = 0; i < searchTexts.length; i++) {
+            List<ShopItemDTO> list = searchByOneWord(searchTexts[i]);
+            resultSearch = addListToList(resultSearch, list);
         }
 
-        List<ShopItemDTO> itemDTOList2 = dtoShopItemRepository.searchItem("%" +searchText + "%");
-        for (int i =0 ; i < itemDTOList2.size(); i++) {
-            if ( !checkItemInList(itemDTOList, itemDTOList2.get(i)) ) {
-                itemDTOList.add(itemDTOList2.get(i));
-            }
-        }
+        resultSearch = SortListWithSearch(resultSearch, searchTexts);
 
-        itemDTOList = reSortListWithSearch(itemDTOList, searchText);
-
-        return updateInfors(itemDTOList, userId);
+        return updateInfors(resultSearch, userId);
     }
 
-    public List<ShopItemDTO> reSortListWithSearch(List<ShopItemDTO> array, String searchText) {
-        List<ShopItemDTO> list = new ArrayList<>();
 
-        for (int i = 0; i < array.size(); i++ ) {
-            if ( array.get(i).getName().toLowerCase() == searchText && !checkItemInList(list, array.get(i))) {
-                list.add(array.get(i));
-            }
 
-        }
+    public List<ShopItemDTO> searchByOneWord(String searchText) {
+        byte[] searchBinary1 = ( " " + searchText + " ").getBytes(StandardCharsets.UTF_8);
+        byte[] searchBinary2 = ( searchText + " ").getBytes(StandardCharsets.UTF_8);
+        byte[] searchBinary3 = ( " " + searchText ).getBytes(StandardCharsets.UTF_8);
 
-        for (int i = 0; i < array.size(); i++ ) {
+        //search with regex one
+        List<ShopItemDTO> itemDTOList = dtoShopItemRepository.searchItem(searchBinary1);
 
-            if ( array.get(i).getName().toLowerCase().contains(searchText) && !checkItemInList(list, array.get(i))) {
-                list.add(array.get(i));
-            }
-        }
+        //search with regex two and add to list
+        List<ShopItemDTO> itemDTOList1 = dtoShopItemRepository.searchItem(searchBinary2);
+        itemDTOList = addListToList(itemDTOList, itemDTOList1);
 
-        for (int i = 0; i < array.size(); i++ ) {
+        // search with regex three and all to list
+        List<ShopItemDTO> itemDTOList2 = dtoShopItemRepository.searchItem(searchBinary3);
+        itemDTOList = addListToList(itemDTOList, itemDTOList2);
 
-            if (  !checkItemInList(list, array.get(i))) {
-                list.add(array.get(i));
-            }
-        }
+        return itemDTOList;
 
-        return list;
     }
+
+    public List<ShopItemDTO> addListToList(List<ShopItemDTO> arrWillAdd, List<ShopItemDTO> arr) {
+        for (int i =0 ; i < arr.size(); i++) {
+            if ( !checkItemInList(arrWillAdd, arr.get(i)) ) {
+                arrWillAdd.add(arr.get(i));
+            }
+        }
+
+        return arrWillAdd;
+    }
+
+    public List<ShopItemDTO> SortListWithSearch(List<ShopItemDTO> array, String[] searchText) {
+        Integer max = searchText.length;
+
+        List<ShopItemDTO> result = new ArrayList<>();
+
+        while (max >= 0 && result.size() < 20) {
+            for ( int i  = 0; i < array.size(); i++) {
+                if ( countNumberContainsInObjectBySearch(array.get(i), searchText) >= max && !checkItemInList(result, array.get(i))) {
+//                    System.out.println(array.get(i).getName() + " . ........ " + countNumberContainsInObjectBySearch(array.get(i), searchText) + " ====" + max);
+                    result.add(array.get(i));
+                }
+            }
+
+            max--;
+        }
+
+        return result;
+    }
+
+    public Integer countNumberContainsInObjectBySearch(ShopItemDTO item, String[] searchText) {
+        Integer count = 0;
+
+        for ( int i = 0; i < searchText.length; i++) {
+            if (checkExists(item.getName(), searchText[i]) || checkExists(item.getShop_name(), searchText[i]) || checkExists(item.getAddress(), searchText[i])) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    public boolean checkExists(String property, String searchText) {
+        property = property.toLowerCase();
+
+        byte[] decode = property.getBytes(StandardCharsets.UTF_8);
+
+//        System.out.println(property + " ----- " + searchText + ": " +  property.toLowerCase().contains(" " + searchText + " ") + property.toLowerCase().contains(searchText + " ") + property.toLowerCase().contains(" " + searchText) );
+        if ( property.toLowerCase().contains(" " + searchText + " ") || property.toLowerCase().contains(searchText + " ") || property.toLowerCase().contains(" " + searchText)) {
+            return true;
+        }
+        return false;
+    }
+
+
+//    public List<ShopItemDTO> reSortListWithSearch(List<ShopItemDTO> array, String[] searchText) {
+//        List<ShopItemDTO> list = new ArrayList<>();
+//
+//
+//        // xep nhung item co dung nhu search text len ( thuong chi co contains)
+////        for (int i = 0; i < array.size(); i++ ) {
+////            for (int j = 0; j < searchText.length; j++ ) {
+////                if ( array.get(i).getName().toLowerCase() == searchText[j] || array.get(i).getShop_name().toLowerCase() == searchText[j] ) {
+////
+////                    if ( array.get(i).getAddress().toLowerCase() == searchText[j] ) {
+////                        if ( !checkItemInList(list, array.get(i))) {
+////                            list.add(array.get(i));
+////                        }
+////                    } else if ( array.get(i).getAddress().toLowerCase().contains(searchText[j])) {
+////                        if ( !checkItemInList(list, array.get(i))) {
+////                            list.add(array.get(i));
+////                        }
+////                    } else {
+////
+////                        if ( !checkItemInList(list, array.get(i))) {
+////                            list.add(array.get(i));
+////                        }
+////                    }
+////                }
+////            }
+////        }
+//
+//        // xep co ten va dia chi giong len truoc
+//        for (int i = 0; i < array.size(); i++ ) {
+//
+//            for (int j = 0; j < searchText.length; j++ ) {
+//                if ( array.get(i).getName().toLowerCase().contains(searchText[j]) || array.get(i).getShop_name().toLowerCase().contains(searchText[j])) {
+//
+//                    if ( array.get(i).getAddress().toLowerCase().contains(searchText[j]) &&  !checkItemInList(list, array.get(i))) {
+//                        list.add(array.get(i));
+//                    }
+//                }
+//            }
+//        }
+//
+//        // xep co ten giong len tiep theo
+//        for (int i = 0; i < array.size(); i++ ) {
+//
+//            for (int j = 0; j < searchText.length; j++ ) {
+//                if ( array.get(i).getName().toLowerCase().contains(searchText[j]) || array.get(i).getShop_name().toLowerCase().contains(searchText[j])) {
+//
+//                    if ( !checkItemInList(list, array.get(i))) {
+//                        list.add(array.get(i));
+//                    }
+//                }
+//            }
+//        }
+//
+//        // xep co dia chi giong tiep theo
+//        for (int i = 0; i < array.size(); i++ ) {
+//            for (int j = 0; j < searchText.length; j++ ) {
+//                if ( array.get(i).getAddress().toLowerCase() == searchText[j] ) {
+//                    if ( !checkItemInList(list, array.get(i))) {
+//                        list.add(array.get(i));
+//                    }
+//                }
+//            }
+//        }
+//
+//
+//        // neu mang chua lon hon 30 thi them vao
+//        if ( array.size() < 30) {
+//            for (int i = 0; i < array.size(); i++ ) {
+//
+//                for (int j = 0; j < searchText.length; j++ ) {
+//                    if ( array.get(i).getAddress().toLowerCase().contains(searchText[j])) {
+//                        if ( !checkItemInList(list, array.get(i))) {
+//                            list.add(array.get(i));
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//        list = addListToList(list, array);
+//
+//        return list;
+//    }
 
     public Boolean checkItemInList(List<ShopItemDTO> itemDTOS, ShopItemDTO itemDTO) {
         for (int i  = 0; i < itemDTOS.size(); i++){
