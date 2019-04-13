@@ -29,6 +29,7 @@ public interface DTOShopItemRepository extends JpaRepository<ShopItemDTO, Intege
             " left join item on shopitem.item_id = item.id" +
             " left join document on shopitem.id = document.shopitem_id" +
             " left join shop on shopitem.shop_id = shop.id " +
+            " left join location l on shop.location_id = l.id " +
             " group by shopitem.id, item.name, shop.name order by shopitem.rating desc limit ?1, ?2", nativeQuery = true)
     List<ShopItemDTO> getHighRatingItem(Integer limit, Integer offset);
 
@@ -38,6 +39,7 @@ public interface DTOShopItemRepository extends JpaRepository<ShopItemDTO, Intege
             " left join item on shopitem.item_id = item.id" +
             " left join document on shopitem.id = document.shopitem_id" +
             " left join shop on shopitem.shop_id = shop.id " +
+            " left join location l on shop.location_id = l.id " +
             " where shopitem.shop_id = ?1" +
             " group by shopitem.id, item.name, shop.name order by shopitem.rating desc limit ?2, ?3", nativeQuery = true)
     List<ShopItemDTO> getAllByShopId(Integer shopId, Integer limit, Integer offset);
@@ -47,6 +49,7 @@ public interface DTOShopItemRepository extends JpaRepository<ShopItemDTO, Intege
             " left join item on shopitem.item_id = item.id" +
             " left join document on shopitem.id = document.shopitem_id" +
             " left join shop on shopitem.shop_id = shop.id " +
+            " left join location l on shop.location_id = l.id " +
             " group by shopitem.id, item.name, shop.name ", nativeQuery = true)
     ShopItemDTO getOneById(Integer id);
 
@@ -56,9 +59,7 @@ public interface DTOShopItemRepository extends JpaRepository<ShopItemDTO, Intege
             " left join document on shopitem.id = document.shopitem_id" +
             " left join shop on shopitem.shop_id = shop.id " +
             " left join location l on shop.location_id = l.id " +
-//            " where item.name like  ?1 or shop.name like ?1 or l.address like ?1" +
             " where item.name like  CONCAT('%', ?1, '%') or shop.name like CONCAT('%', ?1, '%') or l.address like CONCAT('%',?1, '%')" +
-//            " where item.name like  CONCAT('%', CONVERT (?1, BINARY), '%') or shop.name like CONCAT('%', CONVERT (?1, BINARY), '%') or l.address like CONCAT('%', CONVERT (?1, BINARY), '%')" +
             " group by shopitem.id, item.name, shop.name " , nativeQuery = true)
     List<ShopItemDTO> searchItem(byte[] searchText);
 //    List<ShopItemDTO> searchItem(String searchText);
@@ -68,6 +69,7 @@ public interface DTOShopItemRepository extends JpaRepository<ShopItemDTO, Intege
             " left join item on shopitem.item_id = item.id" +
             " left join document on shopitem.id = document.shopitem_id" +
             " left join shop on shopitem.shop_id = shop.id " +
+            " left join location l on shop.location_id = l.id " +
             " group by shopitem.id, item.name, shop.name " , nativeQuery = true)
     List<ShopItemDTO> getAll();
 
@@ -79,7 +81,9 @@ public interface DTOShopItemRepository extends JpaRepository<ShopItemDTO, Intege
             " item.name as name, shop.name as shop_name,  '' as avatar, 0 as love_status, l.address as address  from shopitem" +
             " left join item on shopitem.item_id = item.id" +
             " left join document on shopitem.id = document.shopitem_id" +
-            " left join shop on shopitem.shop_id = shop.id where shopitem.id = ?1" +
+            " left join shop on shopitem.shop_id = shop.id " +
+            " left join location l on shop.location_id = l.id " +
+            " where shopitem.id = ?1" +
             " group by shopitem.id, item.name, shop.name ", nativeQuery = true)
     ShopItemDTO findOneById(Integer shopitem_id);
 
@@ -87,7 +91,9 @@ public interface DTOShopItemRepository extends JpaRepository<ShopItemDTO, Intege
             " item.name as name, shop.name as shop_name,  '' as avatar, 0 as love_status, l.address as address  from shopitem" +
             " inner join item on shopitem.item_id = item.id" +
             " left join document on shopitem.id = document.shopitem_id" +
-            " left join shop on shopitem.shop_id = shop.id where item.category_id = ?1" +
+            " left join shop on shopitem.shop_id = shop.id " +
+            " left join location l on shop.location_id = l.id " +
+            " where item.category_id = ?1" +
             " group by shopitem.id, item.name, shop.name order by shopitem.rating desc limit ?2, ?3", nativeQuery = true)
     List<ShopItemDTO> findAllByCategory(Integer categoryId, Integer offset, Integer limit);
 }
