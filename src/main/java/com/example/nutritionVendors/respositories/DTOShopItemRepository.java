@@ -25,7 +25,7 @@ public interface DTOShopItemRepository extends JpaRepository<ShopItemDTO, Intege
 //    List<ShopItemDTO> getHighRatingItem(Integer limit, Integer offset);
 
     @Query(value = "select shopitem.id, shopitem.price, shopitem.status, shopitem.rating, shopitem.comment_number, shopitem.favorites_number," +
-            " item.name as name, shop.name as shop_name,  '' as avatar, 0 as love_status from shopitem" +
+            " item.name as name, shop.name as shop_name,  '' as avatar, 0 as love_status, l.address as address  from shopitem" +
             " left join item on shopitem.item_id = item.id" +
             " left join document on shopitem.id = document.shopitem_id" +
             " left join shop on shopitem.shop_id = shop.id " +
@@ -34,7 +34,7 @@ public interface DTOShopItemRepository extends JpaRepository<ShopItemDTO, Intege
 
 
     @Query(value = "select shopitem.id, shopitem.price, shopitem.status, shopitem.rating, shopitem.comment_number, shopitem.favorites_number," +
-            " item.name as name, shop.name as shop_name,  '' as avatar, 0 as love_status from shopitem" +
+            " item.name as name, shop.name as shop_name,  '' as avatar, 0 as love_status, l.address as address  from shopitem" +
             " left join item on shopitem.item_id = item.id" +
             " left join document on shopitem.id = document.shopitem_id" +
             " left join shop on shopitem.shop_id = shop.id " +
@@ -43,7 +43,7 @@ public interface DTOShopItemRepository extends JpaRepository<ShopItemDTO, Intege
     List<ShopItemDTO> getAllByShopId(Integer shopId, Integer limit, Integer offset);
 
     @Query(value = "select shopitem.id, shopitem.price, shopitem.status, shopitem.rating, shopitem.comment_number, shopitem.favorites_number," +
-            " item.name as name, shop.name as shop_name,  '' as avatar, 0 as love_status from shopitem" +
+            " item.name as name, shop.name as shop_name,  '' as avatar, 0 as love_status, l.address as address  from shopitem" +
             " left join item on shopitem.item_id = item.id" +
             " left join document on shopitem.id = document.shopitem_id" +
             " left join shop on shopitem.shop_id = shop.id " +
@@ -64,7 +64,7 @@ public interface DTOShopItemRepository extends JpaRepository<ShopItemDTO, Intege
 //    List<ShopItemDTO> searchItem(String searchText);
 
     @Query(value = "select shopitem.id, shopitem.price, shopitem.status, shopitem.rating, shopitem.comment_number, shopitem.favorites_number," +
-            " item.name as name, shop.name as shop_name,  '' as avatar, 0 as love_status from shopitem" +
+            " item.name as name, shop.name as shop_name,  '' as avatar, 0 as love_status, l.address as address  from shopitem" +
             " left join item on shopitem.item_id = item.id" +
             " left join document on shopitem.id = document.shopitem_id" +
             " left join shop on shopitem.shop_id = shop.id " +
@@ -76,7 +76,7 @@ public interface DTOShopItemRepository extends JpaRepository<ShopItemDTO, Intege
 
 
     @Query(value = "select shopitem.id, shopitem.price, shopitem.status, shopitem.rating, shopitem.comment_number, shopitem.favorites_number," +
-            " item.name as name, shop.name as shop_name,  '' as avatar, 0 as love_status from shopitem" +
+            " item.name as name, shop.name as shop_name,  '' as avatar, 0 as love_status, l.address as address  from shopitem" +
             " left join item on shopitem.item_id = item.id" +
             " left join document on shopitem.id = document.shopitem_id" +
             " left join shop on shopitem.shop_id = shop.id where shopitem.id = ?1" +
@@ -84,7 +84,7 @@ public interface DTOShopItemRepository extends JpaRepository<ShopItemDTO, Intege
     ShopItemDTO findOneById(Integer shopitem_id);
 
     @Query(value = "select shopitem.id, shopitem.price, shopitem.status, shopitem.rating, shopitem.comment_number, shopitem.favorites_number," +
-            " item.name as name, shop.name as shop_name,  '' as avatar, 0 as love_status from shopitem" +
+            " item.name as name, shop.name as shop_name,  '' as avatar, 0 as love_status, l.address as address  from shopitem" +
             " inner join item on shopitem.item_id = item.id" +
             " left join document on shopitem.id = document.shopitem_id" +
             " left join shop on shopitem.shop_id = shop.id where item.category_id = ?1" +
