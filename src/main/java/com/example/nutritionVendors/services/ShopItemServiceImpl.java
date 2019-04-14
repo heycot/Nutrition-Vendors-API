@@ -62,6 +62,7 @@ public class ShopItemServiceImpl implements ShopItemService {
             resultSearch = addListToList(resultSearch, list);
         }
 
+
         resultSearch = SortListWithSearch(resultSearch, searchTexts);
 
         return updateInfors(resultSearch, userId);
