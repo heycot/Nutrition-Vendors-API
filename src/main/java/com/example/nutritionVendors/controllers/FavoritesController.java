@@ -87,7 +87,7 @@ public class FavoritesController {
     public ResponseEntity countNumberComment(@PathVariable(name = "id") Integer shopitem_id) throws InternalError {
         try {
 
-            return ResponseEntity.ok(commentService.countNumberCommentByShopItem(shopitem_id));
+            return ResponseEntity.ok(favoritesService.countFavoritesByShopitem(shopitem_id));
 
         } catch (Exception e) {
             System.out.println(e.getCause());

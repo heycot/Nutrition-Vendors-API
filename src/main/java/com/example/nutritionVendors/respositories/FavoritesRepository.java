@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface FavoritesRepository extends JpaRepository<Favorites, Integer> {
 
-    Integer countByShopItemId(Integer id);
+    Integer countByShopItemId(Integer shopitem_id);
 
     Favorites findByShopItemIdAndUserIdAndStatus(Integer shopItemId, Integer userId, Integer status);
 

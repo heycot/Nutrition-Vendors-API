@@ -176,6 +176,11 @@ public class ShopItemServiceImpl implements ShopItemService {
         return shopItemRepository.findAllByShopIdAndComment_numberGreaterThanAndIdNot(shop_id, 0, id);
     }
 
+    @Override
+    public Double getRatingByShopItemId(Integer id) {
+        return shopItemRepository.getRatingById(id);
+    }
+
 
     @Override
     public List<ShopItemDTO> getAllByShopId(Integer id, Integer limit, Integer offset, Integer userId) {

@@ -16,4 +16,6 @@ public interface FavoritesService {
     List<FavoritesDTO> findAllByuserLoved(Integer userId);
 
     Favorites getLoveStatus(Integer shopitem_id, User user);
+
+    Integer countFavoritesByShopitem(Integer shopitem_id);
 }

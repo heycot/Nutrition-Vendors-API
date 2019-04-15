@@ -170,5 +170,18 @@ public class ShopItemController {
         }
     }
 
+    @GetMapping("/rating/{id}")
+    public ResponseEntity getRating(@PathVariable(name = "id") Integer id) throws InternalError {
+
+        try {
+
+            return ResponseEntity.ok(shopItemService.getRatingByShopItemId(id));
+
+        } catch (Exception e){
+            System.out.println("exception: " + e.getCause());
+            return new ResponseEntity<>("internal exception", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
 }

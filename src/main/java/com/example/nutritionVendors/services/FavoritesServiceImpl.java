@@ -82,4 +82,9 @@ public class FavoritesServiceImpl implements FavoritesService {
     public Favorites getLoveStatus(Integer shopitem_id, User user) {
         return favoritesRepository.findByShopItemIdAndStatusAndUserId(shopitem_id, 1, user.getId());
     }
+
+    @Override
+    public Integer countFavoritesByShopitem(Integer shopitem_id) {
+        return favoritesRepository.countByShopItemId(shopitem_id);
+    }
 }
