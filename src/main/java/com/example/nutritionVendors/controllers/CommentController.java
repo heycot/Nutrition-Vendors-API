@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.ws.rs.Path;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -67,13 +68,14 @@ public class CommentController {
                 comment.setCreate_date(ts);
                 comment.setRating(commentDTO.getRating());
                 comment.setStatus(1);
+                comment.setUpdate_date(ts);
 
                 Integer number_comment = shopItem.getComments().size();
                 Double rating = (shopItem.getRating() * number_comment + comment.getRating() ) / (number_comment + 1);
                 shopItem.setRating(rating);
                 shopItem.setComment_number(shopItem.getComment_number() + 1);
 
-                shopService.updateStatusWhenCommented(shopItem);
+//                shopService.updateStatusWhenCommented(shopItem);
 
 
                 return ResponseEntity.ok(commentService.addOne(comment));
@@ -85,4 +87,52 @@ public class CommentController {
         }
 
     }
+
+    @GetMapping("/count/{id}")
+    public ResponseEntity countNumberComment(@PathVariable(name = "id") Integer shopitem_id) throws InternalError {
+        try {
+
+            return ResponseEntity.ok(commentService.countNumberCommentByShopItem(shopitem_id));
+
+        } catch (Exception e) {
+            System.out.println(e.getCause());
+            throw  new InternalException("internal exception error");
+        }
+
+    }
+
+    @GetMapping("/shopitem/{id}/{offset}")
+    public ResponseEntity getCommentsByShopId(@PathVariable(name = "id") Integer shopitem_id, @PathVariable(name = "offset") Integer offset) throws InternalError {
+        try {
+
+            return ResponseEntity.ok(commentService.getCommentsByShopId(shopitem_id, offset, 5));
+
+        } catch (Exception e) {
+            System.out.println(e.getCause());
+            throw  new InternalException("internal exception error");
+        }
+
+    }
+
+    @GetMapping("/check/shopitem/{id}")
+    public ResponseEntity getCommentsByShopIdAnd(@RequestHeader(value = "Authorization") String authorizationHeader, @PathVariable(name = "id") Integer shopitem_id) throws InternalError {
+        try {
+            if (authorizationHeader == null || authorizationHeader == "") {
+
+                throw  new InternalException("Wrong authorization ");
+
+            } else {
+                User user = userService.findByToken(authorizationHeader);
+                Comment comment = new Comment();
+                comment = commentService.getCommentByShopItemAndUser(shopitem_id, user.getId());
+                return ResponseEntity.ok(comment);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getCause());
+            throw  new InternalException("internal exception error");
+        }
+
+    }
+
 }

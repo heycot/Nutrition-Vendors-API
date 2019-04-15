@@ -4,6 +4,7 @@ import com.example.nutritionVendors.entities.Favorites;
 import com.example.nutritionVendors.entities.User;
 import com.example.nutritionVendors.services.FavoritesService;
 import com.example.nutritionVendors.services.UserService;
+import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -80,6 +81,19 @@ public class FavoritesController {
             System.out.println("exception: " + e.getCause());
             return new ResponseEntity<>("internal exception", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/count/{id}")
+    public ResponseEntity countNumberComment(@PathVariable(name = "id") Integer shopitem_id) throws InternalError {
+        try {
+
+            return ResponseEntity.ok(commentService.countNumberCommentByShopItem(shopitem_id));
+
+        } catch (Exception e) {
+            System.out.println(e.getCause());
+            throw  new InternalException("internal exception error");
+        }
+
     }
 
 }

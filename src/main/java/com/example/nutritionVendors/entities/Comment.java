@@ -19,6 +19,7 @@ public class Comment {
     private String content;
     private Integer rating;
     private Timestamp create_date;
+    private Timestamp update_date;
     private  Integer status;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -41,6 +42,14 @@ public class Comment {
     }
 
     public Comment() {
+    }
+
+    public Timestamp getUpdate_date() {
+        return update_date;
+    }
+
+    public void setUpdate_date(Timestamp update_date) {
+        this.update_date = update_date;
     }
 
     public Integer getId() {
