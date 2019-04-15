@@ -109,16 +109,10 @@ public class ShopItemController {
     }
 
     @GetMapping("/shop/{id}/{offset}")
-    public ResponseEntity getAllByShopId(@RequestHeader(value = "Authorization") String authorizationHeader, @PathVariable(name = "id") Integer id, @PathVariable(name = "offset") Integer offset){
+    public ResponseEntity getAllByShopId( @PathVariable(name = "id") Integer id, @PathVariable(name = "offset") Integer offset){
         try {
 
-            if (authorizationHeader == null || authorizationHeader == "") {
-                return ResponseEntity.ok(shopItemService.getAllByShopId(id, Contants.LIMIT, offset, 0));
-
-            } else {
-                User user = userService.findByToken(authorizationHeader);
-                return ResponseEntity.ok(shopItemService.getAllByShopId(id, Contants.LIMIT, offset, user.getId()));
-            }
+            return ResponseEntity.ok(shopItemService.getAllByShopId(id, offset, Contants.LIMIT));
 
         } catch (Exception e){
             System.out.println("exception: " + e.getCause());

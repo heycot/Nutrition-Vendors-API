@@ -183,13 +183,8 @@ public class ShopItemServiceImpl implements ShopItemService {
 
 
     @Override
-    public List<ShopItemDTO> getAllByShopId(Integer id, Integer limit, Integer offset, Integer userId) {
-        List<ShopItemDTO> shopItemDTOS = dtoShopItemRepository.getAllByShopId(id, limit, offset);
-
-        if (userId > 0) {
-            shopItemDTOS = updateLove_Status(shopItemDTOS, userId);
-        }
-
+    public List<ShopItemDTO> getAllByShopId(Integer id, Integer offset, Integer limit) {
+        List<ShopItemDTO> shopItemDTOS = dtoShopItemRepository.getAllByShopId(id, offset, limit);
         return shopItemDTOS;
     }
 
