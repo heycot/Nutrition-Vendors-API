@@ -184,7 +184,7 @@ public class ShopItemServiceImpl implements ShopItemService {
 
     @Override
     public List<ShopItemDTO> getAllByShopId(Integer id, Integer offset, Integer limit) {
-        return updateInfors(dtoShopItemRepository.getAllByShopId(id, offset, limit);
+        return updateInfors(dtoShopItemRepository.getAllByShopId(id, offset, limit), 0);
     }
 
 
