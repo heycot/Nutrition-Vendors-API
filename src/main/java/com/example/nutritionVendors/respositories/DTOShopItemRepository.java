@@ -63,24 +63,6 @@ public interface DTOShopItemRepository extends JpaRepository<ShopItemDTO, Intege
             " group by shopitem.id, item.name, shop.name " , nativeQuery = true)
     List<ShopItemDTO> searchItem(byte[] searchText);
 
-    @Query(value = "select 0 as id, 0 as shopitem_id, shop.rating, shopitem.comment_number, shopitem.favorites_number," +
-            " item.name as name, shop.name as shop_name,  '' as avatar, 0 as love_status, l.address as address from shop" +
-            " left join document on shopitem.id = document.shopitem_id" +
-            " left join shop on shopitem.shop_id = shop.id " +
-            " left join location l on shop.location_id = l.id " +
-            " where  shop.name like CONCAT('%', ?1, '%') or l.address like CONCAT('%',?1, '%')" +
-            " group by shopitem.id, item.name, shop.name " , nativeQuery = true)
-    List<ShopItemDTO> searchShop(byte[] searchText);
-
-    @Query(value = "select shopitem.id, shopitem.price, shopitem.status, shopitem.rating, shopitem.comment_number, shopitem.favorites_number," +
-            " item.name as name, shop.name as shop_name,  '' as avatar, 0 as love_status, l.address as address from shopitem" +
-            " inner join item on shopitem.item_id = item.id" +
-            " left join document on shopitem.id = document.shopitem_id" +
-            " left join shop on shopitem.shop_id = shop.id " +
-            " left join location l on shop.location_id = l.id " +
-            " where  item.name like CONCAT('%', ?1, '%') or l.address like CONCAT('%',?1, '%')" +
-            " group by shopitem.id, item.name, shop.name " , nativeQuery = true)
-    List<ShopItemDTO> searchFood(byte[] searchText);
 
     @Query(value = "select shopitem.id, shopitem.price, shopitem.status, shopitem.rating, shopitem.comment_number, shopitem.favorites_number," +
             " item.name as name, shop.name as shop_name,  '' as avatar, 0 as love_status, l.address as address  from shopitem" +

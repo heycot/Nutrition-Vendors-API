@@ -8,58 +8,55 @@ public class SearchDTO {
 
     @Id
     private Integer id;
-    private Integer shopitem_id;
-    private String shopitem_name;
-    private Integer shop_id;
-    private String shop_name;
-    private Integer number_comment;
+    private Integer entity_id;
+    private String entity_name;
+    private Integer comment_number;
     private Double rating;
     private String address;
-    private Boolean isShop;
-    private String distance;
+    private Integer isShop;
     private String avatar;
 
     public SearchDTO() {
     }
 
-    public Integer getShopitem_id() {
-        return shopitem_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setShopitem_id(Integer shopitem_id) {
-        this.shopitem_id = shopitem_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getShopitem_name() {
-        return shopitem_name;
+    public Integer getEntity_id() {
+        return entity_id;
     }
 
-    public void setShopitem_name(String shopitem_name) {
-        this.shopitem_name = shopitem_name;
+    public void setEntity_id(Integer entity_id) {
+        this.entity_id = entity_id;
     }
 
-    public Integer getShop_id() {
-        return shop_id;
+    public String getEntity_name() {
+        return entity_name;
     }
 
-    public void setShop_id(Integer shop_id) {
-        this.shop_id = shop_id;
+    public void setEntity_name(String entity_name) {
+        this.entity_name = entity_name;
     }
 
-    public String getShop_name() {
-        return shop_name;
+    public Integer getComment_number() {
+        return comment_number;
     }
 
-    public void setShop_name(String shop_name) {
-        this.shop_name = shop_name;
+    public void setComment_number(Integer comment_number) {
+        this.comment_number = comment_number;
     }
 
-    public Integer getNumber_comment() {
-        return number_comment;
+    public Integer getShop() {
+        return isShop;
     }
 
-    public void setNumber_comment(Integer number_comment) {
-        this.number_comment = number_comment;
+    public void setShop(Integer shop) {
+        isShop = shop;
     }
 
     public Double getRating() {
@@ -77,22 +74,22 @@ public class SearchDTO {
     public void setAddress(String address) {
         this.address = address;
     }
-
-    public Boolean getShop() {
-        return isShop;
-    }
-
-    public void setShop(Boolean shop) {
-        isShop = shop;
-    }
-
-    public String getDistance() {
-        return distance;
-    }
-
-    public void setDistance(String distance) {
-        this.distance = distance;
-    }
+//
+//    public Boolean getShop() {
+//        return isShop;
+//    }
+//
+//    public void setShop(Boolean shop) {
+//        isShop = shop;
+//    }
+//
+//    public String getDistance() {
+//        return distance;
+//    }
+//
+//    public void setDistance(String distance) {
+//        this.distance = distance;
+//    }
 
     public String getAvatar() {
         return avatar;

@@ -25,6 +25,7 @@ public class Shop {
     private String phone;
     private String avatar;
     private String sell;
+    private Integer commnet_number;
 
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -44,6 +45,13 @@ public class Shop {
     public Shop() {
     }
 
+    public Integer getCommnet_number() {
+        return commnet_number;
+    }
+
+    public void setCommnet_number(Integer commnet_number) {
+        this.commnet_number = commnet_number;
+    }
 
     public String getSell() {
         return sell;

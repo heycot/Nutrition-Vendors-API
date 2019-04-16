@@ -5,6 +5,7 @@ import com.example.nutritionVendors.entities.ShopItem;
 import com.example.nutritionVendors.entities.User;
 import com.example.nutritionVendors.library.Contants;
 import com.example.nutritionVendors.services.FavoritesService;
+import com.example.nutritionVendors.services.SearchService;
 import com.example.nutritionVendors.services.ShopItemService;
 import com.example.nutritionVendors.services.UserService;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
@@ -33,6 +34,9 @@ public class ShopItemController {
     private UserService userService;
 
     @Autowired
+    private SearchService searchService;
+
+    @Autowired
     private FavoritesService favoritesService;
 
 //    @RequestMapping("/high-rating")
@@ -47,22 +51,16 @@ public class ShopItemController {
 //    }
 
     @GetMapping("/search/{searchText}")
-    public ResponseEntity searchItem(@RequestHeader(value = "Authorization") String authorizationHeader, @PathVariable(name = "searchText") String searchText) throws InternalError {
+    public ResponseEntity searchItem(@PathVariable(name = "searchText") String searchText) throws InternalError {
         try{
 
 
-            String result = java.net.URLDecoder.decode(searchText, StandardCharsets.UTF_8.name());
+//            String result = java.net.URLDecoder.decode(searchText, StandardCharsets.UTF_8.name());
+            String result = "cá liên chiểu";
 
-            if (authorizationHeader == null || authorizationHeader == "" || authorizationHeader == "guest") {
-                return  ResponseEntity.ok(shopItemService.searchItem(result, 0));
+                return ResponseEntity.ok(searchService.searchItem(result));
 
-            } else {
-                User user = userService.findByToken(authorizationHeader);
-                return ResponseEntity.ok(shopItemService.searchItem(result, user.getId()));
-            }
-
-
-        } catch (InternalError | NullPointerException | UnsupportedEncodingException e){
+        } catch (InternalError | NullPointerException e){
             System.out.println(e.getCause());
             throw new InternalException("Internal Server Error");
         }
