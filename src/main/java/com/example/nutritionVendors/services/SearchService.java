@@ -27,7 +27,6 @@ public class SearchService {
 
 
     public List<SearchDTO> searchItem(String searchText) {
-
         String[] searchTexts =  searchText.split(" ");
         List<SearchDTO> resultSearch = new ArrayList<>();
 
