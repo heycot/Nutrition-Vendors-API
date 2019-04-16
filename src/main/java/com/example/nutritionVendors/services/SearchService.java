@@ -121,7 +121,7 @@ public class SearchService {
 
         List<SearchDTO> result = new ArrayList<>();
 
-        while (max >= 0 && result.size() < 30) {
+        while (result.size() < 30 && max > 0) {
             for ( int i  = 0; i < array.size(); i++) {
                 if ( countNumberContainsInObjectBySearch(array.get(i), searchText) >= max && !checkItemInList(result, array.get(i))) {
                     result.add(array.get(i));
