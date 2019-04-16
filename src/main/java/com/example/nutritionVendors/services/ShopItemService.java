@@ -27,4 +27,6 @@ public interface ShopItemService {
     List<ShopItem> findAllByShopIdHadComment(Integer shop_id, Integer id);
 
     Double getRatingByShopItemId(Integer id);
+
+    ShopItemDTO getOneDTO(Integer id);
 }

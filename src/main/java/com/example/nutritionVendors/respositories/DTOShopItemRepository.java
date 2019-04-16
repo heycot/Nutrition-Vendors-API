@@ -83,8 +83,7 @@ public interface DTOShopItemRepository extends JpaRepository<ShopItemDTO, Intege
             " left join document on shopitem.id = document.shopitem_id" +
             " left join shop on shopitem.shop_id = shop.id " +
             " left join location l on shop.location_id = l.id " +
-            " where shopitem.id = ?1" +
-            " group by shopitem.id, item.name, shop.name ", nativeQuery = true)
+            " where shopitem.id = ?1", nativeQuery = true)
     ShopItemDTO findOneById(Integer shopitem_id);
 
     @Query(value = "select shopitem.id, shopitem.price, shopitem.status, shopitem.rating, shopitem.comment_number, shopitem.favorites_number," +

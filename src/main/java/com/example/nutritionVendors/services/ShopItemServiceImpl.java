@@ -181,6 +181,19 @@ public class ShopItemServiceImpl implements ShopItemService {
         return shopItemRepository.getRatingById(id);
     }
 
+    @Override
+    public ShopItemDTO getOneDTO(Integer id) {
+        ShopItemDTO shopItemDTO = dtoShopItemRepository.findOneById(id);
+        Document document = documentRepository.getByShopItemIdAndAndPriority(shopItemDTO.getId(), 1);
+        if (document != null) {
+            shopItemDTO.setAvatar(document.getLink());
+        } else {
+            shopItemDTO.setAvatar("full_logo.jpg");
+        }
+
+        return shopItemDTO;
+    }
+
 
     @Override
     public List<ShopItemDTO> getAllByShopId(Integer id, Integer offset, Integer limit) {

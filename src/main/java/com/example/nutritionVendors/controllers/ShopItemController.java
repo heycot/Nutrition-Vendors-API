@@ -103,6 +103,15 @@ public class ShopItemController {
         }
     }
 
+    @GetMapping("/dto/{id}")
+    public ResponseEntity getOneDTO(@PathVariable(value = "id") Integer id) throws InternalError {
+        try {
+            return ResponseEntity.ok(shopItemService.getOneDTO(id));
+        } catch (Exception e) {
+            throw new InternalError("Internal Server Error");
+        }
+    }
+
     @GetMapping("/shop/{id}/{offset}")
     public ResponseEntity getAllByShopId( @PathVariable(name = "id") Integer id, @PathVariable(name = "offset") Integer offset){
         try {
