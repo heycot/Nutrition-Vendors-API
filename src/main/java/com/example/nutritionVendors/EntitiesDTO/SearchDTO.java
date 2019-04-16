@@ -13,7 +13,7 @@ public class SearchDTO {
     private Integer comment_number;
     private Double rating;
     private String address;
-    private Integer isShop;
+    private Integer is_shop;
     private String avatar;
 
     public SearchDTO() {
@@ -25,6 +25,14 @@ public class SearchDTO {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getIs_shop() {
+        return is_shop;
+    }
+
+    public void setIs_shop(Integer is_shop) {
+        this.is_shop = is_shop;
     }
 
     public Integer getEntity_id() {
@@ -49,14 +57,6 @@ public class SearchDTO {
 
     public void setComment_number(Integer comment_number) {
         this.comment_number = comment_number;
-    }
-
-    public Integer getShop() {
-        return isShop;
-    }
-
-    public void setShop(Integer shop) {
-        isShop = shop;
     }
 
     public Double getRating() {
