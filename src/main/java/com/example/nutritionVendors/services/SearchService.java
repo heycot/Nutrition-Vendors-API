@@ -40,16 +40,26 @@ public class SearchService {
         resultSearch = SortListWithSearch(resultSearch, searchTexts);
 
 
-        if (countNumberContainsInObjectBySearch(resultSearch.get(0), searchTexts) < searchTexts.length) {
-            resultSearch = new ArrayList<>();
-            for (int i = 0; i < searchTexts.length; i++) {
-                List<SearchDTO> list = searchFood(searchTexts[i]);
-                resultSearch = addListToList(resultSearch, list);
+        if (resultSearch.size() > 0) {
+            if (countNumberContainsInObjectBySearch(resultSearch.get(0), searchTexts) < searchTexts.length) {
+                resultSearch = getListSearchFood(searchTexts);
             }
+        } else {
+            resultSearch = getListSearchFood(searchTexts);
         }
+
         resultSearch = SortListWithSearch(resultSearch, searchTexts);
 
         return updateInfors(resultSearch);
+    }
+
+    public List<SearchDTO> getListSearchFood(String[] searchTexts) {
+        List<SearchDTO> resultSearch = new ArrayList<>();
+        for (int i = 0; i < searchTexts.length; i++) {
+            List<SearchDTO> list = searchFood(searchTexts[i]);
+            resultSearch = addListToList(resultSearch, list);
+        }
+        return resultSearch;
     }
 
     public List<SearchDTO> searchFood(String searchText) {

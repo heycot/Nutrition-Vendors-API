@@ -53,14 +53,11 @@ public class ShopItemController {
     @GetMapping("/search/{searchText}")
     public ResponseEntity searchItem(@PathVariable(name = "searchText") String searchText) throws InternalError {
         try{
+            String result = java.net.URLDecoder.decode(searchText, StandardCharsets.UTF_8.name());
 
+            return ResponseEntity.ok(searchService.searchItem(result));
 
-//            String result = java.net.URLDecoder.decode(searchText, StandardCharsets.UTF_8.name());
-            String result = "cá liên chiểu";
-
-                return ResponseEntity.ok(searchService.searchItem(result));
-
-        } catch (InternalError | NullPointerException e){
+        } catch (Exception e ){
             System.out.println(e.getCause());
             throw new InternalException("Internal Server Error");
         }
@@ -78,7 +75,7 @@ public class ShopItemController {
                 return ResponseEntity.ok(shopItemService.getHighRatingItem(offset, Contants.LIMIT, user.getId()));
             }
 
-        } catch (InternalError | NullPointerException e){
+        } catch (Exception e){
             System.out.println(e.getCause());
             throw new InternalException("Internal Server Error");
         }
