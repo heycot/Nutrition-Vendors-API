@@ -28,6 +28,7 @@ public class SearchService {
 
     public List<SearchDTO> searchItem(String searchText) {
         String[] searchTexts =  searchText.split(" ");
+        Boolean isShop = true;
         List<SearchDTO> resultSearch = new ArrayList<>();
 
         for (int i = 0; i < searchTexts.length; i++) {
@@ -42,14 +43,20 @@ public class SearchService {
         if (resultSearch.size() > 0) {
             if (countNumberContainsInObjectBySearch(resultSearch.get(0), searchTexts) < searchTexts.length) {
                 resultSearch = getListSearchFood(searchTexts);
+                isShop = false;
             }
         } else {
             resultSearch = getListSearchFood(searchTexts);
+            isShop = false;
         }
 
         resultSearch = SortListWithSearch(resultSearch, searchTexts);
 
-        return updateInfors(resultSearch);
+        if ( isShop ) {
+            return resultSearch;
+        } else {
+            return updateInfors(resultSearch);
+        }
     }
 
     public List<SearchDTO> getListSearchFood(String[] searchTexts) {

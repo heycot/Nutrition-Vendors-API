@@ -19,7 +19,7 @@ public class ShopController {
     @Autowired
     private ShopService shopService;
 
-    @GetMapping("/{offset}")
+    @GetMapping("/offset/{offset}")
     public ResponseEntity findAllShop(@PathVariable Integer offset) {
         try {
             return ResponseEntity.ok(shopService.findAllShop(offset, Contants.LIMIT));
