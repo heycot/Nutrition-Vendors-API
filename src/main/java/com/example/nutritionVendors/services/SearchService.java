@@ -1,9 +1,7 @@
 package com.example.nutritionVendors.services;
 
 import com.example.nutritionVendors.EntitiesDTO.SearchDTO;
-import com.example.nutritionVendors.EntitiesDTO.ShopItemDTO;
 import com.example.nutritionVendors.entities.Document;
-import com.example.nutritionVendors.respositories.DTOShopItemRepository;
 import com.example.nutritionVendors.respositories.DocumentRepository;
 import com.example.nutritionVendors.respositories.SearchDTORepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +14,6 @@ import java.util.List;
 @Service
 public class SearchService {
 
-    @Autowired
-    private DTOShopItemRepository dtoShopItemRepository;
 
     @Autowired
     private SearchDTORepository searchDTORepository;
@@ -155,7 +151,8 @@ public class SearchService {
 
     public boolean checkExists(String property, String searchText) {
         property = property.toLowerCase();
-        if ( property.toLowerCase().contains(" " + searchText + " ") || property.toLowerCase().contains(searchText + " ") || property.toLowerCase().contains(" " + searchText)) {
+//        if ( property.toLowerCase().contains(" " + searchText + " ") || property.toLowerCase().contains(searchText + " ") || property.toLowerCase().contains(" " + searchText)) {
+            if ( property.toLowerCase().contains( searchText)) {
             return true;
         }
         return false;
