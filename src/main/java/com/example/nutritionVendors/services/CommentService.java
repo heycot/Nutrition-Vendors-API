@@ -13,4 +13,8 @@ public interface CommentService {
 
 
     Integer countNumberCommentByShopItem(Integer shopitem_id);
+
+    Comment getOne(Integer id);
+
+    Comment edit(Comment comment);
 }

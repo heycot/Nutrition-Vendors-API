@@ -50,30 +50,32 @@ public class CommentController {
                 User user = userService.findByToken(authorizationHeader);
 
                 Comment comment = new Comment();
+                commentDTO.setId(0);
+                comment = updateComment(commentDTO, comment, user  );
 
-                Date date= new Date();
-                long time = date.getTime();
-                Timestamp ts = new Timestamp(time);
-
-                ShopItem shopItem = shopItemService.getOne(commentDTO.getShopitem_id());
-                if (shopItem == null ){
-                    throw  new InternalException("do not have that shopitem");
-                }
-
-                comment.setShopItem(shopItem);
-                comment.setUser(user);
-                comment.setId(0);
-                comment.setContent(commentDTO.getContent());
-                comment.setTitle(commentDTO.getTitle());
-                comment.setCreate_date(ts);
-                comment.setRating(commentDTO.getRating());
-                comment.setStatus(1);
-                comment.setUpdate_date(ts);
-
-                Integer number_comment = shopItem.getComments().size();
-                Double rating = (shopItem.getRating() * number_comment + comment.getRating() ) / (number_comment + 1);
-                shopItem.setRating(rating);
-                shopItem.setComment_number(shopItem.getComment_number() + 1);
+//                Date date= new Date();
+//                long time = date.getTime();
+//                Timestamp ts = new Timestamp(time);
+//
+//                ShopItem shopItem = shopItemService.getOne(commentDTO.getShopitem_id());
+//                if (shopItem == null ){
+//                    throw  new InternalException("do not have that shopitem");
+//                }
+//
+//                comment.setShopItem(shopItem);
+//                comment.setUser(user);
+//                comment.setId(0);
+//                comment.setContent(commentDTO.getContent());
+//                comment.setTitle(commentDTO.getTitle());
+//                comment.setCreate_date(ts);
+//                comment.setRating(commentDTO.getRating());
+//                comment.setStatus(1);
+//                comment.setUpdate_date(ts);
+//
+//                Integer number_comment = shopItem.getComments().size();
+//                Double rating = (shopItem.getRating() * number_comment + comment.getRating() ) / (number_comment + 1);
+//                shopItem.setRating(rating);
+//                shopItem.setComment_number(shopItem.getComment_number() + 1);
 
 //                shopService.updateStatusWhenCommented(shopItem);
 
@@ -86,6 +88,59 @@ public class CommentController {
             throw  new InternalException("internal exception error");
         }
 
+    }
+
+    @PostMapping("/edit")
+    public ResponseEntity editComment(@RequestHeader(value = "Authorization") String authorizationHeader, @RequestBody CommentDTO commentDTO) throws InternalError {
+        try {
+
+            if (authorizationHeader == null || authorizationHeader == "") {
+
+                throw  new InternalException("Wrong authorization ");
+
+            } else {
+                User user = userService.findByToken(authorizationHeader);
+
+                Comment comment = commentService.getOne(commentDTO.getId());
+                comment = updateComment(commentDTO, comment, user);
+
+
+                return ResponseEntity.ok(commentService.edit(comment));
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getCause());
+            throw  new InternalException("internal exception error");
+        }
+
+    }
+
+    public Comment updateComment(CommentDTO commentDTO, Comment comment, User user) {
+        Date date= new Date();
+        long time = date.getTime();
+        Timestamp ts = new Timestamp(time);
+
+        ShopItem shopItem = shopItemService.getOne(commentDTO.getShopitem_id());
+        if (shopItem == null ){
+            throw  new InternalException("do not have that shopitem");
+        }
+
+        comment.setShopItem(shopItem);
+        comment.setId(commentDTO.getId());
+        comment.setUser(user);
+        comment.setContent(commentDTO.getContent());
+        comment.setTitle(commentDTO.getTitle());
+        comment.setCreate_date(ts);
+        comment.setRating(commentDTO.getRating());
+        comment.setStatus(1);
+        comment.setUpdate_date(ts);
+
+        Integer number_comment = shopItem.getComments().size();
+        Double rating = (shopItem.getRating() * number_comment + comment.getRating() ) / (number_comment + 1);
+        shopItem.setRating(rating);
+        shopItem.setComment_number(shopItem.getComment_number() + 1);
+
+        return comment;
     }
 
     @GetMapping("/count/{id}")
