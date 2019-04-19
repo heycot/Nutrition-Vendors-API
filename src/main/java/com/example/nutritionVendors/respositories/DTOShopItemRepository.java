@@ -30,7 +30,7 @@ public interface DTOShopItemRepository extends JpaRepository<ShopItemDTO, Intege
             " left join document on shopitem.id = document.shopitem_id" +
             " left join shop on shopitem.shop_id = shop.id " +
             " left join location l on shop.location_id = l.id " +
-            " group by shopitem.id, item.name, shop.name order by shopitem.rating desc limit ?1, ?2", nativeQuery = true)
+            " group by shopitem.id, item.name, shop.name order by shopitem.comment_number desc, shopitem.rating desc limit ?1, ?2", nativeQuery = true)
     List<ShopItemDTO> getHighRatingItem(Integer limit, Integer offset);
 
 
@@ -41,7 +41,7 @@ public interface DTOShopItemRepository extends JpaRepository<ShopItemDTO, Intege
             " left join shop on shopitem.shop_id = shop.id " +
             " left join location l on shop.location_id = l.id " +
             " where shopitem.shop_id = ?1" +
-            " group by shopitem.id, item.name, shop.name order by shopitem.rating desc limit ?2, ?3", nativeQuery = true)
+            " group by shopitem.id, item.name, shop.name order by shopitem.comment_number desc, shopitem.rating desc limit ?2, ?3", nativeQuery = true)
     List<ShopItemDTO> getAllByShopId(Integer shopId, Integer offset, Integer limit);
 
     @Query(value = "select shopitem.id, shopitem.price, shopitem.status, shopitem.rating, shopitem.comment_number, shopitem.favorites_number," +
@@ -70,7 +70,7 @@ public interface DTOShopItemRepository extends JpaRepository<ShopItemDTO, Intege
             " left join document on shopitem.id = document.shopitem_id" +
             " left join shop on shopitem.shop_id = shop.id " +
             " left join location l on shop.location_id = l.id " +
-            " group by shopitem.id, item.name, shop.name " , nativeQuery = true)
+            " group by shopitem.id, item.name, shop.name order by shopitem.comment_number desc, shopitem.rating desc " , nativeQuery = true)
     List<ShopItemDTO> getAll();
 
     @Query(value = "select link from document  where shopitem_id = ?1 limit 1", nativeQuery = true)
@@ -93,6 +93,6 @@ public interface DTOShopItemRepository extends JpaRepository<ShopItemDTO, Intege
             " left join shop on shopitem.shop_id = shop.id " +
             " left join location l on shop.location_id = l.id " +
             " where item.category_id = ?1" +
-            " group by shopitem.id, item.name, shop.name order by shopitem.rating desc limit ?2, ?3", nativeQuery = true)
+            " group by shopitem.id, item.name, shop.name order by shopitem.comment_number desc, shopitem.rating desc limit ?2, ?3", nativeQuery = true)
     List<ShopItemDTO> findAllByCategory(Integer categoryId, Integer offset, Integer limit);
 }
