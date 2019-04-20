@@ -2,7 +2,6 @@ package com.example.nutritionVendors.EntitiesDTO;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.math.BigInteger;
 
 @Entity
 public class ShopItemDTO {

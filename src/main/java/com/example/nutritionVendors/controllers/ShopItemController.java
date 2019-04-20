@@ -1,13 +1,11 @@
 package com.example.nutritionVendors.controllers;
 
 import com.example.nutritionVendors.EntitiesDTO.ShopItemDTO;
+import com.example.nutritionVendors.entities.RecentSearch;
 import com.example.nutritionVendors.entities.ShopItem;
 import com.example.nutritionVendors.entities.User;
 import com.example.nutritionVendors.library.Contants;
-import com.example.nutritionVendors.services.FavoritesService;
-import com.example.nutritionVendors.services.SearchService;
-import com.example.nutritionVendors.services.ShopItemService;
-import com.example.nutritionVendors.services.UserService;
+import com.example.nutritionVendors.services.*;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -35,6 +35,9 @@ public class ShopItemController {
 
     @Autowired
     private SearchService searchService;
+
+    @Autowired
+    private RecentSearchService recentSearchService;
 
     @Autowired
     private FavoritesService favoritesService;
@@ -103,10 +106,37 @@ public class ShopItemController {
         }
     }
 
-    @GetMapping("/dto/{id}")
-    public ResponseEntity getOneDTO(@PathVariable(value = "id") Integer id) throws InternalError {
+    @GetMapping("/dto/{id}/{isSearch}")
+    public ResponseEntity getOneDTO(@RequestHeader(value = "Authorization") String authorizationHeader, @PathVariable(value = "id") Integer id, @PathVariable(value = "isSearch") Integer isSearch) throws InternalError {
         try {
-            return ResponseEntity.ok(shopItemService.getOneDTO(id));
+
+
+            if (authorizationHeader == null || authorizationHeader == "") {
+                return ResponseEntity.ok(shopItemService.getOneDTO(id));
+
+            } else {
+                User user = userService.findByToken(authorizationHeader);
+
+                ShopItemDTO shopItemDTO = shopItemService.getOneDTO(id);
+
+                if (shopItemDTO != null && isSearch == 1) {
+
+                    Date date= new Date();
+                    long time = date.getTime();
+                    Timestamp ts = new Timestamp(time);
+
+                    RecentSearch recentSearch = new RecentSearch();
+                    recentSearch.setId(0);
+                    recentSearch.setEntity_id(id);
+                    recentSearch.setIs_shop(0);
+                    recentSearch.setUser(user);
+                    recentSearch.setCreate_date(ts);
+                    recentSearch.setUpdate_date(ts);
+
+                    recentSearchService.addOne(recentSearch);
+                }
+                return ResponseEntity.ok(shopItemDTO);
+            }
         } catch (Exception e) {
             throw new InternalError("Internal Server Error");
         }

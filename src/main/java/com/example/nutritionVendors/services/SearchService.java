@@ -2,6 +2,7 @@ package com.example.nutritionVendors.services;
 
 import com.example.nutritionVendors.EntitiesDTO.SearchDTO;
 import com.example.nutritionVendors.entities.Document;
+import com.example.nutritionVendors.entities.RecentSearch;
 import com.example.nutritionVendors.respositories.DocumentRepository;
 import com.example.nutritionVendors.respositories.SearchDTORepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -181,5 +182,26 @@ public class SearchService {
         }
 
         return shopItemDTOS;
+    }
+
+    public List<SearchDTO> findAllByUser(List<RecentSearch> recentSearches) {
+
+        List<SearchDTO> results =  new ArrayList<>();
+        SearchDTO item = new SearchDTO();
+        Document document = new Document();
+
+        for(int i = 0; i < recentSearches.size(); i++) {
+
+            if ( recentSearches.get(i).getIs_shop() == 0) {
+                item = searchDTORepository.searchFoodById(recentSearches.get(i).getEntity_id());
+                document = documentRepository.getByShopItemIdAndAndPriority(item.getId(), 1);
+                item.setAvatar(document.getLink());
+                results.add(item);
+            } else {
+                results.add(searchDTORepository.searchShopById(recentSearches.get(i).getEntity_id()));
+            }
+        }
+
+        return results;
     }
 }

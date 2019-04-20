@@ -38,6 +38,10 @@ public class User {
     @JsonIgnore
     private List<Favorites> favorites;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<RecentSearch> recentSearches;
+
     public User() {
     }
 
