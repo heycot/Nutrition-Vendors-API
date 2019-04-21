@@ -21,17 +21,17 @@ public class RecentSearch {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @JsonIgnore
     private User user;
 
     public RecentSearch() {
     }
 
-    public RecentSearch(Integer entity_id, Integer is_shop, Timestamp create_date, Timestamp update_date) {
+    public RecentSearch(Integer entity_id, Integer is_shop, Timestamp create_date, Timestamp update_date, User user) {
         this.entity_id = entity_id;
         this.is_shop = is_shop;
         this.create_date = create_date;
         this.update_date = update_date;
+        this.user = user;
     }
 
     public User getUser() {

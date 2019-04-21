@@ -97,46 +97,34 @@ public class ShopItemController {
 //        }
 //    }
 
-    @RequestMapping("/{id}")
-    public ResponseEntity getOne(@RequestHeader(value = "Authorization") String authorizationHeader, @PathVariable(value = "id") Integer id) throws InternalError {
+    @RequestMapping("/{id}/{isSearch}")
+    public ResponseEntity getOne(@RequestHeader(value = "Authorization") String authorizationHeader, @PathVariable(value = "id") Integer id, @PathVariable(value = "isSearch") Integer isSearch) throws InternalError {
         try {
-            return ResponseEntity.ok(shopItemService.getOne(id));
+            if (authorizationHeader == null || authorizationHeader == "") {
+                return ResponseEntity.ok(shopItemService.getOneDTO(id));
+
+            } else {
+
+
+                User user = userService.findByToken(authorizationHeader);
+
+                ShopItem shopItem = shopItemService.getOne(id);
+
+                if (shopItem != null && isSearch == 1) {
+
+                    recentSearchService.updateOneByEntityId(id, 0, user);
+                }
+                return ResponseEntity.ok(shopItem);
+            }
         } catch (Exception e) {
             throw new InternalError("Internal Server Error");
         }
     }
 
-    @GetMapping("/dto/{id}/{isSearch}")
-    public ResponseEntity getOneDTO(@RequestHeader(value = "Authorization") String authorizationHeader, @PathVariable(value = "id") Integer id, @PathVariable(value = "isSearch") Integer isSearch) throws InternalError {
+    @GetMapping("/dto/{id}")
+    public ResponseEntity getOneDTO(@PathVariable(value = "id") Integer id) throws InternalError {
         try {
-
-
-            if (authorizationHeader == null || authorizationHeader == "") {
-                return ResponseEntity.ok(shopItemService.getOneDTO(id));
-
-            } else {
-                User user = userService.findByToken(authorizationHeader);
-
-                ShopItemDTO shopItemDTO = shopItemService.getOneDTO(id);
-
-                if (shopItemDTO != null && isSearch == 1) {
-
-                    Date date= new Date();
-                    long time = date.getTime();
-                    Timestamp ts = new Timestamp(time);
-
-                    RecentSearch recentSearch = new RecentSearch();
-                    recentSearch.setId(0);
-                    recentSearch.setEntity_id(id);
-                    recentSearch.setIs_shop(0);
-                    recentSearch.setUser(user);
-                    recentSearch.setCreate_date(ts);
-                    recentSearch.setUpdate_date(ts);
-
-                    recentSearchService.addOne(recentSearch);
-                }
-                return ResponseEntity.ok(shopItemDTO);
-            }
+            return ResponseEntity.ok(shopItemService.getOneDTO(id));
         } catch (Exception e) {
             throw new InternalError("Internal Server Error");
         }

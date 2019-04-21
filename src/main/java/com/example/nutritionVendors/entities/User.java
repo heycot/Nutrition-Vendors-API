@@ -26,7 +26,7 @@ public class User {
     private Integer status;
     private String token;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Shop> shops;
 
@@ -45,6 +45,17 @@ public class User {
     public User() {
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<RecentSearch> getRecentSearches() {
+        return recentSearches;
+    }
+
+    public void setRecentSearches(List<RecentSearch> recentSearches) {
+        this.recentSearches = recentSearches;
+    }
 
     public Integer getId() {
         return id;
