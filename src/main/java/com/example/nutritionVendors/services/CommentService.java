@@ -20,4 +20,6 @@ public interface CommentService {
     Comment edit(Comment comment);
 
     List<CommentDTO> getAllCommentDTOByUser(Integer id, Integer offset);
+
+    Integer deleteOneByUser(Integer user_id, Integer comment_id);
 }

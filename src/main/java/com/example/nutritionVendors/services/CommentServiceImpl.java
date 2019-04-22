@@ -78,6 +78,19 @@ public class CommentServiceImpl implements CommentService {
         return list;
     }
 
+    @Override
+    public Integer deleteOneByUser(Integer user_id, Integer comment_id) {
+
+        Comment comment = commentRepository.findOne(comment_id);
+
+        if (comment.getUser().getId() == user_id) {
+            commentRepository.delete(comment);
+            return 1;
+        }
+
+        return 0;
+    }
+
     public Comment updateComment(Comment commentEdit, Comment comment) {
 
         commentEdit.setShopItem(comment.getShopItem());

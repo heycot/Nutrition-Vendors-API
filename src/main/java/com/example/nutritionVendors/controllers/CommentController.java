@@ -58,6 +58,27 @@ public class CommentController {
 
     }
 
+    @GetMapping("/delete/{id}")
+    public ResponseEntity deleteOneByUser(@RequestHeader(value = "Authorization") String authorizationHeader, @PathVariable(value = "id") Integer id) throws InternalError {
+        try {
+
+            if (authorizationHeader == null || authorizationHeader == "") {
+
+                return ResponseEntity.ok(null);
+
+            } else {
+                User user = userService.findByToken(authorizationHeader);
+
+                return ResponseEntity.ok(commentService.deleteOneByUser(user.getId(), id));
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getCause());
+            throw  new InternalException("internal exception error");
+        }
+
+    }
+
     @PostMapping("/add")
     public ResponseEntity addNewComment(@RequestHeader(value = "Authorization") String authorizationHeader, @RequestBody CommentDTO commentDTO) throws InternalError {
         try {
