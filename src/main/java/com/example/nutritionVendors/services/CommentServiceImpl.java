@@ -2,10 +2,15 @@ package com.example.nutritionVendors.services;
 
 import com.example.nutritionVendors.EntitiesDTO.CommentDTO;
 import com.example.nutritionVendors.entities.Comment;
+import com.example.nutritionVendors.entities.Document;
 import com.example.nutritionVendors.entities.ShopItem;
 import com.example.nutritionVendors.entities.User;
+import com.example.nutritionVendors.library.Contants;
+import com.example.nutritionVendors.respositories.CommentDTORepository;
 import com.example.nutritionVendors.respositories.CommentRepository;
+import com.example.nutritionVendors.respositories.DocumentRepository;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
+import org.apache.tomcat.util.bcel.classfile.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +23,12 @@ public class CommentServiceImpl implements CommentService {
 
     @Autowired
     private CommentRepository commentRepository;
+
+    @Autowired
+    private CommentDTORepository commentDTORepository;
+
+    @Autowired
+    private DocumentRepository documentRepository;
 
     @Autowired
     private ShopService shopService;
@@ -53,6 +64,18 @@ public class CommentServiceImpl implements CommentService {
         Comment commentEdit = commentRepository.findOne(comment.getId());
         commentEdit = updateComment(commentEdit, comment);
         return commentRepository.save(commentEdit);
+    }
+
+    @Override
+    public List<CommentDTO> getAllCommentDTOByUser(Integer id, Integer offset) {
+
+        List<CommentDTO> list = commentDTORepository.findAllDTOByUser(id, offset, Contants.LIMIT);
+
+        for (int i = 0; i < list.size(); i++) {
+            Document document = documentRepository.getByShopItemIdAndAndPriority(list.get(i).getShopitem_id(), 1);
+            list.get(i).setEntity_avatar(document.getLink());
+        }
+        return list;
     }
 
     public Comment updateComment(Comment commentEdit, Comment comment) {

@@ -60,6 +60,23 @@ public class UserController {
         }
     }
 
+    @GetMapping("/infor")
+    public ResponseEntity getInforUser(@RequestHeader(value = "Authorization") String authorizationHeader) throws InternalError {
+
+        try {
+            if (authorizationHeader == null || authorizationHeader == "") {
+                return ResponseEntity.ok(null);
+
+            } else {
+                return ResponseEntity.ok(userService.findByToken(authorizationHeader));
+            }
+
+        } catch (Exception e) {
+            System.out.println("exception: " + e.getMessage());
+            return new ResponseEntity<>("internal exception", HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
     @PostMapping("/signup")
     @Consumes({"application/json", MediaType.MULTIPART_FORM_DATA_VALUE})

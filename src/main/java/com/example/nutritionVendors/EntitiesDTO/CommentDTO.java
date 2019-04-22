@@ -14,9 +14,11 @@ public class CommentDTO {
     private String content;
     private Double rating;
     private Timestamp create_date;
-    private  Integer status;
-    private Integer user_id;
+    private Timestamp update_date;
+    private Integer status;
     private Integer shopitem_id;
+    private String entity_name;
+    private String entity_avatar;
 
     public CommentDTO() {
     }
@@ -69,12 +71,12 @@ public class CommentDTO {
         this.status = status;
     }
 
-    public Integer getUser_id() {
-        return user_id;
+    public Timestamp getUpdate_date() {
+        return update_date;
     }
 
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
+    public void setUpdate_date(Timestamp update_date) {
+        this.update_date = update_date;
     }
 
     public Integer getShopitem_id() {
@@ -83,5 +85,21 @@ public class CommentDTO {
 
     public void setShopitem_id(Integer shopitem_id) {
         this.shopitem_id = shopitem_id;
+    }
+
+    public String getEntity_name() {
+        return entity_name;
+    }
+
+    public void setEntity_name(String entity_name) {
+        this.entity_name = entity_name;
+    }
+
+    public String getEntity_avatar() {
+        return entity_avatar;
+    }
+
+    public void setEntity_avatar(String entity_avatar) {
+        this.entity_avatar = entity_avatar;
     }
 }

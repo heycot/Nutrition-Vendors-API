@@ -37,6 +37,26 @@ public class CommentController {
     @Autowired
     private ShopService shopService;
 
+    @GetMapping("/dto/offset/{offset}")
+    public ResponseEntity addNewComment(@RequestHeader(value = "Authorization") String authorizationHeader, @PathVariable(value = "offset") Integer offset) throws InternalError {
+        try {
+
+            if (authorizationHeader == null || authorizationHeader == "") {
+
+               return ResponseEntity.ok(null);
+
+            } else {
+                User user = userService.findByToken(authorizationHeader);
+
+                return ResponseEntity.ok(commentService.getAllCommentDTOByUser(user.getId(), offset));
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getCause());
+            throw  new InternalException("internal exception error");
+        }
+
+    }
 
     @PostMapping("/add")
     public ResponseEntity addNewComment(@RequestHeader(value = "Authorization") String authorizationHeader, @RequestBody CommentDTO commentDTO) throws InternalError {
@@ -52,34 +72,6 @@ public class CommentController {
                 Comment comment = new Comment();
                 commentDTO.setId(0);
                 comment = updateComment(commentDTO, comment, user  );
-
-//                Date date= new Date();
-//                long time = date.getTime();
-//                Timestamp ts = new Timestamp(time);
-//
-//                ShopItem shopItem = shopItemService.getOne(commentDTO.getShopitem_id());
-//                if (shopItem == null ){
-//                    throw  new InternalException("do not have that shopitem");
-//                }
-//
-//                comment.setShopItem(shopItem);
-//                comment.setUser(user);
-//                comment.setId(0);
-//                comment.setContent(commentDTO.getContent());
-//                comment.setTitle(commentDTO.getTitle());
-//                comment.setCreate_date(ts);
-//                comment.setRating(commentDTO.getRating());
-//                comment.setStatus(1);
-//                comment.setUpdate_date(ts);
-//
-//                Integer number_comment = shopItem.getComments().size();
-//                Double rating = (shopItem.getRating() * number_comment + comment.getRating() ) / (number_comment + 1);
-//                shopItem.setRating(rating);
-//                shopItem.setComment_number(shopItem.getComment_number() + 1);
-
-//                shopService.updateStatusWhenCommented(shopItem);
-
-
                 return ResponseEntity.ok(commentService.addOne(comment));
             }
 
