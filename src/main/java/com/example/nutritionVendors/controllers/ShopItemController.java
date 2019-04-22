@@ -121,6 +121,7 @@ public class ShopItemController {
         }
     }
 
+
     @GetMapping("/dto/{id}")
     public ResponseEntity getOneDTO(@PathVariable(value = "id") Integer id) throws InternalError {
         try {
