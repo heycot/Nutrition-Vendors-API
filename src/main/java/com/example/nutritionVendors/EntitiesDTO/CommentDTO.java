@@ -12,7 +12,7 @@ public class CommentDTO {
     private Integer id;
     private String title;
     private String content;
-    private Integer rating;
+    private Double rating;
     private Timestamp create_date;
     private  Integer status;
     private Integer user_id;
@@ -45,11 +45,11 @@ public class CommentDTO {
         this.content = content;
     }
 
-    public Integer getRating() {
+    public Double getRating() {
         return rating;
     }
 
-    public void setRating(Integer rating) {
+    public void setRating(Double rating) {
         this.rating = rating;
     }
 

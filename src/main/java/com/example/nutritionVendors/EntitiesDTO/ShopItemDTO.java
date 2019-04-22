@@ -18,10 +18,19 @@ public class ShopItemDTO {
     private String avatar;
     private Integer love_status;
     private String address;
+    private String unit;
 
 
 
     public ShopItemDTO() {
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 
     public String getAddress() {

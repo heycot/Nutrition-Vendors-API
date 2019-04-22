@@ -19,13 +19,6 @@ public class RecentSearchServiceImpl implements RecentSearchService {
 
     @Override
     public RecentSearch updateOneByEntityId(Integer entity_id, Integer is_shop, User user) {
-//        if ( recentSearchRepository.saveOne123(entity_id, is_shop, user.getId()) > 0) {
-//            return null;
-//        }
-//
-//        return null;
-
-
         Date date= new Date();
         long time = date.getTime();
         Timestamp ts = new Timestamp(time);
@@ -41,6 +34,7 @@ public class RecentSearchServiceImpl implements RecentSearchService {
             recentSearch.setEntity_id(entity_id);
             recentSearch.setIs_shop(is_shop);
             recentSearch.setUser(user);
+            recentSearch.setIs_search(1);
             recentSearch.setCreate_date(ts);
             recentSearch.setUpdate_date(ts);
         }

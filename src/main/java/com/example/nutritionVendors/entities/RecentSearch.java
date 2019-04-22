@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "recent_search")
+@Table(name = "recent")
 public class RecentSearch {
 
     @Id
@@ -18,6 +18,7 @@ public class RecentSearch {
     private Integer is_shop;
     private Timestamp create_date;
     private Timestamp update_date;
+    private Integer is_search;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -32,6 +33,14 @@ public class RecentSearch {
         this.create_date = create_date;
         this.update_date = update_date;
         this.user = user;
+    }
+
+    public Integer getIs_search() {
+        return is_search;
+    }
+
+    public void setIs_search(Integer is_search) {
+        this.is_search = is_search;
     }
 
     public User getUser() {

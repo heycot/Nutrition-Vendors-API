@@ -17,7 +17,7 @@ public class Comment {
     private Integer id;
     private String title;
     private String content;
-    private Integer rating;
+    private Double rating;
     private Timestamp create_date;
     private Timestamp update_date;
     private  Integer status;
@@ -31,7 +31,7 @@ public class Comment {
     @JoinColumn(name = "shopitem_id", referencedColumnName = "id")
     private ShopItem shopItem;
 
-    public Comment(String title, String content, Integer rating, Timestamp create_date, Integer status, User user, ShopItem shopItem) {
+    public Comment(String title, String content, Double rating, Timestamp create_date, Integer status, User user, ShopItem shopItem) {
         this.title = title;
         this.content = content;
         this.rating = rating;
@@ -76,11 +76,11 @@ public class Comment {
         this.title = title;
     }
 
-    public Integer getRating() {
+    public Double getRating() {
         return rating;
     }
 
-    public void setRating(Integer rating) {
+    public void setRating(Double rating) {
         this.rating = rating;
     }
 

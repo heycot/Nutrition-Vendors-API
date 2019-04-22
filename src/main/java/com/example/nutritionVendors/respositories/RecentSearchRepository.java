@@ -15,10 +15,10 @@ public interface RecentSearchRepository extends JpaRepository<RecentSearch, Inte
 //    @SQLUpdate(sql = "insert into recent_search(entity_id, user_id, is_shop) values( ?1, ?2, ?3)") //, nativeQuery = true)
 //    Integer saveOne123(Integer entity_id, Integer user_id, Integer is_shop);
 
-    @Query(value = "select * from recent_search where user_id = ?1 order by update_date desc limit ?2, ?3", nativeQuery = true)
+    @Query(value = "select * from recent where user_id = ?1 order by update_date desc limit ?2, ?3", nativeQuery = true)
     List<RecentSearch> findAllByUserId(Integer user_id, Integer offset, Integer limit);
 
 
-    @Query(value = "select * from recent_search where entity_id = ?1 and is_shop = ?2 and user_id = ?3", nativeQuery = true)
+    @Query(value = "select * from recent where entity_id = ?1 and is_shop = ?2 and user_id = ?3", nativeQuery = true)
     RecentSearch findByEntity_idAndIs_shopAndUser(Integer entity_id, Integer is_shop, Integer user_id);
 }
