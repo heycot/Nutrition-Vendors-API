@@ -53,7 +53,11 @@ public class UserController {
 
             User user1 = userService.findOneByEmailAndPassword(user.getEmail(), user.getPassword());
 
-            return ResponseEntity.ok(user1);
+            if (user1 != null) {
+                return ResponseEntity.ok(user1);
+            } else {
+                return ResponseEntity.ok(new User());
+            }
         } catch (Exception e) {
             System.out.println("exception: " + e.getMessage());
             return new ResponseEntity<>("internal exception", HttpStatus.BAD_REQUEST);
