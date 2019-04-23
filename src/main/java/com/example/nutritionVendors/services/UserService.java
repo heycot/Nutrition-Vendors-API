@@ -20,4 +20,8 @@ public interface UserService {
     User findByToken(String authorizationHeader);
 
     void saveImage(User user, MultipartFile file);
+
+    User findByTokenAndPassword(String authorizationHeader, String pass);
+
+    Integer changePass(String authorizationHeader, String pass);
 }

@@ -76,4 +76,21 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public User findByTokenAndPassword(String authorizationHeader, String pass) {
+        return userRepository.findByTokenAndPassword(authorizationHeader, pass);
+    }
+
+    @Override
+    public Integer changePass(String authorizationHeader, String pass) {
+        User user = userRepository.findByToken(authorizationHeader);
+
+        if ( user != null ) {
+            user.setPassword(pass);
+            return 1;
+        }
+        
+        return 0;
+    }
+
 }

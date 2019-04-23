@@ -116,6 +116,44 @@ public class UserController {
         }
     }
 
+    @GetMapping("/check/{pass}")
+    public  ResponseEntity checkPassword(@RequestHeader(value = "Authorization") String authorizationHeader, @PathVariable(name = "pass") String pass){
+
+        try {
+            if (authorizationHeader == null || authorizationHeader == "") {
+                return ResponseEntity.ok(0);
+
+            } else {
+                if ( userService.findByTokenAndPassword(authorizationHeader, pass) != null) {
+                    return ResponseEntity.ok(1);
+                } else {
+
+                    return ResponseEntity.ok(0);
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("exception: " + e.getMessage());
+            return new ResponseEntity<>("internal exception", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/change/{pass}")
+    public  ResponseEntity changePassword(@RequestHeader(value = "Authorization") String authorizationHeader, @PathVariable(name = "pass") String pass){
+
+        try {
+            if (authorizationHeader == null || authorizationHeader == "") {
+                return ResponseEntity.ok(0);
+
+            } else {
+                return ResponseEntity.ok(userService.changePass(authorizationHeader, pass));
+            }
+
+        } catch (Exception e) {
+            System.out.println("exception: " + e.getMessage());
+            return new ResponseEntity<>("internal exception", HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @GetMapping("/{id}")
     public  ResponseEntity getOne(@PathVariable(name = "id") Integer id){
