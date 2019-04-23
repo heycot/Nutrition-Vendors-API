@@ -24,26 +24,22 @@ public class RecentSearchServiceImpl implements RecentSearchService {
         Timestamp ts = new Timestamp(time);
         RecentSearch recentSearch;
 
-        if ( recentSearchRepository != null) {
-            recentSearch = recentSearchRepository.findByEntity_idAndIs_shopAndUser(entity_id, is_shop, user.getId());
+        recentSearch = recentSearchRepository.findByEntity_idAndIs_shopAndUser(entity_id, is_shop, user.getId());
+
+        if ( recentSearch != null) {
+            recentSearch.setUpdate_date(ts);
+        } else {
+            recentSearch  = new RecentSearch();
+            recentSearch.setId(0);
+            recentSearch.setEntity_id(entity_id);
+            recentSearch.setIs_shop(is_shop);
+            recentSearch.setUser(user);
+            recentSearch.setIs_search(1);
+            recentSearch.setCreate_date(ts);
+            recentSearch.setUpdate_date(ts);
         }
 
-//        if ( recentSearch != null) {
-//            recentSearch.setUpdate_date(ts);
-//        } else {
-//            recentSearch  = new RecentSearch();
-//            recentSearch.setId(0);
-//            recentSearch.setEntity_id(entity_id);
-//            recentSearch.setIs_shop(is_shop);
-//            recentSearch.setUser(user);
-//            recentSearch.setIs_search(1);
-//            recentSearch.setCreate_date(ts);
-//            recentSearch.setUpdate_date(ts);
-//        }
-
-//        return recentSearchRepository.save(recentSearch);
-
-        return null;
+        return recentSearchRepository.save(recentSearch);
     }
 
     @Override
