@@ -101,7 +101,7 @@ public class ShopItemController {
     public ResponseEntity getOne(@RequestHeader(value = "Authorization") String authorizationHeader, @PathVariable(value = "id") Integer id, @PathVariable(value = "isSearch") Integer isSearch) throws InternalError {
         try {
             if (authorizationHeader == null || authorizationHeader == "") {
-                return ResponseEntity.ok(shopItemService.getOneDTO(id));
+                return ResponseEntity.ok(shopItemService.getOne(id));
 
             } else {
 
@@ -110,7 +110,7 @@ public class ShopItemController {
 
                 ShopItem shopItem = shopItemService.getOne(id);
 
-                if (shopItem != null && isSearch == 1) {
+                if (shopItem != null && isSearch == 1 && user != null) {
 
                     recentSearchService.updateOneByEntityId(id, 0, user);
                 }

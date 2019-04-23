@@ -54,7 +54,7 @@ public class ShopController {
                 User user = userService.findByToken(authorizationHeader);
                 Shop shop = shopService.findOneById(id);
 
-                if (shop != null && isSearch == 1) {
+                if (shop != null && isSearch == 1 && user != null) {
 
                     recentSearchService.updateOneByEntityId(id, 1, user);
                 }
