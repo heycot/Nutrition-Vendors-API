@@ -87,9 +87,10 @@ public class UserServiceImpl implements UserService {
 
         if ( user != null ) {
             user.setPassword(pass);
+            userRepository.save(user);
             return 1;
         }
-        
+
         return 0;
     }
 
