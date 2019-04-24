@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -92,6 +95,35 @@ public class UserServiceImpl implements UserService {
         }
 
         return 0;
+    }
+
+
+    @Override
+    public User editInfor(String authorizationHeader, User user, String dateStr) {
+        User userEdit = userRepository.findByToken(authorizationHeader);
+
+        if ( userEdit == null ) {
+            return null;
+        }  else {
+
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Date parsedDate = dateFormat.parse(dateStr);
+                Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+
+                userEdit.setName(user.getName());
+                userEdit.setPhone(user.getPhone());
+                userEdit.setBirthday(timestamp);
+                userEdit.setAddress(user.getAddress());
+
+                userRepository.save(userEdit);
+
+            } catch(Exception e) { //this generic but you can control another types of exception
+                // look the origin of excption
+            }
+        }
+
+        return userEdit;
     }
 
 }

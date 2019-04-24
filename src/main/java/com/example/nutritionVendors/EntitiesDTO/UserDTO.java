@@ -9,7 +9,7 @@ public class UserDTO {
 
     @Id
     private Integer id;
-    private String user_name;
+    private String name;
     private String email;
     private String phone;
     private String password;
@@ -31,12 +31,12 @@ public class UserDTO {
         this.id = id;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public String getName() {
+        return name;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {

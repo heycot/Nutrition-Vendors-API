@@ -64,6 +64,25 @@ public class UserController {
         }
     }
 
+    @PostMapping("/edit/{date}")
+    public ResponseEntity editInfor(@RequestHeader(value = "Authorization") String authorizationHeader, @RequestBody User user,
+                                    @PathVariable(name = "date") String dateStr) throws InternalError {
+
+        try {
+
+            if (authorizationHeader == null || authorizationHeader == "") {
+                return ResponseEntity.ok(null);
+
+            } else {
+                return ResponseEntity.ok(userService.editInfor(authorizationHeader, user, dateStr));
+            }
+
+        } catch (Exception e) {
+            System.out.println("exception: " + e.getMessage());
+            return new ResponseEntity<>("internal exception", HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @GetMapping("/infor")
     public ResponseEntity getInforUser(@RequestHeader(value = "Authorization") String authorizationHeader) throws InternalError {
 
@@ -104,7 +123,7 @@ public class UserController {
             user.setBirthday(ts);
             user.setAddress("");
             user.setStatus(1);
-            user.setUser_name(userDTO.getUser_name());
+            user.setUser_name(userDTO.getName());
             user.setEmail(userDTO.getEmail());
             user.setPassword(userDTO.getPassword());
             user.setShops(shops);

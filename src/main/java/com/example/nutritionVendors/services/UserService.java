@@ -24,4 +24,6 @@ public interface UserService {
     User findByTokenAndPassword(String authorizationHeader, String pass);
 
     Integer changePass(String authorizationHeader, String pass);
+
+    User editInfor(String authorizationHeader, User user, String dateStr);
 }
