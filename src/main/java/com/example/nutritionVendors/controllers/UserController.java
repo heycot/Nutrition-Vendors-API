@@ -54,6 +54,7 @@ public class UserController {
             User user1 = userService.findOneByEmailAndPassword(user.getEmail(), user.getPassword());
 
             if (user1 != null) {
+                user1.setPassword("");
                 return ResponseEntity.ok(user1);
             } else {
                 return ResponseEntity.ok(new User());

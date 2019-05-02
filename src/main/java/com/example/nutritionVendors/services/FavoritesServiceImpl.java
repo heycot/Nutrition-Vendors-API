@@ -42,6 +42,7 @@ public class FavoritesServiceImpl implements FavoritesService {
             favorites = new Favorites();
             favorites.setId(0);
             favorites.setStatus(1);
+            favorites.setShopItem(shopItem);
 
             favorites.setUser(userService.getOneById(userId));
             favorites.setCreate_date(ts);

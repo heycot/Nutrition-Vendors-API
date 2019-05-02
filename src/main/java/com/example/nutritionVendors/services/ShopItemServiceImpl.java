@@ -7,6 +7,7 @@ import com.example.nutritionVendors.entities.Favorites;
 import com.example.nutritionVendors.entities.ShopItem;
 import com.example.nutritionVendors.library.Contants;
 import com.example.nutritionVendors.respositories.*;
+import org.apache.tomcat.util.bcel.classfile.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -203,7 +204,7 @@ public class ShopItemServiceImpl implements ShopItemService {
 
     @Override
     public List<ShopItemDTO> getHighRatingItem(Integer limit, Integer offset, Integer userId) {
-        return updateInfors(dtoShopItemRepository.getHighRatingItem(limit, offset), userId);
+        return updateInfors(dtoShopItemRepository.getHighRatingItem(limit, Contants.LIMIT), userId);
     }
 
     public List<ShopItemDTO> updateLove_Status(List<ShopItemDTO> shopItemDTOS, Integer userId) {
