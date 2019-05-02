@@ -35,4 +35,8 @@ public interface ShopRepository extends JpaRepository<Shop, Integer> {
     @Query(value = "select shopitem.shop_id from shopitem where  shopitem.id = ?1", nativeQuery = true)
     Integer findIdByShopItemId(Integer id);
 
+    List<Shop> findAllByUserToken(String token);
+
+    List<Shop> findAllByUserId(Integer id);
+
 }

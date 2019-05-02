@@ -91,4 +91,27 @@ public class ShopController {
             return new ResponseEntity<>("internal exception", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/user")
+    public ResponseEntity getAllByUser(@RequestHeader(value = "Authorization") String authorizationHeader) {
+        try {
+
+            if (authorizationHeader == null || authorizationHeader == "") {
+                return ResponseEntity.ok(null);
+
+            } else {
+                User user = userService.findByToken(authorizationHeader);
+                if ( user == null) {
+                    return ResponseEntity.ok(null);
+                } else {
+                    return ResponseEntity.ok(shopService.findAllByAuthor(user.getId()));
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("exception: " + e.getCause());
+
+            return new ResponseEntity<>("internal exception", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

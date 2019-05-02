@@ -21,4 +21,6 @@ public interface ShopService {
     Shop findOneByShopItemId(List<ShopItem> shopItems);
 
     void updateStatusWhenCommented(ShopItem shopItem);
+
+    List<Shop> findAllByAuthor(Integer id);
 }

@@ -3,6 +3,7 @@ package com.example.nutritionVendors.services;
 import com.example.nutritionVendors.EntitiesDTO.ShopItemDTO;
 import com.example.nutritionVendors.entities.Shop;
 import com.example.nutritionVendors.entities.ShopItem;
+import com.example.nutritionVendors.entities.User;
 import com.example.nutritionVendors.library.Contants;
 import com.example.nutritionVendors.respositories.ShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +61,10 @@ public class ShopServiceImpl implements ShopService {
 
         shopRepository.save(shop);
 
+    }
+
+    @Override
+    public List<Shop> findAllByAuthor(Integer id) {
+        return shopRepository.findAllByUserId(id);
     }
 }
