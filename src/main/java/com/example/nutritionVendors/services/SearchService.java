@@ -3,6 +3,7 @@ package com.example.nutritionVendors.services;
 import com.example.nutritionVendors.EntitiesDTO.SearchDTO;
 import com.example.nutritionVendors.entities.Document;
 import com.example.nutritionVendors.entities.RecentSearch;
+import com.example.nutritionVendors.library.StringLibrary;
 import com.example.nutritionVendors.respositories.DocumentRepository;
 import com.example.nutritionVendors.respositories.SearchDTORepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,21 +25,25 @@ public class SearchService {
 
 
     public List<SearchDTO> searchItem(String searchText) {
+        // check searchText có dấu
+        Boolean isPunctuation = true;
+        isPunctuation = StringLibrary.checkAccent(searchText) ? true : false;
+
         String[] searchTexts =  searchText.split(" ");
         Boolean isShop = true;
         List<SearchDTO> resultSearch = new ArrayList<>();
 
         for (int i = 0; i < searchTexts.length; i++) {
-            List<SearchDTO> list = searchShop(searchTexts[i]);
+            List<SearchDTO> list = searchShop(searchTexts[i], isPunctuation);
             resultSearch = addListToList(resultSearch, list);
         }
 
 
-        resultSearch = SortListWithSearch(resultSearch, searchTexts);
+        resultSearch = SortListWithSearch(resultSearch, searchTexts, isPunctuation);
 
 
         if (resultSearch.size() > 0) {
-            if (countNumberContainsInObjectBySearch(resultSearch.get(0), searchTexts) < searchTexts.length) {
+            if (countNumberContainsInObjectBySearch(resultSearch.get(0), searchTexts, isPunctuation) < searchTexts.length) {
                 resultSearch = getListSearchFood(searchTexts);
                 isShop = false;
             }
@@ -47,7 +52,8 @@ public class SearchService {
             isShop = false;
         }
 
-        resultSearch = SortListWithSearch(resultSearch, searchTexts);
+        resultSearch = SortListWithSearch(resultSearch, searchTexts, isPunctuation);
+        System.out.println( "size for search: " + resultSearch.size());
 
         if ( isShop ) {
             return resultSearch;
@@ -59,54 +65,94 @@ public class SearchService {
     public List<SearchDTO> getListSearchFood(String[] searchTexts) {
         List<SearchDTO> resultSearch = new ArrayList<>();
         for (int i = 0; i < searchTexts.length; i++) {
-            List<SearchDTO> list = searchFood(searchTexts[i]);
+            List<SearchDTO> list = searchFood(searchTexts[i], true);
             resultSearch = addListToList(resultSearch, list);
         }
+
+//        if (resultSearch.size() == 0) {
+            for (int i = 0; i < searchTexts.length; i++) {
+                List<SearchDTO> list = searchFood(searchTexts[i], false);
+                resultSearch = addListToList(resultSearch, list);
+            }
+//        }
+
         return resultSearch;
     }
 
-    public List<SearchDTO> searchFood(String searchText) {
+    public List<SearchDTO> searchFood(String searchText, Boolean isPunctuation) {
+        List<SearchDTO> itemDTOList = new ArrayList<>();
 
-        byte[] searchBinary1 = ( " " + searchText + " ").getBytes(StandardCharsets.UTF_8);
-        byte[] searchBinary2 = ( searchText + " ").getBytes(StandardCharsets.UTF_8);
-        byte[] searchBinary3 = ( " " + searchText ).getBytes(StandardCharsets.UTF_8);
 
-        //search with regex one
-        List<SearchDTO> itemDTOList = searchDTORepository.searchFood(searchBinary1);
+        // search with punctuation
+        if ( isPunctuation ) {
+            byte[][] regexs = getRegexString(searchText);
 
-        //search with regex two and add to list
-        List<SearchDTO> itemDTOList1 = searchDTORepository.searchFood(searchBinary2);
-        itemDTOList = addListToList(itemDTOList, itemDTOList1);
+            //search with regex one
+            itemDTOList = searchDTORepository.searchFood(regexs[0]);
 
-        // search with regex three and all to list
-        List<SearchDTO> itemDTOList2 = searchDTORepository.searchFood(searchBinary3);
-        itemDTOList = addListToList(itemDTOList, itemDTOList2);
+            //search with regex two and add to list
+            List<SearchDTO> itemDTOList1 = searchDTORepository.searchFood(regexs[1]);
+            itemDTOList = addListToList(itemDTOList, itemDTOList1);
 
+            // search with regex three and all to list
+            List<SearchDTO> itemDTOList2 = searchDTORepository.searchFood(regexs[2]);
+            itemDTOList = addListToList(itemDTOList, itemDTOList2);
+        } else {
+
+            //search without punctuation
+            itemDTOList = searchDTORepository.searchFoodNoPunctuation(searchText);
+        }
 
         return itemDTOList;
 
     }
 
 
-    public List<SearchDTO> searchShop(String searchText) {
-        byte[] searchBinary1 = ( " " + searchText + " ").getBytes(StandardCharsets.UTF_8);
-        byte[] searchBinary2 = ( searchText + " ").getBytes(StandardCharsets.UTF_8);
-        byte[] searchBinary3 = ( " " + searchText ).getBytes(StandardCharsets.UTF_8);
+    public List<SearchDTO> searchShop(String searchText, Boolean isPunctuation) {
+        List<SearchDTO> itemDTOList = new ArrayList<>();
 
-        //search with regex one
-        List<SearchDTO> itemDTOList = searchDTORepository.searchShop(searchBinary1);
+        if ( isPunctuation ) {
+            byte[][] regexs = getRegexString(searchText);
 
-        //search with regex two and add to list
-        List<SearchDTO> itemDTOList1 = searchDTORepository.searchShop(searchBinary2);
-        itemDTOList = addListToList(itemDTOList, itemDTOList1);
+            //search with regex one
+            itemDTOList = searchDTORepository.searchShop(regexs[0]);
 
-        // search with regex three and all to list
-        List<SearchDTO> itemDTOList2 = searchDTORepository.searchShop(searchBinary3);
-        itemDTOList = addListToList(itemDTOList, itemDTOList2);
+            //search with regex two and add to list
+            List<SearchDTO> itemDTOList1 = searchDTORepository.searchShop(regexs[1]);
+            itemDTOList = addListToList(itemDTOList, itemDTOList1);
 
+            // search with regex three and all to list
+            List<SearchDTO> itemDTOList2 = searchDTORepository.searchShop(regexs[2]);
+            itemDTOList = addListToList(itemDTOList, itemDTOList2);
+
+        } else {
+
+            //search with regex one
+//            itemDTOList = searchDTORepository.searchFoodNoPunctuation( " " + searchText + " ");
+//
+//            //search with regex two and add to list
+//            List<SearchDTO> itemDTOList1 = searchDTORepository.searchFoodNoPunctuation(searchText + " ");
+//            itemDTOList = addListToList(itemDTOList, itemDTOList1);
+//
+//            // search with regex three and all to list
+//            List<SearchDTO> itemDTOList2 = searchDTORepository.searchFoodNoPunctuation(" " + searchText);
+//            itemDTOList = addListToList(itemDTOList, itemDTOList2);
+
+            itemDTOList = searchDTORepository.searchFoodNoPunctuation(searchText);
+        }
 
         return itemDTOList;
 
+    }
+
+    public byte[][] getRegexString(String searchText) {
+        byte[][] result = new byte[3][];
+
+        result[0] = ( " " + searchText + " ").getBytes(StandardCharsets.UTF_8);
+        result[1] = ( searchText + " ").getBytes(StandardCharsets.UTF_8);
+        result[2] = ( " " + searchText ).getBytes(StandardCharsets.UTF_8);
+
+        return result;
     }
 
     public List<SearchDTO> addListToList(List<SearchDTO> arrWillAdd, List<SearchDTO> arr) {
@@ -120,14 +166,18 @@ public class SearchService {
     }
 
 
-    public List<SearchDTO> SortListWithSearch(List<SearchDTO> array, String[] searchText) {
+    public List<SearchDTO> SortListWithSearch(List<SearchDTO> array, String[] searchText, Boolean isPunctuation) {
         Integer max = searchText.length;
 
         List<SearchDTO> result = new ArrayList<>();
 
-        while (result.size() < 30 && max > 0) {
+        while ( max > 0) {
             for ( int i  = 0; i < array.size(); i++) {
-                if ( countNumberContainsInObjectBySearch(array.get(i), searchText) >= max && !checkItemInList(result, array.get(i))) {
+                if ( result.size() > 30) {
+                    break;
+                }
+
+                if ( countNumberContainsInObjectBySearch(array.get(i), searchText, isPunctuation) >= max && !checkItemInList(result, array.get(i))) {
                     result.add(array.get(i));
                 }
             }
@@ -135,25 +185,59 @@ public class SearchService {
             max--;
         }
 
+//        max = searchText.length;
+//        while (result.size() < 30 ) {
+//            for ( int i  = 0; i < array.size(); i++) {
+//                if ( countNumberContainsInObjectBySearch(array.get(i), searchText, false) >= max && !checkItemInList(result, array.get(i))) {
+//                    result.add(array.get(i));
+//                }
+//            }
+//            break;
+//
+//        }
+
         return result;
     }
 
-    public Integer countNumberContainsInObjectBySearch(SearchDTO item, String[] searchText) {
+    public Integer countNumberContainsInObjectBySearch(SearchDTO item, String[] searchText, Boolean isPunctuation) {
         Integer count = 0;
 
-        for ( int i = 0; i < searchText.length; i++) {
-            if (checkExists(item.getEntity_name(), searchText[i]) || checkExists(item.getAddress(), searchText[i])) {
-                count++;
+//        if ( isPunctuation ) {
+            for ( int i = 0; i < searchText.length; i++) {
+                if ( StringLibrary.checkAccent(searchText[i]) ) {
+                    if (checkExistsWithPunctuation(item.getEntity_name(), searchText[i]) || checkExistsWithPunctuation(item.getAddress(), searchText[i])) {
+                        count++;
+                    }
+                } else {
+                    if (checkExistsNoPunctuation(item.getEntity_name(), searchText[i]) || checkExistsNoPunctuation(item.getAddress(), searchText[i])) {
+                        count++;
+                    }
+                }
+
             }
-        }
+//        }
+//        else {
+//            for ( int i = 0; i < searchText.length; i++) {
+//                if (checkExistsNoPunctuation(item.getEntity_name(), searchText[i]) || checkExistsNoPunctuation(item.getAddress(), searchText[i])) {
+//                    count++;
+//                }
+//            }
+//        }
 
         return count;
     }
 
-    public boolean checkExists(String property, String searchText) {
+    public boolean checkExistsWithPunctuation(String property, String searchText) {
         property = property.toLowerCase();
-//        if ( property.toLowerCase().contains(" " + searchText + " ") || property.toLowerCase().contains(searchText + " ") || property.toLowerCase().contains(" " + searchText)) {
-            if ( property.toLowerCase().contains( searchText)) {
+        if ( property.toLowerCase().contains(searchText)) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean checkExistsNoPunctuation(String property, String searchText) {
+        property = property.toLowerCase();
+            if ( StringLibrary.removeAccent(property).toLowerCase().contains(StringLibrary.removeAccent(searchText))) {
             return true;
         }
         return false;

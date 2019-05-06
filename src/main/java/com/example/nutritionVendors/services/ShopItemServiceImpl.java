@@ -52,104 +52,104 @@ public class ShopItemServiceImpl implements ShopItemService {
         return dtoShopItemRepository.getOneById(id);
     }
 
-    @Override
-    public List<ShopItemDTO> searchItem(String searchText, Integer userId) {
-
-        String[] searchTexts =  searchText.split(" ");
-        List<ShopItemDTO> resultSearch = new ArrayList<>();
-
-        for (int i = 0; i < searchTexts.length; i++) {
-            List<ShopItemDTO> list = searchByOneWord(searchTexts[i]);
-            resultSearch = addListToList(resultSearch, list);
-        }
-
-
-        resultSearch = SortListWithSearch(resultSearch, searchTexts);
-
-        return updateInfors(resultSearch, userId);
-    }
-
-
-
-    public List<ShopItemDTO> searchByOneWord(String searchText) {
-        byte[] searchBinary1 = ( " " + searchText + " ").getBytes(StandardCharsets.UTF_8);
-        byte[] searchBinary2 = ( searchText + " ").getBytes(StandardCharsets.UTF_8);
-        byte[] searchBinary3 = ( " " + searchText ).getBytes(StandardCharsets.UTF_8);
-
-        //search with regex one
-        List<ShopItemDTO> itemDTOList = dtoShopItemRepository.searchItem(searchBinary1);
-
-        //search with regex two and add to list
-        List<ShopItemDTO> itemDTOList1 = dtoShopItemRepository.searchItem(searchBinary2);
-        itemDTOList = addListToList(itemDTOList, itemDTOList1);
-
-        // search with regex three and all to list
-        List<ShopItemDTO> itemDTOList2 = dtoShopItemRepository.searchItem(searchBinary3);
-        itemDTOList = addListToList(itemDTOList, itemDTOList2);
-
-        return itemDTOList;
-
-    }
-
-    public List<ShopItemDTO> addListToList(List<ShopItemDTO> arrWillAdd, List<ShopItemDTO> arr) {
-        for (int i =0 ; i < arr.size(); i++) {
-            if ( !checkItemInList(arrWillAdd, arr.get(i)) ) {
-                arrWillAdd.add(arr.get(i));
-            }
-        }
-
-        return arrWillAdd;
-    }
-
-    public List<ShopItemDTO> SortListWithSearch(List<ShopItemDTO> array, String[] searchText) {
-        Integer max = searchText.length;
-
-        List<ShopItemDTO> result = new ArrayList<>();
-
-        while (max >= 0 && result.size() < 20) {
-            for ( int i  = 0; i < array.size(); i++) {
-                if ( countNumberContainsInObjectBySearch(array.get(i), searchText) >= max && !checkItemInList(result, array.get(i))) {
-                    result.add(array.get(i));
-                }
-            }
-
-            max--;
-        }
-
-        return result;
-    }
-
-    public Integer countNumberContainsInObjectBySearch(ShopItemDTO item, String[] searchText) {
-        Integer count = 0;
-
-        for ( int i = 0; i < searchText.length; i++) {
-            if (checkExists(item.getName(), searchText[i]) || checkExists(item.getShop_name(), searchText[i]) || checkExists(item.getAddress(), searchText[i])) {
-                count++;
-            }
-        }
-
-        return count;
-    }
-
-    public boolean checkExists(String property, String searchText) {
-        property = property.toLowerCase();
-        if ( property.toLowerCase().contains(" " + searchText + " ") || property.toLowerCase().contains(searchText + " ") || property.toLowerCase().contains(" " + searchText)) {
-            return true;
-        }
-        return false;
-    }
-
-
-
-    public Boolean checkItemInList(List<ShopItemDTO> itemDTOS, ShopItemDTO itemDTO) {
-        for (int i  = 0; i < itemDTOS.size(); i++){
-            if (itemDTO.getId() == itemDTOS.get(i).getId()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
+//    @Override
+//    public List<ShopItemDTO> searchItem(String searchText, Integer userId) {
+//
+//        String[] searchTexts =  searchText.split(" ");
+//        List<ShopItemDTO> resultSearch = new ArrayList<>();
+//
+//        for (int i = 0; i < searchTexts.length; i++) {
+//            List<ShopItemDTO> list = searchByOneWord(searchTexts[i]);
+//            resultSearch = addListToList(resultSearch, list);
+//        }
+//
+//
+//        resultSearch = SortListWithSearch(resultSearch, searchTexts);
+//
+//        return updateInfors(resultSearch, userId);
+//    }
+//
+//
+//
+//    public List<ShopItemDTO> searchByOneWord(String searchText) {
+//        byte[] searchBinary1 = ( " " + searchText + " ").getBytes(StandardCharsets.UTF_8);
+//        byte[] searchBinary2 = ( searchText + " ").getBytes(StandardCharsets.UTF_8);
+//        byte[] searchBinary3 = ( " " + searchText ).getBytes(StandardCharsets.UTF_8);
+//
+//        //search with regex one
+//        List<ShopItemDTO> itemDTOList = dtoShopItemRepository.searchItem(searchBinary1);
+//
+//        //search with regex two and add to list
+//        List<ShopItemDTO> itemDTOList1 = dtoShopItemRepository.searchItem(searchBinary2);
+//        itemDTOList = addListToList(itemDTOList, itemDTOList1);
+//
+//        // search with regex three and all to list
+//        List<ShopItemDTO> itemDTOList2 = dtoShopItemRepository.searchItem(searchBinary3);
+//        itemDTOList = addListToList(itemDTOList, itemDTOList2);
+//
+//        return itemDTOList;
+//
+//    }
+//
+//    public List<ShopItemDTO> addListToList(List<ShopItemDTO> arrWillAdd, List<ShopItemDTO> arr) {
+//        for (int i =0 ; i < arr.size(); i++) {
+//            if ( !checkItemInList(arrWillAdd, arr.get(i)) ) {
+//                arrWillAdd.add(arr.get(i));
+//            }
+//        }
+//
+//        return arrWillAdd;
+//    }
+//
+//    public List<ShopItemDTO> SortListWithSearch(List<ShopItemDTO> array, String[] searchText) {
+//        Integer max = searchText.length;
+//
+//        List<ShopItemDTO> result = new ArrayList<>();
+//
+//        while (max >= 0 && result.size() < 20) {
+//            for ( int i  = 0; i < array.size(); i++) {
+//                if ( countNumberContainsInObjectBySearch(array.get(i), searchText) >= max && !checkItemInList(result, array.get(i))) {
+//                    result.add(array.get(i));
+//                }
+//            }
+//
+//            max--;
+//        }
+//
+//        return result;
+//    }
+//
+//    public Integer countNumberContainsInObjectBySearch(ShopItemDTO item, String[] searchText) {
+//        Integer count = 0;
+//
+//        for ( int i = 0; i < searchText.length; i++) {
+//            if (checkExists(item.getName(), searchText[i]) || checkExists(item.getShop_name(), searchText[i]) || checkExists(item.getAddress(), searchText[i])) {
+//                count++;
+//            }
+//        }
+//
+//        return count;
+//    }
+//
+//    public boolean checkExists(String property, String searchText) {
+//        property = property.toLowerCase();
+//        if ( property.toLowerCase().contains(" " + searchText + " ") || property.toLowerCase().contains(searchText + " ") || property.toLowerCase().contains(" " + searchText)) {
+//            return true;
+//        }
+//        return false;
+//    }
+//
+//
+//
+//    public Boolean checkItemInList(List<ShopItemDTO> itemDTOS, ShopItemDTO itemDTO) {
+//        for (int i  = 0; i < itemDTOS.size(); i++){
+//            if (itemDTO.getId() == itemDTOS.get(i).getId()) {
+//                return true;
+//            }
+//        }
+//
+//        return false;
+//    }
 
     @Override
     public List<ShopItemDTO> findAllByUserLoved(Integer userId, Integer offset, Integer limit) {
