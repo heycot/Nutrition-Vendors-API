@@ -23,10 +23,10 @@ public class StringLibrary {
         // Now create matcher object.
         Matcher m = r.matcher(text);
         if (m.find()) {
-            System.out.println( text + " MATCHED");
+//            System.out.println( text + " MATCHED");
             return true;
         }else {
-            System.out.println( text + " NO MATCH");
+//            System.out.println( text + " NO MATCH");
             return false;
         }
     }
