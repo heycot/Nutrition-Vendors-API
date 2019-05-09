@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveImage(User user, MultipartFile file) {
+    public Integer saveImage(MultipartFile file) {
         try {
 
             if(file != null ) {
@@ -72,10 +72,14 @@ public class UserServiceImpl implements UserService {
                                                                     .path("/api/images/")
                                                                     .path(fileName)
                                                                     .toUriString();
+
+                return 1;
             }
+            return 0;
         } catch (Exception e) {
             System.out.println("eror image");
             System.out.println(e.getMessage());
+            return 0;
         }
     }
 

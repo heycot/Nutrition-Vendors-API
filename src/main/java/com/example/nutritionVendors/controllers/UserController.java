@@ -102,9 +102,20 @@ public class UserController {
     }
 
 
-    @PostMapping("/signup")
+    @PostMapping("/upload")
     @Consumes({"application/json", MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity signup(@RequestBody UserDTO userDTO, @RequestParam(value = "files", required = false) MultipartFile file) throws InternalError {
+    public ResponseEntity uploadImage(@PathVariable Integer user_id, @RequestParam(value = "files", required = false) MultipartFile file) throws InternalError {
+
+        try {
+            return ResponseEntity.ok(userService.saveImage(file));
+        } catch (Exception e) {
+            System.out.println("exception: " + e.getMessage());
+            return new ResponseEntity<>("internal exception with sign up", HttpStatus.EXPECTATION_FAILED);
+        }
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity signup(@RequestBody UserDTO userDTO) throws InternalError {
 
         try {
             Date date= new Date();
@@ -130,8 +141,6 @@ public class UserController {
             user.setShops(shops);
             user.setFavorites(favorites);
             user.setComments(comments);
-
-            userService.saveImage(user, file);
 
             return ResponseEntity.ok(userService.signUp(user));
         } catch (Exception e) {
