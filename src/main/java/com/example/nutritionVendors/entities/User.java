@@ -70,9 +70,6 @@ public class User {
         return name;
     }
 
-    public void setUser_name(String name) {
-        this.name = name;
-    }
 
     public String getEmail() {
         return email;

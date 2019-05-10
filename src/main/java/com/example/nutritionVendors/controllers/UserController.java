@@ -135,7 +135,7 @@ public class UserController {
             user.setBirthday(ts);
             user.setAddress("");
             user.setStatus(1);
-            user.setUser_name(userDTO.getName());
+            user.setName(userDTO.getName());
             user.setEmail(userDTO.getEmail());
             user.setPassword(userDTO.getPassword());
             user.setShops(shops);
