@@ -32,7 +32,7 @@ public interface DTOShopItemRepository extends JpaRepository<ShopItemDTO, Intege
             " left join location l on shop.location_id = l.id " +
             " left join measure m on item.measure_id = m.id " +
             " group by shopitem.id, item.name, shop.name order by shopitem.comment_number desc, shopitem.rating desc limit ?1, ?2", nativeQuery = true)
-    List<ShopItemDTO> getHighRatingItem(Integer limit, Integer offset);
+    List<ShopItemDTO> getHighRatingItem(Integer offset, Integer limit);
 
 
     @Query(value = "select shopitem.id, shopitem.price, shopitem.status, shopitem.rating, shopitem.comment_number, shopitem.favorites_number," +

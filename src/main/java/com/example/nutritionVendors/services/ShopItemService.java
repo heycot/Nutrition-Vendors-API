@@ -6,7 +6,7 @@ import com.example.nutritionVendors.entities.ShopItem;
 import java.util.List;
 
 public interface ShopItemService {
-    List<ShopItemDTO> getHighRatingItem(Integer limit, Integer offset, Integer userId);
+    List<ShopItemDTO> getHighRatingItem(Integer offset);
 
 //    List<ShopItem> getHighRatingShopItem(Integer limit, Integer offset, Integer userId);
 
@@ -22,7 +22,7 @@ public interface ShopItemService {
 
     List<ShopItemDTO> findAllByUserLoved(Integer userId, Integer offset, Integer limit);
 
-    List<ShopItemDTO> findAllByCategory(Integer categoryId, Integer userId, Integer offset);
+    List<ShopItemDTO> findAllByCategory(Integer categoryId, Integer offset);
 
     List<ShopItem> findAllByShopIdHadComment(Integer shop_id, Integer id);
 

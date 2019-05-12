@@ -1,26 +1,16 @@
 package com.example.nutritionVendors.controllers;
 
-import com.example.nutritionVendors.EntitiesDTO.ShopItemDTO;
-import com.example.nutritionVendors.entities.RecentSearch;
 import com.example.nutritionVendors.entities.ShopItem;
 import com.example.nutritionVendors.entities.User;
 import com.example.nutritionVendors.library.Contants;
 import com.example.nutritionVendors.services.*;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @RestController
 @RequestMapping(ShopItemController.BASE_URL)
@@ -39,19 +29,6 @@ public class ShopItemController {
     @Autowired
     private RecentSearchService recentSearchService;
 
-    @Autowired
-    private FavoritesService favoritesService;
-
-//    @RequestMapping("/high-rating")
-//    public ResponseEntity getHighRating() throws InternalError {
-//        try{
-//            List<ShopItem> shopItemDTOS = shopItemService.getHighRatingShopItem(10, 0);
-//
-//            return ResponseEntity.ok(shopItemDTOS);
-//        } catch (InternalError | NullPointerException e){
-//            throw new InternalException("Internal Server Error");
-//        }
-//    }
 
     @GetMapping("/search/{searchText}")
     public ResponseEntity searchItem(@PathVariable(name = "searchText") String searchText) throws InternalError {
@@ -67,16 +44,10 @@ public class ShopItemController {
     }
 
     @RequestMapping("/high-rating/offset/{off}")
-    public ResponseEntity getHighRatingItem(@RequestHeader(value = "Authorization") String authorizationHeader, @PathVariable(name = "off") Integer offset) throws InternalError {
+    public ResponseEntity getHighRatingItem(@PathVariable(name = "off") Integer offset) throws InternalError {
         try{
 
-            if (authorizationHeader == null || authorizationHeader == "" || authorizationHeader == "guest") {
-                return ResponseEntity.ok(shopItemService.getHighRatingItem(offset, Contants.LIMIT, 0));
-
-            } else {
-                User user = userService.findByToken(authorizationHeader);
-                return ResponseEntity.ok(shopItemService.getHighRatingItem(offset, Contants.LIMIT, user.getId()));
-            }
+                return ResponseEntity.ok(shopItemService.getHighRatingItem(offset));
 
         } catch (Exception e){
             System.out.println(e.getCause());
@@ -84,18 +55,6 @@ public class ShopItemController {
         }
     }
 
-//    @GetMapping("/high-rating-item/{id}")
-//    public ResponseEntity getOneHighRatingItem( @PathVariable(name = "id") Integer id ) throws InternalError {
-//        try{
-//
-//            ShopItemDTO shopItemDTO = shopItemService.getOneHighRatingItem(id);
-//
-//            return ResponseEntity.ok(shopItemDTO);
-//        } catch (InternalError | NullPointerException e){
-//            System.out.println(e.getCause());
-//            throw new InternalException("Internal Server Error");
-//        }
-//    }
 
     @RequestMapping("/{id}/{isSearch}")
     public ResponseEntity getOne(@RequestHeader(value = "Authorization") String authorizationHeader, @PathVariable(value = "id") Integer id, @PathVariable(value = "isSearch") Integer isSearch) throws InternalError {
@@ -168,18 +127,11 @@ public class ShopItemController {
     }
 
     @GetMapping("/category/{id}/{off}")
-    public ResponseEntity findAllByCategory(@RequestHeader(value = "Authorization") String authorizationHeader,
-                                            @PathVariable(name = "id") Integer id, @PathVariable(name = "off") Integer offset) throws InternalError {
+    public ResponseEntity findAllByCategory(@PathVariable(name = "id") Integer id, @PathVariable(name = "off") Integer offset) throws InternalError {
 
         try {
 
-            if (authorizationHeader == null || authorizationHeader == "") {
-                return ResponseEntity.ok(shopItemService.findAllByCategory(id, 0, offset));
-
-            } else {
-                User user = userService.findByToken(authorizationHeader);
-                return ResponseEntity.ok(shopItemService.findAllByCategory(id, user.getId(), offset));
-            }
+                return ResponseEntity.ok(shopItemService.findAllByCategory(id, offset));
 
         } catch (Exception e){
             System.out.println("exception: " + e.getCause());

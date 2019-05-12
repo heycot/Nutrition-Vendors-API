@@ -1,6 +1,5 @@
 package com.example.nutritionVendors.services;
 
-import com.example.nutritionVendors.EntitiesDTO.UserDTO;
 import com.example.nutritionVendors.entities.User;
 import com.example.nutritionVendors.library.UserTokenHandle;
 import com.example.nutritionVendors.respositories.UserRepository;
