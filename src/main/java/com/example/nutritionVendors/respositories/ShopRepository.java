@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface ShopRepository extends JpaRepository<Shop, Integer> {
 
-    @Query(value = "select * from shop limit ?1 offset ?2 oder by rating desc ", nativeQuery = true)
+    @Query(value = "select * from shop limit ?1 offset ?2  ", nativeQuery = true)
     List<Shop> findOrOrderByRating(Integer limit, Integer offset);
 
     @Query(value = "SELECT shop.* , ( ACOS( COS( RADIANS( ?1  ) ) " +

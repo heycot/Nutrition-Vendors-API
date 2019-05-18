@@ -5,6 +5,7 @@ import com.example.nutritionVendors.entities.Comment;
 import com.example.nutritionVendors.entities.Shop;
 import com.example.nutritionVendors.entities.ShopItem;
 import com.example.nutritionVendors.entities.User;
+import com.example.nutritionVendors.respositories.CommentRepository;
 import com.example.nutritionVendors.services.CommentService;
 import com.example.nutritionVendors.services.ShopItemService;
 import com.example.nutritionVendors.services.ShopService;
@@ -36,6 +37,14 @@ public class CommentController {
 
     @Autowired
     private ShopService shopService;
+
+    @Autowired
+    private CommentRepository commentRepository;
+
+    @GetMapping
+    public ResponseEntity get() {
+        return ResponseEntity.ok(commentRepository.findAll());
+    }
 
     @GetMapping("/dto/offset/{offset}")
     public ResponseEntity addNewComment(@RequestHeader(value = "Authorization") String authorizationHeader, @PathVariable(value = "offset") Integer offset) throws InternalError {

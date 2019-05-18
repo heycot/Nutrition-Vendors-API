@@ -6,6 +6,7 @@ import com.example.nutritionVendors.entities.ShopItem;
 import com.example.nutritionVendors.entities.User;
 import com.example.nutritionVendors.library.Contants;
 import com.example.nutritionVendors.respositories.ShopRepository;
+import org.apache.tomcat.util.bcel.classfile.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +22,9 @@ public class ShopServiceImpl implements ShopService {
     private ShopItemService shopItemService;
 
     @Override
-    public List<Shop> findAllShop(Integer limit, Integer offset) {
-        return shopRepository.findOrOrderByRating(limit, offset);
+    public List<Shop> findAllShop( Integer offset) {
+//        return shopRepository.findOrOrderByRating( offset, Contants.LIMIT);
+        return shopRepository.findAll();
     }
 
     @Override

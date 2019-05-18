@@ -35,7 +35,7 @@ public class ShopController {
     @GetMapping("/offset/{offset}")
     public ResponseEntity findAllShop(@PathVariable Integer offset) {
         try {
-            return ResponseEntity.ok(shopService.findAllShop(offset, Contants.LIMIT));
+            return ResponseEntity.ok(shopService.findAllShop(offset));
         } catch (Exception e) {
             System.out.println("exception: " + e.getCause());
 

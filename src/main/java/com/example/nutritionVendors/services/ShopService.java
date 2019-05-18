@@ -7,7 +7,7 @@ import com.example.nutritionVendors.entities.ShopItem;
 import java.util.List;
 
 public interface ShopService {
-    List<Shop> findAllShop(Integer limit, Integer offset);
+    List<Shop> findAllShop( Integer offset);
 
     Shop findOneById(Integer id);
 
