@@ -69,10 +69,10 @@ public class ShopItemController {
 
                 ShopItem shopItem = shopItemService.getOne(id);
 
-                if (shopItem != null && isSearch == 1 && user != null) {
+                //if (shopItem != null && isSearch == 1 && user != null) {
 
-                    recentSearchService.updateOneByEntityId(id, 0, user);
-                }
+                    //recentSearchService.updateOneByEntityId(id, 0, user);
+               // }
                 return ResponseEntity.ok(shopItem);
             }
         } catch (Exception e) {

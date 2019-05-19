@@ -28,6 +28,7 @@ public class Comment {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "shopitem_id", referencedColumnName = "id")
+    @JsonIgnore
     private ShopItem shopItem;
 
     public Comment(String title, String content, Double rating, Timestamp create_date, Integer status, User user, ShopItem shopItem) {
